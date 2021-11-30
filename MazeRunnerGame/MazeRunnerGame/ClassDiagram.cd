@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Game" Collapsed="true">
+    <Position X="3" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIJAACAoAIAAAACECAQAAEAAAiAEAANABAAAAAUAAA=</HashCode>
+      <FileName>Game.hpp</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="player" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="5.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAACAAAAIAAAAAAAAIAgAQAQAUABA=</HashCode>
+      <FileName>Player.hpp</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="object" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Square" Collapsed="true">
+    <Position X="8" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAgAACAAAAICAAAAAAAAAAAgAAQcBAA=</HashCode>
+      <FileName>Square.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

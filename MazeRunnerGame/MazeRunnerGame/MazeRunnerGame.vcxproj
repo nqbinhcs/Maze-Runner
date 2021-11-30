@@ -145,7 +145,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Square.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DefinedVariables.hpp" />
+    <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Player.hpp" />
+    <ClInclude Include="Square.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\..\MazeRunnerGame_1\MazeRunnerGame\BackGround.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

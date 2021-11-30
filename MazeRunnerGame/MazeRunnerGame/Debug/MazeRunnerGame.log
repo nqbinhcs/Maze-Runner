@@ -1,2 +1,6 @@
-﻿  main.cpp
-  MazeRunnerGame.vcxproj -> D:\Các môn học\LTHĐT\MazeRunnerGame\Debug\MazeRunnerGame.exe
+﻿  Game.cpp
+  Player.cpp
+  Square.cpp
+  main.cpp
+  Generating Code...
+  MazeRunnerGame.vcxproj -> C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\Debug\MazeRunnerGame.exe
