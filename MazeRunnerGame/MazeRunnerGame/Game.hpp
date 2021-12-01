@@ -1,3 +1,4 @@
+
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -12,18 +13,20 @@
 
 #include "Player.hpp"
 #include "DefinedVariables.hpp"
+#include "TileMap.h"
 //#include "SwagBall.h"
 
 class Game
 {
+public:
+	sf::RenderWindow* window;
 private:
 	sf::VideoMode videoMode;
-	sf::RenderWindow* window;
 	bool endGame;
 	sf::Event sfmlEvent;
 
 	Player player;
-
+	TileMap map;
 	int points;
 
 	sf::Font font;
@@ -39,6 +42,7 @@ private:
 	void initWindow();
 	void initFonts();
 	void initText();
+	void initMap();
 
 public:
 	//Constructors and Destructors

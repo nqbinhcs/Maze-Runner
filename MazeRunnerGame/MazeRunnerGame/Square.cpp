@@ -50,6 +50,11 @@ void Square::setSize(float width, float height)
 	this->shape.setSize(sf::Vector2f(width, height));
 }
 
+void Square::setOutLine(float think, sf::Color color) {
+	this->shape.setOutlineThickness(think);
+	this->shape.setOutlineColor(sf::Color(color));
+}
+
 void Square::update(const sf::RenderTarget* target)
 {
 }

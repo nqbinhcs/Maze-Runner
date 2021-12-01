@@ -15,6 +15,7 @@ void Game::initWindow()
 	this->videoMode = sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT);
 	this->window = new sf::RenderWindow(this->videoMode, NAME_GAME, sf::Style::Close | sf::Style::Titlebar);
 	this->window->setFramerateLimit(60);
+	/*TileMap::drawMap(this->window, this->player);*/
 }
 
 void Game::initFonts()
@@ -40,6 +41,10 @@ void Game::initText()
 	this->endGameText.setString("YOU ARE DEAD, EXIT THE GAME!");
 }
 
+void Game::initMap() {
+	this->map.getMap();
+}
+
 //Constructors and Destructors
 Game::Game()
 {
@@ -47,6 +52,7 @@ Game::Game()
 	this->initWindow();
 	this->initFonts();
 	this->initText();
+	this->initMap();
 }
 
 Game::~Game()
@@ -170,8 +176,9 @@ void Game::render()
 {
 	this->window->clear();
 
+	this->map.drawMap(this->window, this->player);
 	//Render stuff
-	this->player.render(this->window);
+	//this->player.render(this->window);
 
 	/*for (auto i : this->swagBalls)
 	{

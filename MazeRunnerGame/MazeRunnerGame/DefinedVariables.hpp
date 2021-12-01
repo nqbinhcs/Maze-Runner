@@ -1,6 +1,6 @@
 #pragma once
-#define SCREEN_HEIGHT 540
-#define SCREEN_WIDTH 980
+#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1000
 #define FRAME 60
 #define NAME_GAME "MAZE RUNNER GAME"
 

@@ -30,6 +30,7 @@ public:
 	void setPosition(float, float);
 	void setColor(sf::Color);
 	void setSize(float, float);
+	void setOutLine(float, sf::Color);
 
 	void update(const sf::RenderTarget* target);
 	void render(sf::RenderTarget* target);
