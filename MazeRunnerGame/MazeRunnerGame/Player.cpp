@@ -39,29 +39,29 @@ Square& Player::getObject()
 void Player::updateInput()
 {
 	//Keyboard input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
-		this->object.getShape().move(-this->movementSpeed, 0.f);
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
-		this->object.getShape().move(this->movementSpeed, 0.f);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	{
-		this->object.getShape().move(0.f, -this->movementSpeed);
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	{
-		this->object.getShape().move(0.f, this->movementSpeed);
-	}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			this->object.getShape().move(-this->movementSpeed, 0.f);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			this->object.getShape().move(this->movementSpeed, 0.f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			this->object.getShape().move(0.f, -this->movementSpeed);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			this->object.getShape().move(0.f, this->movementSpeed);
+		}
 }
 
 
 //Hàm giữ cho đối tượng không rơi ra ngoài khung hình
 void Player::updateWindowBoundsCollision(const sf::RenderTarget* target)
 {
-
 	//Print Position
 	std::cout << this->object.getShape().getGlobalBounds().left << ' ' << this->object.getShape().getGlobalBounds().top << ' ' << this->object.getShape().getGlobalBounds().width << '\n';
 	std::cout << this->object.getShape().getPosition().x << ' ' << this->object.getShape().getPosition().y << '\n';
@@ -85,6 +85,22 @@ void Player::update(const sf::RenderTarget* target)
 
 	//Window bounds collision
 	this->updateWindowBoundsCollision(target);
+}
+
+void Player::updateCorrectPosition(int direction) {
+	float X = object.getPositionX();
+	float Y = object.getPositionY();
+
+	if (direction == sf::Keyboard::Left)
+		X = floor(X / 50.f) * 50.f;
+	if (direction == sf::Keyboard::Right)
+		X = ceil(X / 50.f) * 50.f;
+	if (direction == sf::Keyboard::Up)
+		Y = floor(Y / 50.f) * 50.f;
+	if (direction == sf::Keyboard::Down)
+		Y = ceil(Y / 50.f) * 50.f;
+
+	object.setPosition(X, Y);
 }
 
 void Player::render(sf::RenderTarget* target)

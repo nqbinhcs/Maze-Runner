@@ -7,8 +7,8 @@
 class TileMap : public Square
 {
 private:
-    int* gameMap;;
-    Square* displayRects;;
+    int* gameMap;
+    Square* displayRects;
 
 public:
     TileMap() {

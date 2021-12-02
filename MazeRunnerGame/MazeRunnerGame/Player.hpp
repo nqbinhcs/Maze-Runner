@@ -30,5 +30,6 @@ public:
 	void updateInput();
 	void updateWindowBoundsCollision(const sf::RenderTarget* target);
 	void update(const sf::RenderTarget* target);
+	void updateCorrectPosition(int direction);
 	void render(sf::RenderTarget* target);
 };

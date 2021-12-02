@@ -23,8 +23,8 @@ public:
 
 	//Accessors - getter
 	sf::RectangleShape& getShape();
-	float getPositionX();
-	float getPositionY();
+	float getPositionX() const;
+	float getPositionY() const;
 
 	//Accessors - setter
 	void setPosition(float, float);
@@ -34,5 +34,10 @@ public:
 
 	void update(const sf::RenderTarget* target);
 	void render(sf::RenderTarget* target);
+
+public:
+	//Other functions
+	bool isInSquare(const sf::Vector2f& cord) const;
+	bool checkCollision(const Square& other, bool firstCheck = true) const;
 };
 

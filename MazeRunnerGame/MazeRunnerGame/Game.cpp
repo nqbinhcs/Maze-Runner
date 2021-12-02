@@ -16,6 +16,9 @@ void Game::initWindow()
 	this->window = new sf::RenderWindow(this->videoMode, NAME_GAME, sf::Style::Close | sf::Style::Titlebar);
 	this->window->setFramerateLimit(60);
 	/*TileMap::drawMap(this->window, this->player);*/
+
+	// Turn off key repetition
+	//this->window->setKeyRepeatEnabled(0);
 }
 
 void Game::initFonts()
@@ -119,8 +122,9 @@ void Game::pollEvents()
 
 void Game::updatePlayer()
 {
-	this->player.update(this->window);
-
+	this->player.update(window);
+	if (sfmlEvent.type == sf::Event::KeyReleased)
+		this->player.updateCorrectPosition(sfmlEvent.key.code);
 }
 
 //void Game::updateCollision()
@@ -162,8 +166,8 @@ void Game::update()
 	{
 		//this->spawnSwagBalls();
 		this->updatePlayer();
-		//this->updateCollision();
 		this->updateGui();
+		//this->updateCollision();
 	}
 }
 
