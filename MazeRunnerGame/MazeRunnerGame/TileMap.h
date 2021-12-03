@@ -4,7 +4,7 @@
 #include "Square.hpp"
 #include "Player.hpp"
 
-class TileMap : public Square
+class TileMap
 {
 private:
     int* gameMap;
@@ -23,7 +23,7 @@ public:
     bool  getMap() {
         /*int gameMap[12 * 20];
         Square displayRects[12 * 20];*/
-
+        std::srand(std::sin(std::time(nullptr)) * 1000);
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 12; j++) {
                 this->displayRects[i + j * 20].setPosition(i * 50, j * 50);
