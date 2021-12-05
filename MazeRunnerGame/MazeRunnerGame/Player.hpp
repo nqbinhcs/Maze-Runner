@@ -5,6 +5,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include <time.h>
+using namespace sf;
 
 #include "DefinedVariables.hpp"
 #include "Square.hpp"
@@ -32,4 +34,7 @@ public:
 	void update(const sf::RenderTarget* target);
 	void updateCorrectPosition(int direction);
 	void render(sf::RenderTarget* target);
+
+
+	void setLocaStart(int x, int y);
 };

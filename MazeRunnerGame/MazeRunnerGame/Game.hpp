@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include <time.h>
 
 #include<iostream>
 #include<ctime>
@@ -16,6 +17,7 @@
 #include "TileMap.h"
 //#include "SwagBall.h"
 
+using namespace sf;
 class Game
 {
 public:

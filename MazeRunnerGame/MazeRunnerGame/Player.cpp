@@ -1,6 +1,6 @@
 ﻿#include "Player.hpp"
-
 #include <iostream>
+#include<windows.h>
 
 
 void Player::initVariables()
@@ -38,13 +38,20 @@ Square& Player::getObject()
 
 void Player::updateInput()
 {
-	//Keyboard input
+		srand(time(0));
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		//Khởi tạo game
+		Clock clock;
+		float timer = 0, delay = 0.1;
+		float time = clock.getElapsedTime().asSeconds();
+		clock.restart();
+		timer += time;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) )
 		{
 			this->object.getShape().move(-this->movementSpeed, 0.f);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) )
 		{
 			this->object.getShape().move(this->movementSpeed, 0.f);
 		}
@@ -52,10 +59,12 @@ void Player::updateInput()
 		{
 			this->object.getShape().move(0.f, -this->movementSpeed);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
 			this->object.getShape().move(0.f, this->movementSpeed);
 		}
+
+		if (timer > delay) { timer = 0; }
 }
 
 
@@ -85,6 +94,7 @@ void Player::update(const sf::RenderTarget* target)
 
 	//Window bounds collision
 	this->updateWindowBoundsCollision(target);
+
 }
 
 void Player::updateCorrectPosition(int direction) {
@@ -106,4 +116,9 @@ void Player::updateCorrectPosition(int direction) {
 void Player::render(sf::RenderTarget* target)
 {
 	target->draw(this->object.getShape());
+}
+
+void Player::setLocaStart(int i, int j) {
+	this->object.setPosition((i)*SIZE_CELL, (j)*SIZE_CELL);
+	//this->object.getShape().move(x * 1.0f, y * 1.0f);
 }

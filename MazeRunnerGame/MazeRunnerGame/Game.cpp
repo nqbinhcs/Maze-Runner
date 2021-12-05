@@ -45,7 +45,10 @@ void Game::initText()
 }
 
 void Game::initMap() {
-	this->map.getMap();
+	this->map.creatGameMap();
+	this->map.setdisplayMap();
+	//Set location of player
+	this->player.setLocaStart(this->map.getColStart(), this->map.getRowStart());
 }
 
 //Constructors and Destructors
