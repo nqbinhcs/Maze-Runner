@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -145,17 +145,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Coordinate.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Square.cpp" />
+    <ClCompile Include="MazeObject.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Coordinate.hpp" />
     <ClInclude Include="DefinedVariables.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Maze.hpp" />
+    <ClInclude Include="MazeCreationInterface.hpp" />
+    <ClInclude Include="MazeFactory.hpp" />
     <ClInclude Include="Player.hpp" />
-    <ClInclude Include="Square.hpp" />
+    <ClInclude Include="MazeObject.hpp" />
+    <ClInclude Include="Room.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
