@@ -13,4 +13,4 @@
 Yêu cầu: Thay đổi lại nhưng code vẫn chạy được như ban đầu
 
 
-Push code: Để đảm bảo respo mình nhẹ, khi add thì các ông add những cái cần thiết nha. Như ai lỡ add hết, thì sử dụng [git rm] để xóa cái thư mục [.vs/MazeRunnerGame/ipch] nha
+
