@@ -15,7 +15,6 @@
 #include "Player.hpp"
 #include "DefinedVariables.hpp"
 #include "TileMap.h"
-//#include "SwagBall.h"
 
 using namespace sf;
 class Game

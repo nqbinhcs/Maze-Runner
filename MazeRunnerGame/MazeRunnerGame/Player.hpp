@@ -9,12 +9,12 @@
 using namespace sf;
 
 #include "DefinedVariables.hpp"
-#include "Square.hpp"
+#include "MazeObject.hpp"
 
 class Player
 {
 private:
-	Square object;
+	MazeObject object;
 
 	float movementSpeed;
 
@@ -26,7 +26,7 @@ public:
 	virtual ~Player();
 
 	//Accessors
-	Square& getObject();
+	MazeObject& getObject();
 
 	//Functions
 	void updateInput();

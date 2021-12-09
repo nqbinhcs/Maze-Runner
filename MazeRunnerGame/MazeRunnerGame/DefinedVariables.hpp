@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>
+
 #define SCREEN_HEIGHT 650
 #define SCREEN_WIDTH 1050
 #define SIZE_ROW 13

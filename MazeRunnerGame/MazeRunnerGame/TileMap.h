@@ -1,9 +1,11 @@
 ﻿#pragma warning
 #pragma once
 #include "DefinedVariables.hpp"
-#include "Square.hpp"
+#include "MazeObject.hpp"
 #include "Player.hpp"
 
+
+// Các hàm tạo Maze để cho Maze hoặc lớp lớn hơn xử lý nha Thái ơi ""
 class Cell {
 private:
     bool visited;
@@ -43,7 +45,7 @@ private:
     int posX, posY;
     int goalX, goalY;
     Cell gameMap[SIZE_ROW][SIZE_COL];
-    Square displayRects[SIZE_ROW * SIZE_COL];
+    MazeObject displayRects[SIZE_ROW * SIZE_COL];
 
 public:
     TileMap() {

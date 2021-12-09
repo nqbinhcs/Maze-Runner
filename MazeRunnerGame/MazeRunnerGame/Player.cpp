@@ -29,7 +29,7 @@ Player::~Player()
 
 
 //Accessors
-Square& Player::getObject()
+MazeObject& Player::getObject()
 {
 	return object;
 }
