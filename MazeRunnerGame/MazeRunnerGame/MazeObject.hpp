@@ -11,8 +11,7 @@
 
 class MazeObject
 {
-private:
-
+protected:
 	sf::Texture curTexure;
 	sf::RectangleShape shape;
 
@@ -20,9 +19,6 @@ private:
 
 	void initVariables();
 	void initShape();
-
-public:
-	MazeObject(float x = 0.f, float y = 0.f);
 
 	//Getter - Lấy tọa độ trong cửa sổ window
 	sf::RectangleShape& getShape();
@@ -34,7 +30,10 @@ public:
 	void setColor(sf::Color);
 	void setSize(float, float);
 	void setOutLine(float, sf::Color);
+public:
+	MazeObject(float x = 0.f, float y = 0.f);
 
+	
 	//Cập nhật, dựng hình
 	void update(const sf::RenderTarget* target);
 	void render(sf::RenderTarget* target);
