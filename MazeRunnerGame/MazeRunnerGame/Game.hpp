@@ -20,24 +20,19 @@ using namespace sf;
 class Game
 {
 public:
-	sf::RenderWindow* window;
+	sf::RenderWindow* m_pWindow;
 private:
-	sf::VideoMode videoMode;
-	bool endGame;
-	sf::Event sfmlEvent;
+	sf::VideoMode m_VideoMode;
+	bool m_EndGame;
+	sf::Event m_Event;
 
-	Player player;
-	TileMap map;
-	int points;
+	Player m_Player;
+	TileMap m_Map;
+	int m_Points;
 
-	sf::Font font;
-	sf::Text guiText;
-	sf::Text endGameText;
-
-	/*std::vector<SwagBall> swagBalls;
-	float spawnTimerMax;
-	float spawnTimer;
-	int maxSwagBalls;*/
+	sf::Font m_Font;
+	sf::Text m_GuiText;
+	sf::Text m_EndGameText;
 
 	void initVariables();
 	void initWindow();

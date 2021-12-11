@@ -3,122 +3,101 @@
 #include<windows.h>
 
 
+//@DESCR: Initialize player's parameters
+//@PARAM: None
+//@RETURN: None
 void Player::initVariables()
 {
-	this->movementSpeed = 5.f;
+	this->movementSpeed = SIZE_CELL;
 }
 
+//@DESCR: Initialize shape's parameters
+//@PARAM: None
+//@RETURN: None
 void Player::initShape()
 {
-	this->object.setColor(sf::Color::Green);
-	this->object.setSize(OBJECT_WIDTH, OBJECT_HEIGHT);
+	this->setColor(sf::Color::Green);
+	this->shape.setSize(sf::Vector2f(OBJECT_WIDTH, OBJECT_HEIGHT));
 }
 
+//@DESCR: Parameter constructor of Player
+//@PARAM: Player's coordinate (x, y)
+//@RETURN: None
 Player::Player(float x, float y)
 {
-	this->object.setPosition(x, y);
+	this->setPosition(roundf(x * SIZE_CELL), roundf(y * SIZE_CELL));
 
 	this->initVariables();
 	this->initShape();
 }
 
+//@DESCR: Destructor of Game
+//@PARAM: None
+//@RETURN: None
 Player::~Player()
 {
-
 }
 
-
-//Accessors
-MazeObject& Player::getObject()
+void Player::updateInput(sf::Keyboard::Key direction)
 {
-	return object;
-}
-
-
-
-void Player::updateInput()
-{
-		srand(time(0));
-
-		//Khởi tạo game
-		Clock clock;
-		float timer = 0, delay = 0.1;
-		float time = clock.getElapsedTime().asSeconds();
-		clock.restart();
-		timer += time;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) )
-		{
-			this->object.getShape().move(-this->movementSpeed, 0.f);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) )
-		{
-			this->object.getShape().move(this->movementSpeed, 0.f);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			this->object.getShape().move(0.f, -this->movementSpeed);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			this->object.getShape().move(0.f, this->movementSpeed);
-		}
-
-		if (timer > delay) { timer = 0; }
+	switch (direction)
+	{
+	case sf::Keyboard::Key::Left:
+		this->shape.move(sf::Vector2f(-movementSpeed, 0.f));
+		break;
+	case sf::Keyboard::Key::Right:
+		this->shape.move(sf::Vector2f(movementSpeed, 0.f));
+		break;
+	case sf::Keyboard::Key::Up:
+		this->shape.move(sf::Vector2f(0.f, -movementSpeed));
+		break;
+	case sf::Keyboard::Key::Down:
+		this->shape.move(sf::Vector2f(0.f, movementSpeed));
+		break;
+	}
 }
 
 
 //Hàm giữ cho đối tượng không rơi ra ngoài khung hình
 void Player::updateWindowBoundsCollision(const sf::RenderTarget* target)
 {
-	//Print Position
-	std::cout << this->object.getShape().getGlobalBounds().left << ' ' << this->object.getShape().getGlobalBounds().top << ' ' << this->object.getShape().getGlobalBounds().width << '\n';
-	std::cout << this->object.getShape().getPosition().x << ' ' << this->object.getShape().getPosition().y << '\n';
-	//Left
-	if (this->object.getShape().getGlobalBounds().left <= 0.f)
-		this->object.setPosition(0.f, this->object.getShape().getGlobalBounds().top);
-	//Right
-	if (this->object.getShape().getGlobalBounds().left + this->object.getShape().getGlobalBounds().width >= target->getSize().x)
-		this->object.setPosition(target->getSize().x - this->object.getShape().getGlobalBounds().width, this->object.getShape().getGlobalBounds().top);
-	//Top
-	if (this->object.getShape().getGlobalBounds().top <= 0.f)
-		this->object.setPosition(this->object.getShape().getGlobalBounds().left, 0.f);
-	//Bottom
-	if (this->object.getShape().getGlobalBounds().top + this->object.getShape().getGlobalBounds().height >= target->getSize().y)
-		this->object.setPosition(this->object.getShape().getGlobalBounds().left, target->getSize().y - this->object.getShape().getGlobalBounds().height);
+	// Debug Player's position
+	std::cout << this->shape.getGlobalBounds().left << ' '
+		<< this->shape.getGlobalBounds().top << ' '
+		<< this->shape.getGlobalBounds().width << ' '
+		<< this->shape.getGlobalBounds().height << '\n';
+
+	std::cout << this->getPositionX() << ' ' << this->getPositionY() << '\n';
+	
+	// Left
+	if (this->shape.getGlobalBounds().left <= 0.f)
+		this->setPosition(0.f, this->shape.getGlobalBounds().top);
+	// Right
+	if (this->shape.getGlobalBounds().left + this->shape.getGlobalBounds().width >= target->getSize().x)
+		this->setPosition(target->getSize().x - this->shape.getGlobalBounds().width, this->shape.getGlobalBounds().top);
+	// Top
+	if (this->shape.getGlobalBounds().top <= 0.f)
+		this->setPosition(this->shape.getGlobalBounds().left, 0.f);
+	// Bottom
+	if (this->shape.getGlobalBounds().top + this->shape.getGlobalBounds().height >= target->getSize().y)
+		this->setPosition(this->shape.getGlobalBounds().left, target->getSize().y - this->shape.getGlobalBounds().height);
 }
 
-void Player::update(const sf::RenderTarget* target)
+void Player::update(const sf::RenderTarget* target, sf::Keyboard::Key direction)
 {
-	this->updateInput();
+	this->updateInput(direction);
 
 	//Window bounds collision
 	this->updateWindowBoundsCollision(target);
 
 }
 
-void Player::updateCorrectPosition(int direction) {
-	float X = object.getPositionX();
-	float Y = object.getPositionY();
-
-	if (direction == sf::Keyboard::Left)
-		X = floor(X / 50.f) * 50.f;
-	if (direction == sf::Keyboard::Right)
-		X = ceil(X / 50.f) * 50.f;
-	if (direction == sf::Keyboard::Up)
-		Y = floor(Y / 50.f) * 50.f;
-	if (direction == sf::Keyboard::Down)
-		Y = ceil(Y / 50.f) * 50.f;
-
-	object.setPosition(X, Y);
-}
-
 void Player::render(sf::RenderTarget* target)
 {
-	target->draw(this->object.getShape());
+	target->draw(this->shape);
 }
 
 void Player::setLocaStart(int i, int j) {
-	this->object.setPosition((i)*SIZE_CELL, (j)*SIZE_CELL);
-	//this->object.getShape().move(x * 1.0f, y * 1.0f);
+	this->setPosition((i)*SIZE_CELL, (j)*SIZE_CELL);
+	//this->move(x * 1.0f, y * 1.0f);
 }

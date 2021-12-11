@@ -17,11 +17,12 @@ protected:
 
 	MazeCoordinate curMazePosition;
 
-	void initVariables();
-	void initShape();
+protected:
+	virtual void initVariables();
+	virtual void initShape();
 
+public:
 	//Getter - Lấy tọa độ trong cửa sổ window
-	sf::RectangleShape& getShape();
 	float getPositionX() const;
 	float getPositionY() const;
 
@@ -32,14 +33,9 @@ protected:
 	void setOutLine(float, sf::Color);
 public:
 	MazeObject(float x = 0.f, float y = 0.f);
-
 	
 	//Cập nhật, dựng hình
 	void update(const sf::RenderTarget* target);
 	void render(sf::RenderTarget* target);
-
-public:
-	bool isInMazeObject(const sf::Vector2f& cord) const;
-	bool checkCollision(const MazeObject& other, bool firstCheck = true) const;
 };
 

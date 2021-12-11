@@ -11,13 +11,12 @@ using namespace sf;
 #include "DefinedVariables.hpp"
 #include "MazeObject.hpp"
 
-class Player
+class Player : public MazeObject
 {
 private:
-	MazeObject object;
-
 	float movementSpeed;
 
+protected:
 	void initVariables();
 	void initShape();
 
@@ -25,14 +24,10 @@ public:
 	Player(float x = 0.f, float y = 0.f);
 	virtual ~Player();
 
-	//Accessors
-	MazeObject& getObject();
-
 	//Functions
-	void updateInput();
+	void updateInput(sf::Keyboard::Key direction);
 	void updateWindowBoundsCollision(const sf::RenderTarget* target);
-	void update(const sf::RenderTarget* target);
-	void updateCorrectPosition(int direction);
+	void update(const sf::RenderTarget* target, sf::Keyboard::Key direction);
 	void render(sf::RenderTarget* target);
 
 

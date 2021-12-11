@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 
+//@DESCR: Parameters of screen
 #define SCREEN_HEIGHT 650
 #define SCREEN_WIDTH 1050
 #define SIZE_ROW 13
