@@ -6,8 +6,8 @@
 #include <SFML/Network.hpp>
 #include "DefinedVariables.hpp"
 
-#include "MazeObject.h"
-#include "Coordinate.h"
+#include "MazeObject.hpp"
+#include "Coordinate.hpp"
 
 using namespace std;
 
@@ -64,7 +64,6 @@ public:
 	//Tells us if the Room is in the maze
 	bool inMaze = false;
 
-
 	//Rooms adjacent to this room
 	std::vector<std::shared_ptr<Room>> adjRooms;
 
@@ -73,7 +72,6 @@ public:
 
 	//Rooms that are connected to the this room
 	std::vector<std::shared_ptr<Room>> connectRooms;
-
 
 	//MazeObject vừa là hình vừa là Texture.
 	sf::Sprite curRoomTexture;
@@ -84,7 +82,9 @@ public:
 	~Room();
 
 	//Create Room Rect
-	void MakeRoomRect(int& xOffset, int& yOffset, int& xSplits, int& ySplits, const int& mazeWidth, const int& mazeHeight);
+	void MakeRoomRect(int& xOffset, int& yOffset, 
+					  int& xSplits, int& ySplits, 
+					  const int& mazeWidth, const int& mazeHeight);
 	
 	void MakeRoomRect();
 

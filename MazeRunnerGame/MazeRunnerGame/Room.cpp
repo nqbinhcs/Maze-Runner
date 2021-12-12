@@ -1,4 +1,6 @@
-#include "Room.h"
+﻿#include "Room.hpp"
+#include <windows.h>
+#include <stdio.h>
 
 sf::Texture Room::roomTextures[16];
 bool Room::isTextureNull = true;
@@ -50,11 +52,16 @@ Room::~Room()
 {
 }
 
-
+//@DESCR: Sưt position.
+//@PARAM: None
+//@RETURN: None
 void Room::MakeRoomRect(int& xOffset, int& yOffset, int& xSplits, int& ySplits, const int& mazeWidth, const int& mazeHeight)
 {
-	curRoomTexture.setPosition(xOffset + (int)((roomPos.getX()) * ceil(mazeWidth / xSplits)), yOffset + (int)((roomPos.getY()) * ceil(mazeHeight / ySplits)));
-	curRoomTexture.setOrigin((int)ceil(mazeWidth / (xSplits)), (int)ceil(mazeHeight / (ySplits)));
+	curRoomTexture.setPosition(xOffset + (int)((roomPos.getX()) * ceil(mazeWidth / xSplits)),
+							   yOffset + (int)((roomPos.getY()) * ceil(mazeHeight / ySplits)));
+
+	curRoomTexture.setOrigin((int)ceil(mazeWidth / (xSplits)),
+							(int)ceil(mazeHeight / (ySplits)));
 }
 
 void Room::MakeRoomRect() {
@@ -62,6 +69,9 @@ void Room::MakeRoomRect() {
 	curRoomTexture.setOrigin(16, 16);
 }
 
+//@DESCR: NOT UNDERSTAND,
+//@PARAM: None
+//@RETURN: None
 directions Room::CheckAdjRoomDir(Room& room)
 {
 	directions dir;
@@ -83,37 +93,50 @@ directions Room::CheckAdjRoomDir(Room& room)
 	return dir;
 }
 
+//@DESCR: Set images of Roo,
+//@PARAM: None
+//@RETURN: None
 void Room::AssignRoomTextures()
 {
 	curRoomTexture.setTexture(roomTextures[wallDirBit]);
 }
 
+//@DESCR: Remove wall direction. (not understand)
+//@PARAM: shared_ptr<Room>
+//@RETURN: None
 void Room::RemoveWallDirection(std::shared_ptr<Room>& roomToConnectPtr)
 {
 	directions dirToRemove = CheckAdjRoomDir(*roomToConnectPtr);
 	wallDirBit -= dirToRemove;
 }
 
+//@DESCR: Connect room this with room other.
+//@PARAM: shared_ptr<Room>
+//@RETURN: None
 void Room::ConnectRoom(std::shared_ptr<Room>& roomToConnectPtr)
 {
 	connectRooms.push_back(roomToConnectPtr);
 	RemoveWallDirection(roomToConnectPtr);
 }
 
+//@DESCR: Draw cell(room) on window.
+//@PARAM: target(mean window), delay: const 0
+//@RETURN: None
 void Room::AddRoomToRenderer(int delay, sf::RenderWindow& target)
 {
-	//roomRender là màn hình mình vẽ lên
-	//curRoomTexture là hình vẽ của nó
-	//roomRect là hình dạng của nó
-	if (delay > 0)
-	{
+	/*if (delay > 0)
+	{*/
 		sf::sleep(sf::seconds(delay));
 		target.draw(curRoomTexture);
-	}
+	/*}*/
 }
 
+//@DESCR: Draw cell(room) on window.
+//@PARAM: target(mean window).
+//@RETURN: None
 void Room::AddRoomToRenderer(sf::RenderWindow& target)
 {
-	target.draw(curRoomTexture);
-	//AddRoomToRenderer(1, target);
+	//Sleep(2);
+	//target.draw(curRoomTexture);
+	AddRoomToRenderer(0, target);
 }

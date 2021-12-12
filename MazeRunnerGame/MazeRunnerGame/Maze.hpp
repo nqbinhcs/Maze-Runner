@@ -1,5 +1,5 @@
 #include <random>
-#include "Room.h"
+#include "Room.hpp"
 //#include "Coordinate.hpp"
 #pragma once
 
@@ -48,11 +48,7 @@ public:
 	MazeCoordinate finalPos;
 
 	//Constructors and Destructors
-	Maze(int xCount, int yCount, 
-		int xOffset, int yOffset,
-		int xSize, int ySize,
-		int level, bool showCreation,
-		sf::RenderWindow& window);
+	Maze(int xCount, int yCount, int xOffset, int yOffset, int xSize, int ySize, int level, bool showCreation, sf::RenderWindow& window);
 	Maze(const Maze& other);
 	Maze();
 	~Maze();

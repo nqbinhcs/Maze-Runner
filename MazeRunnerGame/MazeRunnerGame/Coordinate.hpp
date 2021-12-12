@@ -1,7 +1,7 @@
 #pragma once
 class MazeCoordinate
 {
-public:
+private:
 	int x, y;
 public:
 	MazeCoordinate(int x, int y);

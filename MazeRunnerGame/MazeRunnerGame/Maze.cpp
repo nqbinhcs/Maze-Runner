@@ -1,11 +1,6 @@
-#include "Maze.h"
+#include "Maze.hpp"
 
-Maze::Maze(int xCount, int yCount,
-	int xOffset, int yOffset, 
-	int xSize, int ySize, 
-	int level,
-	bool showCreation,
-	sf::RenderWindow& window) :
+Maze::Maze(int xCount, int yCount, int xOffset, int yOffset, int xSize, int ySize, int level, bool showCreation, sf::RenderWindow& window) :
 	mazeX_RoomCount(xCount), 
 	mazeY_RoomCount(yCount),
 	mazeX_Offset(xOffset), 
@@ -53,8 +48,9 @@ Maze::~Maze()
 }
 
 
-
-//Resets the Maze based off current parameters
+//@DESCR: Resets the Maze based off current parameters
+//@PARAM: None.
+//@RETURN: None
 void Maze::ResetMaze(sf::RenderWindow& window)
 {
 	//Clear all previous vectors
@@ -62,14 +58,14 @@ void Maze::ResetMaze(sf::RenderWindow& window)
 	obstacleRooms.clear();
 	objectsInMaze.clear();
 
-	//Create Maze and Items in Maze
+	//Create Maze.
 	CreateRooms(window);
 	CarveMaze(window);
-
-	//CreateKey();
 }
 
-//Sets the maze based off of input parameters
+//@DESCR: Sets the maze based off of input parameters
+//@PARAM: None.
+//@RETURN: None
 void Maze::SetMaze(int x, int y, int level, sf::RenderWindow& window)
 {
 	mazeX_RoomCount = x;
@@ -78,7 +74,9 @@ void Maze::SetMaze(int x, int y, int level, sf::RenderWindow& window)
 	ResetMaze(window);
 }
 
-//Sets the maze up for the next level
+//@DESCR: Sets the maze up for the next level
+//@PARAM: None.
+//@RETURN: None
 void Maze::NextLevelMaze(sf::RenderWindow& window)
 {
 	mazeLevel++;
@@ -87,27 +85,35 @@ void Maze::NextLevelMaze(sf::RenderWindow& window)
 	ResetMaze(window);
 }
 
-//Checks what point is in the direction dir relative to the Coordinate pos
+//@DESCR: Checks what point is in the direction dir relative to the Coordinate pos
+//@PARAM: None.
+//@RETURN: None
 void Maze::ChangePosition(MazeCoordinate& pos, directions dir)
 {
 	switch (dir)
 	{
 	case UP:
-		pos.y--;
+		pos.setY(pos.getY() - 1);
+		//pos.y--;
 		break;
 	case LEFT:
-		pos.x--;
+		pos.setX(pos.getX() - 1);
+		//pos.x--;
 		break;
 	case DOWN:
-		pos.y++;
+		pos.setY(pos.getY() + 1);
+		//pos.y++;
 		break;
 	case RIGHT:
-		pos.x++;
+		pos.setX(pos.getX() + 1);
+		//pos.x++;
 		break;
 	}
 }
 
-//Creates all the rooms and connects them
+//@DESCR: Creates all the rooms and connects them
+//@PARAM: None.
+//@RETURN: None
 void Maze::CreateRooms(sf::RenderWindow& window)
 {
 	directions allDir[] = { UP, LEFT, DOWN, RIGHT };
@@ -120,7 +126,7 @@ void Maze::CreateRooms(sf::RenderWindow& window)
 			std::shared_ptr<Room> newPtr(new Room(MazeCoordinate(x, y)));
 
 			newPtr->MakeRoomRect(mazeX_Offset, mazeY_Offset, mazeX_RoomCount, mazeY_RoomCount, mazeX_Size, mazeY_Size);
-			newPtr->AddRoomToRenderer(window);
+			//newPtr->AddRoomToRenderer(window);
 			allRooms.push_back(newPtr);
 		}
 	}
@@ -145,7 +151,9 @@ void Maze::CreateRooms(sf::RenderWindow& window)
 		});
 }
 
-//Create a maze using a backtracking algorithm
+//@DESCR: Create a maze using a backtracking algorithm
+//@PARAM: None.
+//@RETURN: shared_ptr<Room>
 void Maze::CarveMaze(sf::RenderWindow& window)
 {
 	//This vector acts as a stack that contains the current maze path
@@ -208,8 +216,9 @@ void Maze::CarveMaze(sf::RenderWindow& window)
 			curRoomPtr->AssignRoomTextures();
 			nextRoomPtr->AssignRoomTextures();
 
-			curRoomPtr->AddRoomToRenderer(window);
-			nextRoomPtr->AddRoomToRenderer(window);
+			//Don't draw step by step.
+			//curRoomPtr->AddRoomToRenderer(window);
+			//nextRoomPtr->AddRoomToRenderer(window);
 
 			//Removes the next room from the available rooms for the current room 
 			curRoomPtr->availRooms.erase(std::find(begin(curRoomPtr->availRooms), end(curRoomPtr->availRooms), nextRoomPtr));
@@ -229,7 +238,6 @@ void Maze::CarveMaze(sf::RenderWindow& window)
 	std::shared_ptr<Room> finalRoom = FindRoomByPos(finalPos);
 	//mazeDoorPtr = std::shared_ptr<MazeDoor>(new MazeDoor(finalRoom));
 	finalRoom->roomTypes.push_back(END);
-
 }
 
 //Creates objects in the maze rooms designated during the maze creation. Only called if difficulty is greater than 0
@@ -255,7 +263,9 @@ void Maze::CarveMaze(sf::RenderWindow& window)
 //		});
 //}
 
-//Find a room by the position
+//@DESCR: Find a room by the position
+//@PARAM: Base on position of room.
+//@RETURN: shared_ptr<Room>
 std::shared_ptr<Room> Maze::FindRoomByPos(MazeCoordinate pos)
 {
 	auto iter = (std::find_if(begin(allRooms), end(allRooms), [&](std::shared_ptr<Room> checkRoom) {
@@ -271,12 +281,17 @@ std::shared_ptr<Room> Maze::FindRoomByPos(MazeCoordinate pos)
 	}
 }
 
-//Adds an outline of the maze area to the renderer
+//@DESCR: None
+//@PARAM: None
+//@RETURN: None
 void Maze::MazeOutline(sf::RenderTarget* target)
 {
 	mazeRect.update(target);
 }
 
+//@DESCR: Render maze on window.  Draw each cell(room)
+//@PARAM: delay const 0.
+//@RETURN: None
 void Maze::AddMazeRoomsToRenderer(int delay, sf::RenderWindow& window)
 {
 	for_each(begin(allRooms), end(allRooms), [&](std::shared_ptr<Room> curRoomPtr)

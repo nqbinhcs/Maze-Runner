@@ -15,6 +15,7 @@
 #include "Player.hpp"
 #include "DefinedVariables.hpp"
 #include "TileMap.h"
+#include "Maze.hpp"
 
 using namespace sf;
 class Game
@@ -26,8 +27,9 @@ private:
 	bool m_EndGame;
 	sf::Event m_Event;
 
+	shared_ptr<Maze> curMaze;
 	Player m_Player;
-	TileMap m_Map;
+	//TileMap m_Map;
 	int m_Points;
 
 	sf::Font m_Font;

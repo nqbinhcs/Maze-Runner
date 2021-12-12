@@ -55,10 +55,10 @@ void Game::initText()
 //@PARAM: None
 //@RETURN: None
 void Game::initMap() {
-	this->m_Map.creatGameMap();
-	this->m_Map.setdisplayMap();
+	//this->m_Map.creatGameMap();
+	//this->m_Map.setdisplayMap();
 	//Set location of m_Player
-	this->m_Player.setLocaStart(this->m_Map.getColStart(), this->m_Map.getRowStart());
+	//this->m_Player.setLocaStart(this->m_Map.getColStart(), this->m_Map.getRowStart());
 }
 
 //@DESCR: Constructor of Game
@@ -70,7 +70,10 @@ Game::Game()
 	this->initWindow();
 	this->initFonts();
 	this->initText();
-	this->initMap();
+	//this->initMap();
+	curMaze = std::shared_ptr<Maze>(new Maze(MAZE_X, MAZE_Y,
+		OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_WIDTH,
+		SCREEN_MAZE_HEIGHT, 1, false, *m_pWindow));
 }
 
 //@DESCR: Destructor of Game
@@ -164,12 +167,13 @@ void Game::renderGui(sf::RenderTarget* target)
 //@RETURN: None
 void Game::render()
 {
-	this->m_pWindow->clear();
+	m_pWindow->clear(sf::Color(255, 255, 255));
+	//this->m_pWindow->clear();
 
-	this->m_Map.drawMap(this->m_pWindow, this->m_Player);
+	//this->m_Map.drawMap(this->m_pWindow, this->m_Player);
 	
 	//Render m_Player's state
-	this->m_Player.render(this->m_pWindow);
+	//this->m_Player.render(this->m_pWindow);
 	
 	//Render Gui
 	this->renderGui(this->m_pWindow);
@@ -177,6 +181,11 @@ void Game::render()
 	//Render end text
 	if (this->m_EndGame == true)
 		this->m_pWindow->draw(this->m_EndGameText);
+
+	//Use it, command:
+	//Game.cpp: 173, 176, 73, (58 to 61), 
+	//Game.hpp: 32
+	curMaze->AddMazeRoomsToRenderer(0, *m_pWindow);
 
 	this->m_pWindow->display();
 }
