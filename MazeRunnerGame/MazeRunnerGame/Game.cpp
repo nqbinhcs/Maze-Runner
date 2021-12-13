@@ -6,7 +6,7 @@
 void Game::initVariables()
 {
 	this->m_EndGame = false;
-	this->m_Points = 0;
+	this->m_Time = 0;
 }
 
 //@DESCR: Initialize parameter of Game's screen
@@ -193,12 +193,39 @@ void Game::render()
 	//Use it, command:
 	//Game.cpp: 173, 176, 73, (58 to 61), 
 	//Game.hpp: 32
+
+	//Render Maze
 	curMaze->AddMazeRoomsToRenderer(0, *m_pWindow);
 
-	//Render screen
-	//m_pGameOver->draw(*m_pWindow);
-	//m_pNextStage->draw(*m_pWindow);
-	//m_pLevelComplete->draw(*m_pWindow, 10);
-
+	//Render State Screen
+	//renderDisplayStates(GameOverState);
+	//renderDisplayStates(NextStageState);
+	renderDisplayStates(LevelCompleteState);
+	
 	this->m_pWindow->display();
 }
+
+//@DESCR: Render Game's particular state such as: GameOver, NextStage, LevelComplete
+//@PARAM: None
+//@RETURN: Non
+void Game::renderDisplayStates(GameState state)
+{
+	if (state == LevelCompleteState)
+	{
+		m_pLevelComplete->draw(*m_pWindow, m_Time);
+		return;
+	}
+
+	if (state == GameOverState)
+	{
+		m_pGameOver->draw(*m_pWindow);
+		return;
+	}
+
+	if (state == NextStageState)
+	{
+		m_pNextStage->draw(*m_pWindow);
+		return;
+	}
+}
+

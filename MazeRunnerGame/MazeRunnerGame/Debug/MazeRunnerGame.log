@@ -1,3 +1,8 @@
 ﻿  Game.cpp
 C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.h(1,17): warning C4081: expected '('; found 'newline'
+  main.cpp
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.h(1,17): warning C4081: expected '('; found 'newline'
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\main.cpp(7,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\main.cpp(12,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
   MazeRunnerGame.vcxproj -> C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\Debug\MazeRunnerGame.exe

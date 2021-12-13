@@ -22,7 +22,7 @@
 
 using namespace sf;
 
-enum GameState { MenuState, InGameState, LevelCompleteState, GameOverState };
+enum GameState { MenuState, InGameState, LevelCompleteState, GameOverState, NextStageState};
 
 class Game
 {
@@ -41,7 +41,6 @@ private:
 	shared_ptr<NextStage> m_pNextStage;
 	shared_ptr<LevelComplete> m_pLevelComplete;
 
-
 	//In Game
 	shared_ptr<Maze> curMaze;
 	Player m_Player;
@@ -51,6 +50,9 @@ private:
 	sf::Font m_Font;
 	sf::Text m_GuiText;
 	sf::Text m_EndGameText;
+
+	//stat
+	int m_Time; //total times
 
 	void initVariables();
 	void initWindow();
@@ -79,4 +81,6 @@ public:
 
 	void renderGui(sf::RenderTarget* target);
 	void render();
+
+	void renderDisplayStates(GameState);
 };
