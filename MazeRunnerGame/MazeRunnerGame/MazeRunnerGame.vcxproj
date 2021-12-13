@@ -146,25 +146,35 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Coordinate.cpp" />
+    <ClCompile Include="Display.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="LevelComplete.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="NextStage.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="MazeObject.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Coordinate.hpp" />
     <ClInclude Include="DefinedVariables.hpp" />
+    <ClInclude Include="Display.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="GameOver.hpp" />
+    <ClInclude Include="LevelComplete.hpp" />
     <ClInclude Include="Maze.hpp" />
     <ClInclude Include="MazeCreationInterface.hpp" />
     <ClInclude Include="MazeFactory.hpp" />
+    <ClInclude Include="NextStage.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="MazeObject.hpp" />
     <ClInclude Include="Room.hpp" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Text.hpp" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>

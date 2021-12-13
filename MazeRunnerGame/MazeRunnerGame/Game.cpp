@@ -18,6 +18,12 @@ void Game::initWindow()
 	this->m_pWindow = new sf::RenderWindow(this->m_VideoMode, NAME_GAME, sf::Style::Close | sf::Style::Titlebar);
 	this->m_pWindow->setFramerateLimit(60);
 
+
+	//init display
+	this->m_pGameOver = std::shared_ptr<GameOver>(new GameOver());
+	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
+	this->m_pLevelComplete = std::shared_ptr<LevelComplete>(new LevelComplete());
+
 	// Turn off key repetition
 	//this->m_pWindow->setKeyRepeatEnabled(0);
 }
@@ -162,6 +168,7 @@ void Game::renderGui(sf::RenderTarget* target)
 	target->draw(this->m_GuiText);
 }
 
+
 //@DESCR: Render Game's state
 //@PARAM: None
 //@RETURN: None
@@ -181,11 +188,17 @@ void Game::render()
 	//Render end text
 	if (this->m_EndGame == true)
 		this->m_pWindow->draw(this->m_EndGameText);
-
+	
+	
 	//Use it, command:
 	//Game.cpp: 173, 176, 73, (58 to 61), 
 	//Game.hpp: 32
 	curMaze->AddMazeRoomsToRenderer(0, *m_pWindow);
+
+	//Render screen
+	//m_pGameOver->draw(*m_pWindow);
+	//m_pNextStage->draw(*m_pWindow);
+	//m_pLevelComplete->draw(*m_pWindow, 10);
 
 	this->m_pWindow->display();
 }
