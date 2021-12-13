@@ -197,10 +197,10 @@ void Game::render()
 	//Render Maze
 	curMaze->AddMazeRoomsToRenderer(0, *m_pWindow);
 
-	//Render State Screen
+	//Render State Screen -- For testing purposes, you should uncomment individual line to see clearly
 	//renderDisplayStates(GameOverState);
 	//renderDisplayStates(NextStageState);
-	renderDisplayStates(LevelCompleteState);
+	//renderDisplayStates(LevelCompleteState);
 	
 	this->m_pWindow->display();
 }
