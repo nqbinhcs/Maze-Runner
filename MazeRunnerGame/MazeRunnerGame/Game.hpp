@@ -16,8 +16,14 @@
 #include "DefinedVariables.hpp"
 #include "TileMap.h"
 #include "Maze.hpp"
+#include "GameOver.hpp"
+#include "NextStage.hpp"
+#include "LevelComplete.hpp"
 
 using namespace sf;
+
+enum GameState { MenuState, InGameState, LevelCompleteState, GameOverState, NextStageState};
+
 class Game
 {
 public:
@@ -27,14 +33,26 @@ private:
 	bool m_EndGame;
 	sf::Event m_Event;
 
+	//Game State
+	GameState m_State;
+
+	//Display
+	shared_ptr<GameOver> m_pGameOver;
+	shared_ptr<NextStage> m_pNextStage;
+	shared_ptr<LevelComplete> m_pLevelComplete;
+
+	//In Game
 	shared_ptr<Maze> curMaze;
 	Player m_Player;
-	//TileMap m_Map;
 	int m_Points;
 
+	//Gui
 	sf::Font m_Font;
 	sf::Text m_GuiText;
 	sf::Text m_EndGameText;
+
+	//stat
+	int m_Time; //total times
 
 	void initVariables();
 	void initWindow();
@@ -56,8 +74,6 @@ public:
 	const bool running() const;
 	void pollEvents();
 
-	/*void spawnSwagBalls();
-	const int randBallType() const;*/
 	void updatePlayer();
 	//void updateCollision();
 	void updateGui();
@@ -65,4 +81,6 @@ public:
 
 	void renderGui(sf::RenderTarget* target);
 	void render();
+
+	void renderDisplayStates(GameState);
 };
