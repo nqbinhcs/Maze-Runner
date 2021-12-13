@@ -1,31 +1,8 @@
 ﻿  Game.cpp
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.h(1,17): warning C4081: expected '('; found 'newline'
-  Maze.cpp
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.cpp(12,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.cpp(12,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  MazeObject.cpp
-  Player.cpp
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Player.cpp(101,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Player.cpp(101,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Room.cpp
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Room.cpp(61,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Room.cpp(60,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Room.cpp(64,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Room.cpp(63,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Room.cpp(129,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  TileMap.cpp
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.h(1,17): warning C4081: expected '('; found 'newline'
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.cpp(196,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.cpp(196,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.cpp(202,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.cpp(202,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.cpp(208,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.cpp(208,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.cpp(215,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.cpp(215,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.h(1,17): warning C4081: expected '('; found 'newline'
   main.cpp
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.h(1,17): warning C4081: expected '('; found 'newline'
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\main.cpp(7,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\main.cpp(12,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.h(1,17): warning C4081: expected '('; found 'newline'
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\main.cpp(7,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\main.cpp(12,30): warning C4305: 'initializing': truncation from 'double' to 'float'
   Generating Code...
-  MazeRunnerGame.vcxproj -> D:\Các môn học\LTHĐT\MazeGame\MazeRunnerGame\MazeRunnerGame\Debug\MazeRunnerGame.exe
+  MazeRunnerGame.vcxproj -> C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\Debug\MazeRunnerGame.exe
