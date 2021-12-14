@@ -101,7 +101,7 @@ public:
 	void MazeOutline(sf::RenderTarget* target);
 
 	//Adds each room and an outline to the renderer
-	void AddMazeRoomsToRenderer(int delay, sf::RenderWindow& window);
+	void AddMazeRoomsToRenderer(sf::RenderWindow& window);
 
 	//Advances each item one increment in its own cycle of behavior
 
