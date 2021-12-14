@@ -123,7 +123,9 @@ void Maze::CreateRooms(sf::RenderWindow& window)
 	{
 		for (int y = 0; y < mazeY_RoomCount; y++)
 		{
-			std::shared_ptr<Room> newPtr(new Room(MazeCoordinate(x, y)));
+			int widthRoom = (int)ceil(mazeX_Size / (mazeX_RoomCount));
+			int heightRoom = (int)ceil(mazeY_Size / (mazeY_RoomCount));
+			std::shared_ptr<Room> newPtr(new Room(MazeCoordinate(x, y), widthRoom, heightRoom));
 
 			newPtr->MakeRoomRect(mazeX_Offset, mazeY_Offset, mazeX_RoomCount, mazeY_RoomCount, mazeX_Size, mazeY_Size);
 			//newPtr->AddRoomToRenderer(window);
@@ -292,11 +294,11 @@ void Maze::MazeOutline(sf::RenderTarget* target)
 //@DESCR: Render maze on window.  Draw each cell(room)
 //@PARAM: delay const 0.
 //@RETURN: None
-void Maze::AddMazeRoomsToRenderer(int delay, sf::RenderWindow& window)
+void Maze::AddMazeRoomsToRenderer(sf::RenderWindow& window)
 {
 	for_each(begin(allRooms), end(allRooms), [&](std::shared_ptr<Room> curRoomPtr)
 		{
-			curRoomPtr->AddRoomToRenderer(delay, window);
+			curRoomPtr->AddRoomToRenderer(window);
 		});
 	//MazeOutline();
 }
