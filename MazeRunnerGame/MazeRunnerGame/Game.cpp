@@ -195,7 +195,7 @@ void Game::render()
 	//Game.hpp: 32
 
 	//Render Maze
-	curMaze->AddMazeRoomsToRenderer(0, *m_pWindow);
+	curMaze->AddMazeRoomsToRenderer(*m_pWindow);
 
 	//Render State Screen -- For testing purposes, you should uncomment individual line to see clearly
 	//renderDisplayStates(GameOverState);
