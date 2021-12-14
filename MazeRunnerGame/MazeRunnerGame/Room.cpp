@@ -1,41 +1,45 @@
-﻿#include "Room.hpp"
+#include "Room.hpp"
 #include <windows.h>
 #include <stdio.h>
+#include <iostream>
 
-sf::Texture Room::roomTextures[16];
+sf::Image Room::roomImages[16];
 bool Room::isTextureNull = true;
 
-Room::Room(MazeCoordinate pos) : roomPos(pos)
+Room::Room(MazeCoordinate pos, int widthRoom, int heightRoom) : roomPos(pos), widthRoom(widthRoom), heightRoom(heightRoom)
 {
 	if (Room::isTextureNull == true)
 	{
 		Room::isTextureNull = false;
 
-		Room::roomTextures[0b0000].loadFromFile(IMG_0BORDER); 	//None
-		Room::roomTextures[0b0001].loadFromFile(IMG_1BORDER_D); 	//Down
-		Room::roomTextures[0b0010].loadFromFile(IMG_1BORDER_L); //Left
-		Room::roomTextures[0b0100].loadFromFile(IMG_1BORDER_U);	//Up
-		Room::roomTextures[0b1000].loadFromFile(IMG_1BORDER_R);
+		Room::roomImages[0b0000].loadFromFile(IMG_0BORDER); 	//None
+		Room::roomImages[0b0001].loadFromFile(IMG_1BORDER_D); 	//Down
+		Room::roomImages[0b0010].loadFromFile(IMG_1BORDER_L);	//Left
+		Room::roomImages[0b0100].loadFromFile(IMG_1BORDER_U);	//Up
+		Room::roomImages[0b1000].loadFromFile(IMG_1BORDER_R);
 
 
-		Room::roomTextures[0b0011].loadFromFile(IMG_2BORDER_DL);
-		Room::roomTextures[0b0101].loadFromFile(IMG_2BORDER_DU);
-		Room::roomTextures[0b1001].loadFromFile(IMG_2BORDER_DR);
-		Room::roomTextures[0b0110].loadFromFile(IMG_2BORDER_LU);
-		Room::roomTextures[0b1010].loadFromFile(IMG_2BORDER_LR);
-		Room::roomTextures[0b1100].loadFromFile(IMG_2BORDER_UR);
+		Room::roomImages[0b0011].loadFromFile(IMG_2BORDER_DL);
+		Room::roomImages[0b0101].loadFromFile(IMG_2BORDER_DU);
+		Room::roomImages[0b1001].loadFromFile(IMG_2BORDER_DR);
+		Room::roomImages[0b0110].loadFromFile(IMG_2BORDER_LU);
+		Room::roomImages[0b1010].loadFromFile(IMG_2BORDER_LR);
+		Room::roomImages[0b1100].loadFromFile(IMG_2BORDER_UR);
 
 
-		Room::roomTextures[0b0111].loadFromFile(IMG_3BORDER_DLU);
-		Room::roomTextures[0b1011].loadFromFile(IMG_3BORDER_DLR);
-		Room::roomTextures[0b1101].loadFromFile(IMG_3BORDER_DUR);
-		Room::roomTextures[0b1110].loadFromFile(IMG_3BORDER_LUR);
+		Room::roomImages[0b0111].loadFromFile(IMG_3BORDER_DLU);
+		Room::roomImages[0b1011].loadFromFile(IMG_3BORDER_DLR);
+		Room::roomImages[0b1101].loadFromFile(IMG_3BORDER_DUR);
+		Room::roomImages[0b1110].loadFromFile(IMG_3BORDER_LUR);
 
 
-		Room::roomTextures[0b1111].loadFromFile(IMG_4BORDER);
+		Room::roomImages[0b1111].loadFromFile(IMG_4BORDER);
 
 	}
-	this->curRoomTexture.setTexture(Room::roomTextures[0b1111]);
+	sf::Image newImage;
+	newImage.create(widthRoom, heightRoom, sf::Color::Black);
+	resizeImage(roomImages[0b1111], newImage);
+	curRoomTexture.loadFromImage(newImage);
 }
 
 Room::Room(const Room& other) :
@@ -52,21 +56,22 @@ Room::~Room()
 {
 }
 
-//@DESCR: Sưt position.
+//@DESCR: Set position.
 //@PARAM: None
 //@RETURN: None
 void Room::MakeRoomRect(int& xOffset, int& yOffset, int& xSplits, int& ySplits, const int& mazeWidth, const int& mazeHeight)
 {
-	curRoomTexture.setPosition(xOffset + (int)((roomPos.getX()) * ceil(mazeWidth / xSplits)),
-							   yOffset + (int)((roomPos.getY()) * ceil(mazeHeight / ySplits)));
-
-	curRoomTexture.setOrigin((int)ceil(mazeWidth / (xSplits)),
-							(int)ceil(mazeHeight / (ySplits)));
+	positionX = xOffset + (int)((roomPos.getX()) * ceil(mazeWidth / xSplits));
+	positionY = yOffset + (int)((roomPos.getY()) * ceil(mazeHeight / ySplits));
+	widthRoom = (int)ceil(mazeWidth / (xSplits));
+	heightRoom = (int)ceil(mazeHeight / (ySplits));
 }
 
+//@DESCR: Use test each Room.
+//@PARAM: None
+//@RETURN: None
 void Room::MakeRoomRect() {
-	curRoomTexture.setPosition(100, 100);
-	curRoomTexture.setOrigin(16, 16);
+	//curRoomTexture.setPosition(100, 100);
 }
 
 //@DESCR: NOT UNDERSTAND,
@@ -98,7 +103,10 @@ directions Room::CheckAdjRoomDir(Room& room)
 //@RETURN: None
 void Room::AssignRoomTextures()
 {
-	curRoomTexture.setTexture(roomTextures[wallDirBit]);
+	sf::Image newImage;
+	newImage.create(widthRoom, heightRoom, sf::Color::Black);
+	resizeImage(roomImages[wallDirBit], newImage);
+	curRoomTexture.loadFromImage(newImage);
 }
 
 //@DESCR: Remove wall direction. (not understand)
@@ -120,23 +128,29 @@ void Room::ConnectRoom(std::shared_ptr<Room>& roomToConnectPtr)
 }
 
 //@DESCR: Draw cell(room) on window.
-//@PARAM: target(mean window), delay: const 0
-//@RETURN: None
-void Room::AddRoomToRenderer(int delay, sf::RenderWindow& target)
-{
-	/*if (delay > 0)
-	{*/
-		sf::sleep(sf::seconds(delay));
-		target.draw(curRoomTexture);
-	/*}*/
-}
-
-//@DESCR: Draw cell(room) on window.
 //@PARAM: target(mean window).
 //@RETURN: None
-void Room::AddRoomToRenderer(sf::RenderWindow& target)
+void Room::AddRoomToRenderer(sf::RenderWindow& window)
 {
-	//Sleep(2);
-	//target.draw(curRoomTexture);
-	AddRoomToRenderer(0, target);
+	sf::Sprite curRoomSprite(curRoomTexture);
+	curRoomSprite.setPosition(positionX, positionY);
+	window.draw(curRoomSprite);
+}
+
+//@DESCR: Use resize images.
+//@PARAM: None.
+//@RETURN: None
+void Room::resizeImage(const sf::Image& originalImage, sf::Image& resizedImage)
+{
+	const sf::Vector2u originalImageSize{ originalImage.getSize() };
+	const sf::Vector2u resizedImageSize{ resizedImage.getSize() };
+	for (unsigned int y{ 0u }; y < resizedImageSize.y; ++y)
+	{
+		for (unsigned int x{ 0u }; x < resizedImageSize.x; ++x)
+		{
+			unsigned int origX{ static_cast<unsigned int>(static_cast<double>(x) / resizedImageSize.x * originalImageSize.x) };
+			unsigned int origY{ static_cast<unsigned int>(static_cast<double>(y) / resizedImageSize.y * originalImageSize.y) };
+			resizedImage.setPixel(x, y, originalImage.getPixel(origX, origY));
+		}
+	}
 }
