@@ -50,8 +50,12 @@ class Room
 {
 public:
 	static bool isTextureNull;
-	static sf::Texture roomTextures[];
-
+	static sf::Image roomImages[];
+private:
+	float positionX;
+	float positionY;
+	float widthRoom;
+	float heightRoom;
 public:
 	std::vector<RoomType> roomTypes;
 
@@ -74,18 +78,19 @@ public:
 	std::vector<std::shared_ptr<Room>> connectRooms;
 
 	//MazeObject vừa là hình vừa là Texture.
-	sf::Sprite curRoomTexture;
+	sf::Texture curRoomTexture;
 
 public:
-	Room(MazeCoordinate pos);
+	static void resizeImage(const sf::Image& originalImage, sf::Image& resizedImage);
+
+public:
+	Room(MazeCoordinate pos, int widthRoom, int heightRoom/*, sf::RenderWindow& target*/);
 	Room(const Room& obj);
 	~Room();
 
 	//Create Room Rect
-	void MakeRoomRect(int& xOffset, int& yOffset, 
-					  int& xSplits, int& ySplits, 
-					  const int& mazeWidth, const int& mazeHeight);
-	
+	void MakeRoomRect(int& xOffset, int& yOffset, int& xSplits, int& ySplits, const int& mazeWidth, const int& mazeHeight);
+
 	void MakeRoomRect();
 
 	//Check the direction of an adjacent room
@@ -101,8 +106,7 @@ public:
 	void ConnectRoom(std::shared_ptr<Room>& roomToConnectPtr);
 
 	//Adds room to Renderer. If it has a delay, render after waiting. 
-	void AddRoomToRenderer(int delay, sf::RenderWindow& target);
-
 	void AddRoomToRenderer(sf::RenderWindow& target);
+
 };
 
