@@ -10,6 +10,9 @@ int main()
 	Game game;
 	Clock clock;
 	float timer = 0, delay = 0.1;
+	
+
+	game.render();
 
 	//Game loop
 	while (game.running())
