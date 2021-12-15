@@ -1,4 +1,4 @@
-
+#define _CRT_SECURE_NO_WARNINGS
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -23,6 +23,12 @@
 using namespace sf;
 
 enum GameState { MenuState, InGameState, LevelCompleteState, GameOverState, NextStageState};
+
+struct TextBox
+{
+	sf::RectangleShape m_Rect;
+	sf::Text m_Text;
+};
 
 class Game
 {
@@ -51,12 +57,21 @@ private:
 	sf::Text m_GuiText;
 	sf::Text m_EndGameText;
 
+	TextBox m_Title;
+	TextBox m_LevelInfo;
+	TextBox m_TimeInfo;
+	TextBox m_CoinsInfo;
+	//TextBox m_GamePause;
+	//TextBox m_GameExit;
+
+
 	//stat
 	int m_Time; //total times
 
 	void initVariables();
 	void initWindow();
 	void initFonts();
+	void initTextBox();
 	void initText();
 	void initMap();
 
