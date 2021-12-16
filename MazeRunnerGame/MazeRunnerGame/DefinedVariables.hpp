@@ -22,8 +22,8 @@
 #define OFFSET_MAZE_Y (SCREEN_HEIGHT - SCREEN_MAZE_HEIGHT - SPACE)
 #define OFFSET_MAZE_X SPACE
 
-#define MAZE_Y 20
-#define MAZE_X 20
+#define MAZE_Y 23
+#define MAZE_X 23
 //=========================================
 
 const float OBJECT_WIDTH = 50;

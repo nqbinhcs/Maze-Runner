@@ -1,10 +1,19 @@
 #include "Game.hpp"
 
+struct MyLevel {
+	int x, y;
+};
+
+MyLevel level[7] = { MyLevel{3, 3} , MyLevel{ 5, 5 }, MyLevel{ 9, 9 }, MyLevel{ 15, 15 }, MyLevel{ 20, 20 }, MyLevel{ 23, 23 }, MyLevel{ 30, 30 } };
+
+
+
 //@DESCR: Initialize variables of Game
 //@PARAM: None
 //@RETURN: None
 void Game::initVariables()
 {
+	// m_State = NextStageState;
 	this->m_EndGame = false;
 	this->m_Time = 0;
 }
@@ -267,6 +276,9 @@ void Game::update()
 {
 	this->pollEvents();
 
+	//Testing code - Always Nextstage
+
+
 	if (this->m_EndGame == false)
 	{
 		if (m_Event.type == sf::Event::KeyPressed)
@@ -317,6 +329,19 @@ void Game::render()
 	mazeBound.setOutlineThickness(5);
 
 	this->m_pWindow->draw(mazeBound);
+
+	//// - - - - - - Begin Testing: Next maze - - - - - - 
+	//
+	//cout << m_State << '\n';
+	//if (m_State == NextStageState)
+	//{
+	//	cout << "IN state\n";
+	//	curMaze->SetMaze(level[0].x, level[0].y, 1, *m_pWindow);
+	//	this->m_State = GameOverState;
+	//}
+
+
+	//// - - - - - -  End Testing - - - - - - 
 
 	curMaze->AddMazeRoomsToRenderer(*m_pWindow);
 

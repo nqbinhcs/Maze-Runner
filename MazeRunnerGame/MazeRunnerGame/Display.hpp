@@ -26,4 +26,11 @@ public:
 	virtual void draw(sf::RenderWindow& window);
 };
 
+
+//@DESCR: Delay function 
+//@PARAM: second.
+//@RETURN: None
+void delay(float second);
+
+
 #endif

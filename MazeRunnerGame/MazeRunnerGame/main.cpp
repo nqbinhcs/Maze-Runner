@@ -13,7 +13,7 @@ int main()
 	
 
 	game.render();
-
+	
 	//Game loop
 	while (game.running())
 	{
@@ -22,4 +22,5 @@ int main()
 	}
 
 	return 0;
+
 }

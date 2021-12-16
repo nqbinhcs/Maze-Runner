@@ -1,5 +1,21 @@
 ﻿#include "Display.hpp"
 
+//@DESCR: Delay function 
+//@PARAM: second.
+//@RETURN: None
+void delay(float second)
+{
+	sf::Clock Clock;
+	sf::Time timeEnd = sf::seconds(second);
+	bool cmp;
+	do {
+		sf::Time time = Clock.getElapsedTime();
+		cmp = (time < timeEnd);
+	} while (cmp);
+	Clock.restart();
+	return;
+}
+
 Display::Display()
 {
 }

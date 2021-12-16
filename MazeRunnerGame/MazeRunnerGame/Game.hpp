@@ -30,6 +30,7 @@ struct TextBox
 	sf::Text m_Text;
 };
 
+
 class Game
 {
 public:
@@ -82,6 +83,10 @@ public:
 
 	//Accessors
 	const bool& getEndGame() const;
+
+
+	//Game processing
+
 
 	//Modifiers
 
