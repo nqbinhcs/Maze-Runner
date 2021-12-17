@@ -26,6 +26,8 @@
 #define MAZE_X 23
 //=========================================
 
+#define MAX_LEVEL 7
+
 const float OBJECT_WIDTH = 50;
 const float OBJECT_HEIGHT = 50;
 

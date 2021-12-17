@@ -22,12 +22,16 @@
 
 using namespace sf;
 
-enum GameState { MenuState, InGameState, LevelCompleteState, GameOverState, NextStageState};
+enum GameState { MenuState, InGameState, LevelCompleteState, GameOverState, NextStageState, ChallengeCompleteState};
 
 struct TextBox
 {
 	sf::RectangleShape m_Rect;
 	sf::Text m_Text;
+};
+
+struct MyLevel {
+	int x, y;
 };
 
 
@@ -68,13 +72,20 @@ private:
 
 	//stat
 	int m_Time; //total times
+	int m_Level; //current levels
 
+
+	//GUI functions
 	void initVariables();
 	void initWindow();
 	void initFonts();
 	void initTextBox();
 	void initText();
 	void initMap();
+
+	//Processing functions
+	void nextLevel();
+	void setLevel(int _level);
 
 public:
 	//Constructors and Destructors

@@ -1,11 +1,7 @@
 #include "Game.hpp"
 
-struct MyLevel {
-	int x, y;
-};
 
 MyLevel level[7] = { MyLevel{3, 3} , MyLevel{ 5, 5 }, MyLevel{ 9, 9 }, MyLevel{ 15, 15 }, MyLevel{ 20, 20 }, MyLevel{ 23, 23 }, MyLevel{ 30, 30 } };
-
 
 
 //@DESCR: Initialize variables of Game
@@ -13,9 +9,12 @@ MyLevel level[7] = { MyLevel{3, 3} , MyLevel{ 5, 5 }, MyLevel{ 9, 9 }, MyLevel{ 
 //@RETURN: None
 void Game::initVariables()
 {
-	// m_State = NextStageState;
+	m_State = GameOverState;
 	this->m_EndGame = false;
 	this->m_Time = 0;
+	this->m_Level = 0;
+
+	
 }
 
 //@DESCR: Initialize parameter of Game's screen
@@ -121,7 +120,7 @@ void Game::initTextBox()
 	m_LevelInfo.m_Rect.setOutlineThickness(5);
 
 	writer.str(std::string());
-	writer << "LEVEL " << 1;
+	writer << "LEVEL " << m_Level + 1;
 
 	m_LevelInfo.m_Text.setFont(this->m_Font);
 	m_LevelInfo.m_Text.setLetterSpacing(1.5);
@@ -187,6 +186,27 @@ void Game::initMap() {
 	//this->m_Player.setLocaStart(this->m_Map.getColStart(), this->m_Map.getRowStart());
 }
 
+//@DESCR: Changing from "current" level to "current + 1" level
+//@PARAM: None
+//@RETURN: None
+void Game::nextLevel()
+{
+	if (m_Level >= MAX_LEVEL - 1) 
+		return;
+	m_Level++;
+	std::cout << m_Level << '\n';
+	curMaze->SetMaze(level[m_Level].x, level[m_Level].y, m_Level + 1, *m_pWindow);
+}
+
+//@DESCR: Changing from "current" level to new level
+//@PARAM: new level
+//@RETURN: None
+void Game::setLevel(int _level)
+{
+	m_Level = _level;
+	curMaze->SetMaze(level[m_Level].x, level[m_Level].y, m_Level + 1, *m_pWindow);
+}
+
 //@DESCR: Constructor of Game
 //@PARAM: None
 //@RETURN: None
@@ -201,6 +221,9 @@ Game::Game()
 	curMaze = std::shared_ptr<Maze>(new Maze(MAZE_X, MAZE_Y,
 		OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_WIDTH,
 		SCREEN_MAZE_HEIGHT, 1, false, *m_pWindow));
+
+	//reset level to 0
+	setLevel(0);
 }
 
 //@DESCR: Destructor of Game
@@ -246,6 +269,9 @@ void Game::pollEvents()
 			case sf::Event::KeyPressed:
 				if (this->m_Event.key.code == sf::Keyboard::Escape)
 					this->m_pWindow->close();
+				//For fun
+				if (this->m_Event.key.code == sf::Keyboard::Enter)
+					this->m_State = LevelCompleteState;
 				break;
 			}
 		}
@@ -266,7 +292,16 @@ void Game::updatePlayer()
 //@RETURN: None
 void Game::updateGui()
 {
+	stringstream writer;
+	//Level Info
+	writer.str(std::string());
+	writer << "LEVEL " << m_Level + 1;
 
+	m_LevelInfo.m_Text.setFont(this->m_Font);
+	m_LevelInfo.m_Text.setLetterSpacing(1.5);
+	m_LevelInfo.m_Text.setFillColor(sf::Color::White);
+	m_LevelInfo.m_Text.setCharacterSize(40);
+	m_LevelInfo.m_Text.setString(writer.str());
 }
 
 //@DESCR: Update all changes
@@ -330,26 +365,10 @@ void Game::render()
 
 	this->m_pWindow->draw(mazeBound);
 
-	//// - - - - - - Begin Testing: Next maze - - - - - - 
-	//
-	//cout << m_State << '\n';
-	//if (m_State == NextStageState)
-	//{
-	//	cout << "IN state\n";
-	//	curMaze->SetMaze(level[0].x, level[0].y, 1, *m_pWindow);
-	//	this->m_State = GameOverState;
-	//}
-
-
-	//// - - - - - -  End Testing - - - - - - 
 
 	curMaze->AddMazeRoomsToRenderer(*m_pWindow);
 
-	//Render State Screen -- For testing purposes, you should uncomment individual line to see clearly
-	//renderDisplayStates(GameOverState);
-	//renderDisplayStates(NextStageState);
-	//renderDisplayStates(LevelCompleteState);
-
+	
 	this->m_pWindow->draw(this->m_Title.m_Rect);
 	this->m_pWindow->draw(this->m_Title.m_Text);
 
@@ -361,6 +380,28 @@ void Game::render()
 
 	this->m_pWindow->draw(this->m_CoinsInfo.m_Rect);
 	this->m_pWindow->draw(this->m_CoinsInfo.m_Text);
+
+
+	//Press Enter to next maze
+
+	// - - - - - - Begin Testing: Next maze - - - - - - 
+
+	if (m_State == NextStageState)
+	{
+		delay(0.7);
+		nextLevel();
+		m_State = GameOverState;
+	}
+
+	if (m_State == LevelCompleteState)
+	{
+		
+		renderDisplayStates(NextStageState);
+		m_State = NextStageState;
+	}
+	
+	// - - - - - -  End Testing - - - - - - 
+
 
 	this->m_pWindow->display();
 }
@@ -384,6 +425,7 @@ void Game::renderDisplayStates(GameState state)
 
 	if (state == NextStageState)
 	{
+
 		m_pNextStage->draw(*m_pWindow);
 		return;
 	}
