@@ -26,6 +26,10 @@ public:
 	float getPositionX() const;
 	float getPositionY() const;
 
+	MazeCoordinate getPosition() {
+		return curMazePosition;
+	}
+
 	//Setter - Thay đổi tích chất 
 	void setPosition(float, float);
 	void setColor(sf::Color);
@@ -33,6 +37,9 @@ public:
 	void setOutLine(float, sf::Color);
 public:
 	MazeObject(float x = 0.f, float y = 0.f);
+	MazeObject(MazeCoordinate pos) {
+		curMazePosition = pos;
+	}
 	
 	//Cập nhật, dựng hình
 	void update(const sf::RenderTarget* target);
