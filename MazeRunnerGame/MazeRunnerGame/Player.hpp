@@ -25,9 +25,9 @@ public:
 	virtual ~Player();
 
 	//Functions
-	void updateInput(sf::Keyboard::Key direction);
+	void updateInput(int direction);
 	void updateWindowBoundsCollision(const sf::RenderTarget* target);
-	void update(const sf::RenderTarget* target, sf::Keyboard::Key direction);
+	void update(const sf::RenderTarget* target, int direction);
 	void render(sf::RenderTarget* target);
 
 

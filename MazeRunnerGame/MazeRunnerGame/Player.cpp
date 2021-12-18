@@ -38,7 +38,7 @@ Player::~Player()
 {
 }
 
-void Player::updateInput(sf::Keyboard::Key direction)
+void Player::updateInput(int direction)
 {
 	switch (direction)
 	{
@@ -83,7 +83,7 @@ void Player::updateWindowBoundsCollision(const sf::RenderTarget* target)
 		this->setPosition(this->shape.getGlobalBounds().left, target->getSize().y - this->shape.getGlobalBounds().height);
 }
 
-void Player::update(const sf::RenderTarget* target, sf::Keyboard::Key direction)
+void Player::update(const sf::RenderTarget* target, int direction)
 {
 	this->updateInput(direction);
 
