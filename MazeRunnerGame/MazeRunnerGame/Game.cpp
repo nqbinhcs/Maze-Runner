@@ -227,7 +227,7 @@ Game::Game()
 		SCREEN_MAZE_HEIGHT, 1, false, *m_pWindow));
 	m_Player = std::shared_ptr<Player>(new Player(curMaze->startPos, OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
 	//reset level to 0
-	setLevel(2);
+	setLevel(0);
 }
 
 //@DESCR: Destructor of Game
