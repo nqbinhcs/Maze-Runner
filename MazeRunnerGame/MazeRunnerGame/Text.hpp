@@ -4,47 +4,76 @@
 #include "DefinedVariables.hpp"
 #include <iostream>
 
-#define CHRACTER_SIZE 40
 #define FONT_GAME "Fonts/TitleFont.ttf"
 
-class TextShow
+
+class MyText
 {
 protected:
-    std::string textS; // chuỗi lưu các ký tự để in lên màn hình
+    std::string m_strText; // chuỗi lưu các ký tự để in lên màn hình
+    sf::Font m_Font;  // biến lưu font chữ
+    sf::Text m_sfText; // biến Text trong sf
 
-    sf::Font font;  // biến lưu font chữ
-    sf::Text textT; // biến Text trong sf
-    sf::Text style; // kiểu chữ
-
-    float posX; // vị trí in ra màn hình
-    float posY;
+    sf::RectangleShape m_Box;
 
 public:
-    TextShow(); 
-    ~TextShow();
-    TextShow(std::string textS, std::string font, float posX, float posY);
-    void set(std::string textS, std::string font, float posX, float posY);
-    void setPosition(float posX, float posY);
-    void setText(std::string textS);
+    MyText(); 
+    ~MyText();
+    MyText(std::string text, std::string font, float size, sf::Uint32 style, sf::Color color);
+
+public:
+    void setText(std::string text, std::string font, float size, sf::Uint32 style, sf::Color color);
+    
+    void setTextPosition(float posX, float posY);
+    void setStyleFont(sf::Uint32 style);
+    void setTextColor(sf::Color color);
+    void scaleText(float scaleSize);
+
+    void setCharacterSize(float size);
+    void setCharacterSpacing(float space);
+
     void setFont(std::string font);
-    void drawText(sf::RenderWindow& window);
-    void setStyleFont(int style);
-    void setColor(unsigned short red, unsigned short green, unsigned short blue);
-    void updateText();
-    void scale(float scaleSize);
-    void setSize(float size);
 
-    float getSizeText();
-    float getSizeCharacter();
-    short lengthText();
-    float getheight();
-    float getBottom();
+    void setContent(std::string textS);
+    void updateContent();
 
-    float getPositionX();
-    float getPositionY();
+    float getTextSize();
+    float getCharacterSize();
+    short getTextLength();
+    float getTextHeight();
+    float getTextBottom();
 
-    void setOriginToMidHead();
-    void setOriginToTopHead();
-    void setOriginToMidle();
-    void setOriginToMidTop();
+    float getTextPositionX();
+    float getTextPositionY();
+
+    void setTextOriginToLeft();
+    void setTextOriginToCenter();
+    void setTextOriginToRight();
+
+    void setTextOriginToTop();
+    void setTextOriginToMiddle();
+    void setTextOriginToBottom();
+
+public:
+    void setBox(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, sf::Color outlineColor);;
+    void setBoxPosition(sf::Vector2f position);
+    void setBoxSize(sf::Vector2f size);
+    void setBoxFillColor(sf::Color color);
+    void setBoxOutlineColor(sf::Color color);
+    void setBoxOutlineThickness(float thickness);
+
+
+public:
+    void rotate(float angle);
+
+    void alignTextLeft();
+    void alignTextCenter();
+    void alignTextRight();
+
+    void alignTextTop();
+    void alignTextMiddle();
+    void alignTextBottom();
+
+public:
+    void drawMyText(sf::RenderTarget* window);
 };
