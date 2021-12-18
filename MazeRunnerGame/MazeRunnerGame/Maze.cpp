@@ -1,4 +1,8 @@
 #include "Maze.hpp"
+#include <stack>
+#include <queue>
+#include <cstddef>
+#include <iostream>
 
 Maze::Maze(int xCount, int yCount, int xOffset, int yOffset, int xSize, int ySize, int level, bool showCreation, sf::RenderWindow& window) :
 	mazeX_RoomCount(xCount), 
@@ -296,6 +300,8 @@ void Maze::MazeOutline(sf::RenderTarget* target)
 //@RETURN: None
 void Maze::AddMazeRoomsToRenderer(sf::RenderWindow& window)
 {
+	std::shared_ptr<Room> endRoom = FindRoomByPos(finalPos);
+	endRoom->SetRoomEnd();
 	for_each(begin(allRooms), end(allRooms), [&](std::shared_ptr<Room> curRoomPtr)
 		{
 			curRoomPtr->AddRoomToRenderer(window);

@@ -4,6 +4,8 @@
 #include <iostream>
 
 sf::Image Room::roomImages[16];
+sf::Image Room::roomImagesEnd[16];
+sf::Image Room::roomImagesBrowser[16];
 bool Room::isTextureNull = true;
 
 Room::Room(MazeCoordinate pos, int widthRoom, int heightRoom) : roomPos(pos), widthRoom(widthRoom), heightRoom(heightRoom)
@@ -35,6 +37,53 @@ Room::Room(MazeCoordinate pos, int widthRoom, int heightRoom) : roomPos(pos), wi
 
 		Room::roomImages[0b1111].loadFromFile(IMG_4BORDER);
 
+		//=========================================================================
+		Room::roomImagesEnd[0b0000].loadFromFile(IMG_0BORDER_END); 	//None
+		Room::roomImagesEnd[0b0001].loadFromFile(IMG_1BORDER_D_END); 	//Down
+		Room::roomImagesEnd[0b0010].loadFromFile(IMG_1BORDER_L_END);	//Left
+		Room::roomImagesEnd[0b0100].loadFromFile(IMG_1BORDER_U_END);	//Up
+		Room::roomImagesEnd[0b1000].loadFromFile(IMG_1BORDER_R_END);
+
+
+		Room::roomImagesEnd[0b0011].loadFromFile(IMG_2BORDER_DL_END);
+		Room::roomImagesEnd[0b0101].loadFromFile(IMG_2BORDER_DU_END);
+		Room::roomImagesEnd[0b1001].loadFromFile(IMG_2BORDER_DR_END);
+		Room::roomImagesEnd[0b0110].loadFromFile(IMG_2BORDER_LU_END);
+		Room::roomImagesEnd[0b1010].loadFromFile(IMG_2BORDER_LR_END);
+		Room::roomImagesEnd[0b1100].loadFromFile(IMG_2BORDER_UR_END);
+
+
+		Room::roomImagesEnd[0b0111].loadFromFile(IMG_3BORDER_DLU_END);
+		Room::roomImagesEnd[0b1011].loadFromFile(IMG_3BORDER_DLR_END);
+		Room::roomImagesEnd[0b1101].loadFromFile(IMG_3BORDER_DUR_END);
+		Room::roomImagesEnd[0b1110].loadFromFile(IMG_3BORDER_LUR_END);
+
+
+		Room::roomImagesEnd[0b1111].loadFromFile(IMG_4BORDER_END);
+
+		//=========================================================================
+		Room::roomImagesBrowser[0b0000].loadFromFile(IMG_0BORDER_BROWSER); 	//None
+		Room::roomImagesBrowser[0b0001].loadFromFile(IMG_1BORDER_D_BROWSER); 	//Down
+		Room::roomImagesBrowser[0b0010].loadFromFile(IMG_1BORDER_L_BROWSER);	//Left
+		Room::roomImagesBrowser[0b0100].loadFromFile(IMG_1BORDER_U_BROWSER);	//Up
+		Room::roomImagesBrowser[0b1000].loadFromFile(IMG_1BORDER_R_BROWSER);
+
+
+		Room::roomImagesBrowser[0b0011].loadFromFile(IMG_2BORDER_DL_BROWSER);
+		Room::roomImagesBrowser[0b0101].loadFromFile(IMG_2BORDER_DU_BROWSER);
+		Room::roomImagesBrowser[0b1001].loadFromFile(IMG_2BORDER_DR_BROWSER);
+		Room::roomImagesBrowser[0b0110].loadFromFile(IMG_2BORDER_LU_BROWSER);
+		Room::roomImagesBrowser[0b1010].loadFromFile(IMG_2BORDER_LR_BROWSER);
+		Room::roomImagesBrowser[0b1100].loadFromFile(IMG_2BORDER_UR_BROWSER);
+
+
+		Room::roomImagesBrowser[0b0111].loadFromFile(IMG_3BORDER_DLU_BROWSER);
+		Room::roomImagesBrowser[0b1011].loadFromFile(IMG_3BORDER_DLR_BROWSER);
+		Room::roomImagesBrowser[0b1101].loadFromFile(IMG_3BORDER_DUR_BROWSER);
+		Room::roomImagesBrowser[0b1110].loadFromFile(IMG_3BORDER_LUR_BROWSER);
+
+
+		Room::roomImagesBrowser[0b1111].loadFromFile(IMG_4BORDER_BROWSER);
 	}
 	sf::Image newImage;
 	newImage.create(widthRoom, heightRoom, sf::Color::Black);
@@ -109,6 +158,19 @@ void Room::AssignRoomTextures()
 	curRoomTexture.loadFromImage(newImage);
 }
 
+void Room::SetRoomEnd() {
+	sf::Image newImage;
+	newImage.create(widthRoom, heightRoom, sf::Color::Black);
+	resizeImage(roomImagesEnd[wallDirBit], newImage);
+	curRoomTexture.loadFromImage(newImage);
+}
+
+void Room::SetRoomBrowser() {
+	sf::Image newImage;
+	newImage.create(widthRoom, heightRoom, sf::Color::Black);
+	resizeImage(roomImagesBrowser[wallDirBit], newImage);
+	curRoomTexture.loadFromImage(newImage);
+}
 //@DESCR: Remove wall direction. (not understand)
 //@PARAM: shared_ptr<Room>
 //@RETURN: None
@@ -153,4 +215,18 @@ void Room::resizeImage(const sf::Image& originalImage, sf::Image& resizedImage)
 			resizedImage.setPixel(x, y, originalImage.getPixel(origX, origY));
 		}
 	}
+}
+
+bool Room::checkConnectRoom(std::shared_ptr<Room> isRoomConnect) {
+	if (connectRooms.size() == 0) {
+		return false;
+	}
+	else {
+		for (int i = 0; i < connectRooms.size(); i++) {
+			if (connectRooms[i] == isRoomConnect) {
+				return true;
+			}
+		}
+	}
+	return false;
 }

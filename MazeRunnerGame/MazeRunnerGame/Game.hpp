@@ -49,7 +49,9 @@ private:
 
 	//In Game
 	shared_ptr<Maze> curMaze;
-	Player m_Player;
+
+	shared_ptr<Player> m_Player;
+	int m_Points;
 
 	//Gui
 	sf::Font m_Font;

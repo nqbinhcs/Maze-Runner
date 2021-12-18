@@ -74,7 +74,7 @@ public:
         for (int i = 0; i < SIZE_ROW * SIZE_COL; i++) {
             this->displayRects[i].render(target);
         }
-        player.update(target, sf::Keyboard::Key::Unknown);
+        //player.update(target, sf::Keyboard::Key::Unknown);
         player.render(target);
     }
 };

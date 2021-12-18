@@ -53,6 +53,24 @@ public:
 	Maze();
 	~Maze();
 
+	float getMazeX_Offset() {
+		return mazeX_Offset;
+	}
+	float getMazeY_Offset() {
+		return mazeY_Offset;
+	}
+	float getWidthRoom() {
+		return int(mazeX_Size / mazeX_RoomCount);
+	}
+	float getHeightRoom() {
+		return int(mazeY_Size / mazeY_RoomCount);
+	}
+	float getNumRow() {
+		return mazeY_RoomCount;
+	}
+	float getNumCol() {
+		return mazeX_RoomCount;
+	}
 	//Resets the Maze based off current parameters
 	void ResetMaze(sf::RenderWindow& window);
 
@@ -112,4 +130,6 @@ public:
 				curObjPtr->NextCycle();
 			});
 	}*/
+
+	//void BFS_Algorithm(MazeCoordinate posNow);
 };

@@ -22,8 +22,8 @@
 #define OFFSET_MAZE_Y (SCREEN_HEIGHT - SCREEN_MAZE_HEIGHT - SPACE)
 #define OFFSET_MAZE_X SPACE
 
-#define MAZE_Y 23
-#define MAZE_X 23
+#define MAZE_Y 3
+#define MAZE_X 3
 //=========================================
 
 #define MAX_LEVEL 7

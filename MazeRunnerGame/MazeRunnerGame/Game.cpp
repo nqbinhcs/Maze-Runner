@@ -115,6 +115,10 @@ void Game::nextLevel()
 	m_Level++;
 	std::cout << m_Level << '\n';
 	curMaze->SetMaze(level[m_Level].x, level[m_Level].y, m_Level + 1, *m_pWindow);
+	m_Player->setPosStart(curMaze->startPos);
+	m_Player->setWidthPlayer(curMaze->getWidthRoom());
+	m_Player->setHeightPlayer(curMaze->getHeightRoom());
+	m_Player->updateDirecPlayer(0);
 }
 
 //@DESCR: Changing from "current" level to new level
@@ -139,7 +143,7 @@ Game::Game()
 	curMaze = std::shared_ptr<Maze>(new Maze(MAZE_X, MAZE_Y,
 		OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_WIDTH,
 		SCREEN_MAZE_HEIGHT, 1, false, *m_pWindow));
-
+	m_Player = std::shared_ptr<Player>(new Player(curMaze->startPos, OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
 	//reset level to 0
 	setLevel(0);
 }
@@ -175,25 +179,27 @@ const bool Game::running() const
 //@BUG: waitEvent can't catch CLOSE event
 void Game::pollEvents()
 {
+	sf::Event temp;
 	//if (m_pWindow->waitEvent(m_Event)) 
 	{
-		while (this->m_pWindow->pollEvent(this->m_Event))
+		while (this->m_pWindow->pollEvent(temp))
 		{
-			switch (this->m_Event.type)
+			switch (temp.type)
 			{
 			case sf::Event::Closed:
 				this->m_pWindow->close();
 				break;
 			case sf::Event::KeyPressed:
-				if (this->m_Event.key.code == sf::Keyboard::Escape)
+				if (temp.key.code == sf::Keyboard::Escape)
 					this->m_pWindow->close();
 				//For fun
-				if (this->m_Event.key.code == sf::Keyboard::Enter)
+				if (temp.key.code == sf::Keyboard::Enter)
 					this->m_State = LevelCompleteState;
 				break;
 			}
 		}
 	}
+	this->m_Event = temp;
 }
 
 //@DESCR: Update m_Player's changes, including position
@@ -201,7 +207,7 @@ void Game::pollEvents()
 //@RETURN: None
 void Game::updatePlayer()
 {
-	this->m_Player.update(m_pWindow, m_Event.key.code);
+	this->m_Player->update(m_pWindow, m_Event.key.code, curMaze);
 }
 
 
@@ -260,6 +266,7 @@ void Game::render()
 	//Render end text
 	if (this->m_EndGame == true)
 		this->m_pWindow->draw(this->m_EndGameText);
+
 	
 	
 	//Use it, command:
@@ -274,9 +281,9 @@ void Game::render()
 	mazeBound.setOutlineThickness(5);
 
 	this->m_pWindow->draw(mazeBound);
-
-
 	curMaze->AddMazeRoomsToRenderer(*m_pWindow);
+
+	m_Player->render(*m_pWindow);
 
 	updateTimeInfo();
 
@@ -302,7 +309,7 @@ void Game::render()
 		m_State = GameOverState;
 	}
 
-	if (m_State == LevelCompleteState)
+	if (m_State == LevelCompleteState || m_Player->getPosition() == curMaze->finalPos)
 	{
 		
 		renderDisplayStates(NextStageState);
