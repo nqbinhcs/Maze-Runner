@@ -9,7 +9,8 @@ MyLevel level[7] = { MyLevel{3, 3} , MyLevel{ 5, 5 }, MyLevel{ 9, 9 }, MyLevel{ 
 //@RETURN: None
 void Game::initVariables()
 {
-	m_State = GameOverState;
+	//Init state of game is Menu state
+	m_State = MenuState;
 	this->m_EndGame = false;
 	this->m_Time.setCDTime(3603);
 	this->m_Time.start();
@@ -29,6 +30,8 @@ void Game::initWindow()
 
 
 	//init display
+	this->m_pMenu = std::shared_ptr<Menu>(new Menu(SCREEN_WIDTH, SCREEN_HEIGHT));
+	this->m_pModeGame = std::shared_ptr<ModeGame>(new ModeGame(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this->m_pGameOver = std::shared_ptr<GameOver>(new GameOver());
 	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
 	this->m_pLevelComplete = std::shared_ptr<LevelComplete>(new LevelComplete());
@@ -184,11 +187,18 @@ void Game::pollEvents()
 	{
 		while (this->m_pWindow->pollEvent(temp))
 		{
+			std::cout << "LEVEL COMPLETE!\n";
 			switch (temp.type)
 			{
 			case sf::Event::Closed:
 				this->m_pWindow->close();
 				break;
+
+
+
+			if (m_State == LevelCompleteState)
+			{
+				
 			case sf::Event::KeyPressed:
 				if (temp.key.code == sf::Keyboard::Escape)
 					this->m_pWindow->close();
@@ -197,6 +207,8 @@ void Game::pollEvents()
 					this->m_State = LevelCompleteState;
 				break;
 			}
+			}
+			
 		}
 	}
 	this->m_Event = temp;

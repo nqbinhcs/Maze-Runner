@@ -153,6 +153,8 @@
     <ClCompile Include="LevelComplete.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="ModeGame.cpp" />
     <ClCompile Include="NextStage.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="MazeObject.cpp" />
@@ -171,6 +173,8 @@
     <ClInclude Include="Maze.hpp" />
     <ClInclude Include="MazeCreationInterface.hpp" />
     <ClInclude Include="MazeFactory.hpp" />
+    <ClInclude Include="Menu.hpp" />
+    <ClInclude Include="ModeGame.hpp" />
     <ClInclude Include="NextStage.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="MazeObject.hpp" />

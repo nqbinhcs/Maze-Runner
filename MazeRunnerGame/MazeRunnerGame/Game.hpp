@@ -20,6 +20,8 @@
 #include "GameOver.hpp"
 #include "NextStage.hpp"
 #include "LevelComplete.hpp"
+#include "Menu.hpp"
+#include "ModeGame.hpp"
 
 using namespace sf;
 
@@ -43,6 +45,9 @@ private:
 	GameState m_State;
 
 	//Display
+
+	shared_ptr<Menu> m_pMenu;
+	shared_ptr<ModeGame> m_pModeGame;
 	shared_ptr<GameOver> m_pGameOver;
 	shared_ptr<NextStage> m_pNextStage;
 	shared_ptr<LevelComplete> m_pLevelComplete;
