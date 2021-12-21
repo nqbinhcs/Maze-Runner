@@ -1,0 +1,106 @@
+﻿  Display.cpp
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Display.cpp(47,115): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Display.cpp(47,85): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Display.cpp(47,59): warning C4244: 'argument': conversion from 'const T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Display.cpp(47,37): warning C4244: 'argument': conversion from 'const T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+  Game.cpp
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Room.hpp(138,10): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Room.hpp(141,10): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(57,10): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(60,10): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(63,13): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(66,13): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(69,10): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(72,10): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.h(1,17): warning C4081: expected '('; found 'newline'
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Game.cpp(394,12): warning C4305: 'argument': truncation from 'double' to 'float'
+  GameOver.cpp
+  LevelComplete.cpp
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\LevelComplete.cpp(18,75): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\LevelComplete.cpp(18,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+  Menu.cpp
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Menu.cpp(36,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Menu.cpp(40,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Menu.cpp(43,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Menu.cpp(46,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Menu.cpp(49,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Menu.cpp(91,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Menu.cpp(99,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Menu.cpp(111,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Menu.cpp(118,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  ModeGame.cpp
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\ModeGame.cpp(65,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\ModeGame.cpp(73,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\ModeGame.cpp(85,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\ModeGame.cpp(92,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  NextStage.cpp
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\NextStage.cpp(17,75): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\NextStage.cpp(17,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+  Text.cpp
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Text.cpp(66,47): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Text.cpp(70,37): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Text.cpp(78,46): warning C4244: 'return': conversion from 'unsigned int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Text.cpp(82,43): warning C4244: 'return': conversion from 'unsigned int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Text.cpp(95,36): warning C4267: 'return': conversion from 'size_t' to 'short', possible loss of data
+  main.cpp
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Room.hpp(138,10): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Room.hpp(141,10): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(57,10): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(60,10): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(63,13): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(66,13): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(69,10): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\Maze.hpp(72,10): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\TileMap.h(1,17): warning C4081: expected '('; found 'newline'
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\main.cpp(7,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\MazeRunnerGame\main.cpp(12,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
+  MazeRunnerGame.vcxproj -> C:\QBVN\Code\OOP\Project\MazeRunnerGame\MazeRunnerGame\Debug\MazeRunnerGame.exe

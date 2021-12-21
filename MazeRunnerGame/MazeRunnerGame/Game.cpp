@@ -184,31 +184,93 @@ void Game::pollEvents()
 {
 	sf::Event temp;
 	//if (m_pWindow->waitEvent(m_Event)) 
+	//{
+	//	while (this->m_pWindow->pollEvent(temp))
+	//	{
+	//		switch (temp.type)
+	//		{
+	//		case sf::Event::Closed:
+	//			this->m_pWindow->close();
+	//			break;
+	//
+	//		case sf::Event::KeyPressed:
+	//			if (temp.key.code == sf::Keyboard::Escape)
+	//				this->m_pWindow->close();
+	//			//For fun
+	//			if (temp.key.code == sf::Keyboard::Enter)
+	//				this->m_State = LevelCompleteState;
+	//			break;
+	//		
+	//		}
+	//		
+	//	}
+	//}
+
+	//if (m_pWindow->waitEvent(m_Event)) 
 	{
 		while (this->m_pWindow->pollEvent(temp))
 		{
-			std::cout << "LEVEL COMPLETE!\n";
 			switch (temp.type)
 			{
 			case sf::Event::Closed:
 				this->m_pWindow->close();
 				break;
 
-
-
-			if (m_State == LevelCompleteState)
-			{
-				
 			case sf::Event::KeyPressed:
 				if (temp.key.code == sf::Keyboard::Escape)
 					this->m_pWindow->close();
+
+				//Menu
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+				{
+					m_pMenu->moveUp();
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+				{
+					m_pMenu->moveDown();
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+				{
+					switch (m_pMenu->GetPressedItem())
+					{
+					case 0:
+						//new game
+
+						//Rendering select mode and Getting the difficulty of the game
+						m_pModeGame->runModeGame(*m_pWindow);
+
+						//For getting the difficulty of the game, use method m_pModeGmae  "int m_pModeGame->GetPressedItem()"
+
+						//Because of entering new game, so current game state is InGameState
+						m_State = InGameState;
+
+						break;
+					case 1:
+						//continue
+						break;
+
+					case 2:
+						//high
+						break;
+					case 3:
+						//help
+						break;
+					case 4:
+						//exit
+						break;
+					}
+					break;
+			default:
+				break;
+				}
+
 				//For fun
-				if (temp.key.code == sf::Keyboard::Enter)
+				if (temp.key.code == sf::Keyboard::BackSpace)
 					this->m_State = LevelCompleteState;
 				break;
+
 			}
-			}
-			
+
 		}
 	}
 	this->m_Event = temp;
@@ -265,13 +327,26 @@ void Game::renderGui(sf::RenderTarget* target)
 void Game::render()
 {
 	m_pWindow->clear(sf::Color(128,128,128));
-	//this->m_pWindow->clear();
+	
+	
+	// -----------------------------If in MenuState , skip all these below-----------------------------
+	if (m_State == MenuState) {
+		renderDisplayStates(m_State);
+		this->m_pWindow->display();
+		return;
+	}
 
-	//this->m_Map.drawMap(this->m_pWindow, this->m_Player);
-	
-	//Render m_Player's state
-	//this->m_Player.render(this->m_pWindow);
-	
+
+	//-----------------------------If Difficulty complete-----------------------------
+	if (m_State == DifficultyCompleteState)
+	{
+		renderDisplayStates(m_State);
+		this->m_pWindow->display();
+		return;
+	}
+
+	//-----------------------------In Game-----------------------------
+
 	//Render Gui
 	this->renderGui(this->m_pWindow);
 
@@ -317,8 +392,17 @@ void Game::render()
 	if (m_State == NextStageState)
 	{
 		delay(0.7);
-		nextLevel();
-		m_State = GameOverState;
+
+		//Win a difficulty mode
+		if (m_Level == MAX_LEVEL - 1)
+		{
+			m_State = DifficultyCompleteState;
+		}
+		else
+		{
+			nextLevel();
+			m_State = InGameState;
+		}
 	}
 
 	if (m_State == LevelCompleteState || m_Player->getPosition() == curMaze->finalPos)
@@ -338,7 +422,13 @@ void Game::render()
 //@RETURN: Non
 void Game::renderDisplayStates(GameState state)
 {
-	if (state == LevelCompleteState)
+	if (state == MenuState)
+	{
+		m_pMenu->draw(*m_pWindow);
+		return;
+	}
+
+	if (state == DifficultyCompleteState)
 	{
 		m_pLevelComplete->draw(*m_pWindow, 0);
 		return;

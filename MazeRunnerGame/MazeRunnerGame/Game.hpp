@@ -25,7 +25,7 @@
 
 using namespace sf;
 
-enum GameState { MenuState, InGameState, LevelCompleteState, GameOverState, NextStageState, ChallengeCompleteState};
+enum GameState { MenuState, InGameState, LevelCompleteState, GameOverState, NextStageState, DifficultyCompleteState};
 
 struct MyLevel {
 	int x, y;

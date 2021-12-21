@@ -21,7 +21,7 @@ ModeGame::ModeGame(float width, float height) :Menu(width, height)
 	/* set thông số đồ họa cho dòng chữ NEW GAME
 	   do dònng chữ New Game nằm đầu nên ta cho mặc định khi vào Menu, chức năng này được chọn */
 	textMode[0].setFont(font);
-	textMode[0].setCharacterSize(60);
+	textMode[0].setCharacterSize(40);
 	textMode[0].setFillColor(sf::Color::White);
 	textMode[0].setStyle(sf::Text::Bold);
 	textMode[0].setString("EASY");
@@ -29,14 +29,14 @@ ModeGame::ModeGame(float width, float height) :Menu(width, height)
 
 	// set thông số đồ họa cho dòng chữ các dòng chữ thể hiện chức năng khác
 	textMode[1].setFont(font);
-	textMode[1].setCharacterSize(60);
+	textMode[1].setCharacterSize(40);
 	textMode[1].setFillColor(sf::Color::White);
 	textMode[1].setStyle(sf::Text::Bold);
 	textMode[1].setString("NORMAL");
 	setPositionText(textMode[1], 300);
 
 	textMode[2].setFont(font);
-	textMode[2].setCharacterSize(60);
+	textMode[2].setCharacterSize(40);
 	textMode[2].setFillColor(sf::Color::White);
 	textMode[2].setStyle(sf::Text::Bold);
 	textMode[2].setString("HARD");
@@ -172,7 +172,7 @@ void ModeGame::runModeGame(sf::RenderWindow& window)
 {
 	while (window.isOpen()) {
 		sf::Event event;
-		while (window.pollEvent(event)) {
+		while(window.pollEvent(event)) {
 			switch (event.type) {
 
 			case sf::Event::Closed:
@@ -201,10 +201,7 @@ void ModeGame::runModeGame(sf::RenderWindow& window)
 				}
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-					//curGameState = InGameState;
-					break;
-					//levelChoice choice(window.getSize().x, window.getSize().y);
-					//choice.runLevelChoice(window, GetPressedItem());
+					return;
 				}
 			}
 		}

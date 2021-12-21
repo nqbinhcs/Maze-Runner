@@ -11,6 +11,11 @@ private:
 	int selectOption;
 	sf::Font font;
 	sf::Text text[_MAX_CHOICE_MENU];
+	sf::Text GameTittle;
+
+private:
+	// For effect
+	int delta_effect;
 
 public:
 	Menu();
