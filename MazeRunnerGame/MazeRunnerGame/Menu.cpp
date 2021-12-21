@@ -28,7 +28,7 @@ Menu::Menu(float width, float height) :Display(width, height)
 
 
 	text[0].setFont(font);
-	text[0].setCharacterSize(40);
+	text[0].setCharacterSize(60);
 	text[0].setFillColor(sf::Color::White);
 	text[0].setStyle(sf::Text::Bold);
 	text[0].setString("NEW GAME");

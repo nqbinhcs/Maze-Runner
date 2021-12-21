@@ -21,7 +21,7 @@ ModeGame::ModeGame(float width, float height) :Menu(width, height)
 	/* set thông số đồ họa cho dòng chữ NEW GAME
 	   do dònng chữ New Game nằm đầu nên ta cho mặc định khi vào Menu, chức năng này được chọn */
 	textMode[0].setFont(font);
-	textMode[0].setCharacterSize(40);
+	textMode[0].setCharacterSize(60);
 	textMode[0].setFillColor(sf::Color::White);
 	textMode[0].setStyle(sf::Text::Bold);
 	textMode[0].setString("EASY");
