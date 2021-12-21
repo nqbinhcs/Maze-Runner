@@ -31,49 +31,6 @@ using namespace std;
 #define IMG_1BORDER_R "Images/Room_1Border_R.png"
 
 #define IMG_0BORDER "Images/Room_0Border.png"
-//=============================================================================
-#define IMG_4BORDER_END "Images/Room_4Border_End.png"
-
-#define IMG_3BORDER_DLU_END "Images/Room_3Border_D_L_U_End.png"
-#define IMG_3BORDER_LUR_END "Images/Room_3Border_L_U_R_End.png"
-#define IMG_3BORDER_DUR_END "Images/Room_3Border_D_U_R_End.png"
-#define IMG_3BORDER_DLR_END "Images/Room_3Border_D_L_R_End.png"
-
-#define IMG_2BORDER_LU_END "Images/Room_2Border_L_U_End.png"
-#define IMG_2BORDER_UR_END "Images/Room_2Border_U_R_End.png"
-#define IMG_2BORDER_DL_END "Images/Room_2Border_D_L_End.png"
-#define IMG_2BORDER_DR_END "Images/Room_2Border_D_R_End.png"
-#define IMG_2BORDER_DU_END "Images/Room_2Border_D_U_End.png"
-#define IMG_2BORDER_LR_END "Images/Room_2Border_L_R_End.png"
-
-#define IMG_1BORDER_D_END "Images/Room_1Border_D_End.png"
-#define IMG_1BORDER_L_END "Images/Room_1Border_L_End.png"
-#define IMG_1BORDER_U_END "Images/Room_1Border_U_End.png"
-#define IMG_1BORDER_R_END "Images/Room_1Border_R_End.png"
-
-#define IMG_0BORDER_END "Images/Room_0Border_End.png"
-//=============================================================================
-#define IMG_4BORDER_BROWSER "Images/Room_4Border_Browser.png"
-
-#define IMG_3BORDER_DLU_BROWSER "Images/Room_3Border_D_L_U_Browser.png"
-#define IMG_3BORDER_LUR_BROWSER "Images/Room_3Border_L_U_R_Browser.png"
-#define IMG_3BORDER_DUR_BROWSER "Images/Room_3Border_D_U_R_Browser.png"
-#define IMG_3BORDER_DLR_BROWSER "Images/Room_3Border_D_L_R_Browser.png"
-
-#define IMG_2BORDER_LU_BROWSER "Images/Room_2Border_L_U_Browser.png"
-#define IMG_2BORDER_UR_BROWSER "Images/Room_2Border_U_R_Browser.png"
-#define IMG_2BORDER_DL_BROWSER "Images/Room_2Border_D_L_Browser.png"
-#define IMG_2BORDER_DR_BROWSER "Images/Room_2Border_D_R_Browser.png"
-#define IMG_2BORDER_DU_BROWSER "Images/Room_2Border_D_U_Browser.png"
-#define IMG_2BORDER_LR_BROWSER "Images/Room_2Border_L_R_Browser.png"
-
-#define IMG_1BORDER_D_BROWSER "Images/Room_1Border_D_Browser.png"
-#define IMG_1BORDER_L_BROWSER "Images/Room_1Border_L_Browser.png"
-#define IMG_1BORDER_U_BROWSER "Images/Room_1Border_U_Browser.png"
-#define IMG_1BORDER_R_BROWSER "Images/Room_1Border_R_Browser.png"
-
-#define IMG_0BORDER_BROWSER "Images/Room_0Border_Browser.png"
-
 
 enum directions {
 	DOWN = 0b0001,
@@ -85,7 +42,11 @@ enum RoomType
 {
 	NONE,
 	START,
-	END
+	END,
+	FINAL,
+	KEY,
+	TRAP,
+	GUARD
 };
 
 class Room
@@ -93,8 +54,6 @@ class Room
 public:
 	static bool isTextureNull;
 	static sf::Image roomImages[];
-	static sf::Image roomImagesEnd[];
-	static sf::Image roomImagesBrowser[];
 private:
 	float positionX;
 	float positionY;
