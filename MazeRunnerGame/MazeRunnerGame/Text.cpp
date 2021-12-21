@@ -8,6 +8,9 @@ MyText::MyText() {
     // setText type
     setCharacterSize(12);
     setTextColor(sf::Color::Black);
+
+    // set bound
+    updateBound();
 }
 
 MyText::~MyText(){
@@ -29,6 +32,9 @@ void MyText::setText(std::string text, std::string font, float size, sf::Uint32 
     setCharacterSize(size);
     setStyleFont(style);
     setTextColor(color);
+
+    // set bound
+    updateBound();
 }
 
 void MyText::setTextPosition(float posX, float posY) {         // hàm setter cài đặt vị trí của text
@@ -39,6 +45,9 @@ void MyText::setContent(std::string m_strText) {                  // hàm setter
     this->m_strText = m_strText;
 
     this->updateContent();
+
+    // update bound
+    updateBound();
 }
 void MyText::setFont(std::string font) {                   // hàm setter m_Font
     if (!this->m_Font.loadFromFile(font))
@@ -152,6 +161,9 @@ void MyText::setBoxPosition(sf::Vector2f position) {
 
 void MyText::setBoxSize(sf::Vector2f size) {
     m_Box.setSize(size);
+
+    // update bound
+    updateBound();
 }
 
 void MyText::setBoxFillColor(sf::Color color) {
@@ -206,4 +218,15 @@ void MyText::drawMyText(sf::RenderTarget* window) {         // vẽ text lên wi
    window->draw(m_Box);
    window->draw(m_sfText);
 
+}
+
+void MyText::updateBound()
+{
+    sf::FloatRect textBound(m_sfText.getGlobalBounds());
+    sf::FloatRect rectBound(m_Box.getGlobalBounds());
+
+    if (rectBound.height <= textBound.height && rectBound.width <= rectBound.height)
+        m_Bound = textBound;
+    else
+        m_Bound = rectBound;
 }

@@ -5,7 +5,7 @@
 
 //change
 #define SCREEN_HEIGHT 850 // change from 700 -> 960
-#define SCREEN_WIDTH 1050 // change from 1050 -> 1280
+#define SCREEN_WIDTH 1250 // change from 1050 -> 1280
 #define SIZE_ROW 13
 #define SIZE_COL 21
 #define FRAME 60

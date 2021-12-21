@@ -15,7 +15,8 @@ protected:
     sf::Text m_sfText; // biến Text trong sf
 
     sf::RectangleShape m_Box;
-
+public:
+    sf::FloatRect m_Bound;
 public:
     MyText(); 
     ~MyText();
@@ -73,6 +74,9 @@ public:
     void alignTextTop();
     void alignTextMiddle();
     void alignTextBottom();
+
+public:
+    void updateBound();
 
 public:
     void drawMyText(sf::RenderTarget* window);
