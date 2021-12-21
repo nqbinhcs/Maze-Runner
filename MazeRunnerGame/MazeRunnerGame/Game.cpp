@@ -74,30 +74,6 @@ void Game::initText()
 	initCoinsInfo();
 }
 
-#define SCREEN_TITLE_WIDTH	(SCREEN_WIDTH - 2 * SPACE)
-#define SCREEN_TITLE_HEIGHT	(OFFSET_MAZE_Y - 2 * SPACE) 
-#define OFFSET_TITLE_X		SPACE
-#define OFFSET_TITLE_Y		SPACE
-
-#define NUMBER_OF_BOXES 3
-#define SCREEN_INFO_HEIGHT (SCREEN_MAZE_HEIGHT / NUMBER_OF_BOXES)
-#define SCREEN_INFO_WIDTH (SCREEN_WIDTH - SCREEN_MAZE_WIDTH - 2 * SPACE)	
-
-#define OFFSET_LEVEL_X (OFFSET_MAZE_X + SCREEN_MAZE_WIDTH + 5)
-#define OFFSET_LEVEL_Y OFFSET_MAZE_Y
-
-#define OFFSET_TIME_X OFFSET_LEVEL_X
-#define OFFSET_TIME_Y (OFFSET_LEVEL_Y + SCREEN_INFO_HEIGHT)
-
-#define OFFSET_COINS_X OFFSET_LEVEL_X
-#define OFFSET_COINS_Y (OFFSET_TIME_Y + SCREEN_INFO_HEIGHT)
-
-#define OFFSET_PAUSE_X OFFSET_LEVEL_X
-#define OFFSET_PAUSE_Y (OFFSET_COINS_Y + SCREEN_INFO_HEIGHT)
-
-#define OFFSET_EXIT_X OFFSET_LEVEL_X
-#define OFFSET_EXIT_Y (OFFSET_PAUSE_Y + SCREEN_INFO_HEIGHT)
-
 //@DESCR: Initialize settings of m_Map
 //@PARAM: None
 //@RETURN: None
@@ -297,18 +273,18 @@ void Game::render()
 
 	m_Player->render(*m_pWindow);
 
+	// Info display
+	//updateLevel();
 	updateTimeInfo();
+	updateCoinsInfo();
 
 	m_Title.drawMyText(m_pWindow);
-	m_LevelInfo.drawMyText(m_pWindow);
-	m_CoinsInfo.drawMyText(m_pWindow);
-	m_TimeInfo.drawMyText(m_pWindow);
+	//m_LevelInfo.drawMyText(m_pWindow);
 
-	/*sf::Text test;
-	test.setString("ahihi");
-	test.setCharacterSize(50);
-	test.setFillColor(sf::Color::Red);
-	m_pWindow->draw(test);*/
+	for (int i(0); i < 2; i++) {
+		m_CoinsInfo[i].drawMyText(m_pWindow);
+		m_TimeInfo[i].drawMyText(m_pWindow);
+	}
 
 	//Press Enter to next maze
 
@@ -320,6 +296,10 @@ void Game::render()
 		nextLevel();
 		m_State = GameOverState;
 	}
+
+	// Update level
+	updateLevel();
+	m_LevelInfo.drawMyText(m_pWindow);
 
 	if (m_State == LevelCompleteState || m_Player->getPosition() == curMaze->finalPos)
 	{
@@ -386,41 +366,82 @@ void Game::initLevelInfo() {
 	m_LevelInfo.alignTextMiddle();
 }
 
-void Game::initTimeInfo() {
-	stringstream writer("");
-	
-	m_TimeInfo.setBox(sf::Vector2f(OFFSET_TIME_X, OFFSET_TIME_Y), 
-		sf::Vector2f(SCREEN_INFO_WIDTH, SCREEN_INFO_HEIGHT),
+void Game::initTimeInfo() {	
+	// Time title
+	m_TimeInfo[0].setBox(sf::Vector2f(OFFSET_TIME_X, OFFSET_TIME_Y), 
+		sf::Vector2f(SCREEN_INFO_WIDTH / 2, SCREEN_INFO_HEIGHT / 2),
 		sf::Color::Black, sf::Color::White);
-	m_TimeInfo.setBoxOutlineThickness(5);
-	
-	writer << "TIME " << m_Time.getCDTime();
+	m_TimeInfo[0].setBoxOutlineThickness(5);
 
-	m_TimeInfo.setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
-	m_TimeInfo.setCharacterSpacing(1.5);
-	m_TimeInfo.alignTextCenter();
-	m_TimeInfo.alignTextMiddle();
+	m_TimeInfo[0].setText("TIME", FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_TimeInfo[0].setCharacterSpacing(1.5);
+	m_TimeInfo[0].alignTextCenter();
+	m_TimeInfo[0].alignTextMiddle();
+
+	// Time info
+	stringstream writer("");
+
+	m_TimeInfo[1].setBox(sf::Vector2f(OFFSET_TIME_INFO_X, OFFSET_TIME_INFO_Y),
+		sf::Vector2f(SCREEN_INFO_WIDTH / 2, SCREEN_INFO_HEIGHT / 2),
+		sf::Color::Black, sf::Color::White);
+	m_TimeInfo[1].setBoxOutlineThickness(5);
+
+	writer << m_Time.getCDTime();
+
+	m_TimeInfo[1].setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_TimeInfo[1].setCharacterSpacing(1.5);
+	m_TimeInfo[1].alignTextCenter();
+	m_TimeInfo[1].alignTextMiddle();
 }
 
 void Game::initCoinsInfo() {
-	stringstream writer("");
-	
-	m_CoinsInfo.setBox(sf::Vector2f(OFFSET_COINS_X, OFFSET_COINS_Y),
-		sf::Vector2f(SCREEN_INFO_WIDTH, SCREEN_INFO_HEIGHT),
+	// Coins title
+	m_CoinsInfo[0].setBox(sf::Vector2f(OFFSET_COINS_X, OFFSET_COINS_Y),
+		sf::Vector2f(SCREEN_INFO_WIDTH / 2, SCREEN_INFO_HEIGHT / 2),
 		sf::Color::Black, sf::Color::White);
-	m_CoinsInfo.setBoxOutlineThickness(5);
+	m_CoinsInfo[0].setBoxOutlineThickness(5);
 
-	writer.str(std::string());
-	writer << "COINS " << 100;
+	m_CoinsInfo[0].setText("COINS", FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_CoinsInfo[0].setCharacterSpacing(1.5);
+	m_CoinsInfo[0].alignTextCenter();
+	m_CoinsInfo[0].alignTextMiddle();
 
-	m_CoinsInfo.setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
-	m_CoinsInfo.setCharacterSpacing(1.5);
-	m_CoinsInfo.alignTextCenter();
-	m_CoinsInfo.alignTextMiddle();
+	// Coins info
+	stringstream writer("");
+	m_CoinsInfo[1].setBox(sf::Vector2f(OFFSET_COINS_INFO_X, OFFSET_COINS_INFO_Y),
+		sf::Vector2f(SCREEN_INFO_WIDTH / 2, SCREEN_INFO_HEIGHT / 2),
+		sf::Color::Black, sf::Color::White);
+	m_CoinsInfo[1].setBoxOutlineThickness(5);
+
+	writer << m_Points;
+
+	m_CoinsInfo[1].setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_CoinsInfo[1].setCharacterSpacing(1.5);
+	m_CoinsInfo[1].alignTextCenter();
+	m_CoinsInfo[1].alignTextMiddle();
 }
 
 void Game::updateTimeInfo() {
-	m_TimeInfo.setContent(m_Time.getCDTime());
-	m_TimeInfo.alignTextCenter();
-	m_TimeInfo.alignTextMiddle();
+	m_TimeInfo[1].setContent(m_Time.getCDTime());
+	m_TimeInfo[1].alignTextCenter();
+	m_TimeInfo[1].alignTextMiddle();
+}
+
+void Game::updateCoinsInfo() {
+	stringstream writer("");
+	writer << m_Points;
+
+	m_CoinsInfo[1].setContent(writer.str());
+	m_CoinsInfo[1].alignTextCenter();
+	m_CoinsInfo[1].alignTextMiddle();
+}
+
+void Game::updateLevel() {
+	stringstream writer("");
+	
+	writer << "LEVEL " << m_Level + 1;
+
+	m_LevelInfo.setContent(writer.str());
+	m_LevelInfo.alignTextCenter();
+	m_LevelInfo.alignTextMiddle();
 }
