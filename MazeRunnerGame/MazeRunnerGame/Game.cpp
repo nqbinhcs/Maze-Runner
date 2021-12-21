@@ -94,9 +94,15 @@ void Game::nextLevel()
 	m_Level++;
 	std::cout << m_Level << '\n';
 	curMaze->SetMaze(level[m_Level].x, level[m_Level].y, m_Level + 1, *m_pWindow);
-	m_Player->setPosStart(curMaze->startPos);
-	m_Player->setWidthPlayer(curMaze->getWidthRoom());
-	m_Player->setHeightPlayer(curMaze->getHeightRoom());
+
+	m_Player->setPosition(curMaze->startPos);
+	m_Player->setSize(curMaze->getWidthRoom(), curMaze->getHeightRoom());
+	m_Player->updateDirecPlayer(0);
+	m_Player->setLose(false);
+
+	//m_Player->setPosStart(curMaze->startPos);
+	//m_Player->setWidthPlayer(curMaze->getWidthRoom());
+	//m_Player->setHeightPlayer(curMaze->getHeightRoom());
 	m_Player->updateDirecPlayer(0);
 }
 

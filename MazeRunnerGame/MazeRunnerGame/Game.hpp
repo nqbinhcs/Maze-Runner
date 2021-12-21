@@ -15,7 +15,6 @@
 #include "Clock.hpp"
 #include "Player.hpp"
 #include "DefinedVariables.hpp"
-#include "TileMap.h"
 #include "Maze.hpp"
 #include "GameOver.hpp"
 #include "NextStage.hpp"

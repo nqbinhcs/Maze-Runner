@@ -153,6 +153,10 @@
     <ClCompile Include="LevelComplete.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="MazeChest.cpp" />
+    <ClCompile Include="MazeGuard.cpp" />
+    <ClCompile Include="MazeKey.cpp" />
+    <ClCompile Include="MazeTrap.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="ModeGame.cpp" />
     <ClCompile Include="NextStage.cpp" />
@@ -160,7 +164,6 @@
     <ClCompile Include="MazeObject.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Text.cpp" />
-    <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clock.hpp" />
@@ -171,8 +174,12 @@
     <ClInclude Include="GameOver.hpp" />
     <ClInclude Include="LevelComplete.hpp" />
     <ClInclude Include="Maze.hpp" />
+    <ClInclude Include="MazeChest.hpp" />
     <ClInclude Include="MazeCreationInterface.hpp" />
     <ClInclude Include="MazeFactory.hpp" />
+    <ClInclude Include="MazeGuard.hpp" />
+    <ClInclude Include="MazeKey.hpp" />
+    <ClInclude Include="MazeTrap.hpp" />
     <ClInclude Include="Menu.hpp" />
     <ClInclude Include="ModeGame.hpp" />
     <ClInclude Include="NextStage.hpp" />
@@ -181,7 +188,6 @@
     <ClInclude Include="Room.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Text.hpp" />
-    <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\..\MazeRunnerGame_1\MazeRunnerGame\BackGround.jpg" />
