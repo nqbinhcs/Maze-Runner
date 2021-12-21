@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -8,41 +8,48 @@
 
 #include "DefinedVariables.hpp"
 #include "Coordinate.hpp"
+#include "Room.hpp"
 
 class MazeObject
 {
 protected:
 	sf::Texture curTexure;
-	sf::RectangleShape shape;
-
 	MazeCoordinate curMazePosition;
-
 protected:
-	virtual void initVariables();
-	virtual void initShape();
+
+	float xOffset;
+	float yOffset;
+
+	float width;
+	float height;
 
 public:
-	//Getter - Lấy tọa độ trong cửa sổ window
-	float getPositionX() const;
-	float getPositionY() const;
 
 	MazeCoordinate getPosition() {
 		return curMazePosition;
 	}
-
-	//Setter - Thay đổi tích chất 
-	void setPosition(float, float);
-	void setColor(sf::Color);
-	void setSize(float, float);
-	void setOutLine(float, sf::Color);
-public:
-	MazeObject(float x = 0.f, float y = 0.f);
-	MazeObject(MazeCoordinate pos) {
+	void setPosition(MazeCoordinate pos) {
 		curMazePosition = pos;
+	}
+
+	void setSize(float width, float height) {
+		this->width = width;
+		this->height = height;
+	}
+public:
+	MazeObject(MazeCoordinate pos, float xOffset, float yOffset, float width, float height) {
+		curMazePosition = pos;
+		this->xOffset = xOffset;
+		this->yOffset = yOffset;
+		this->width = width;
+		this->height = height;
 	}
 	
 	//Cập nhật, dựng hình
 	void update(const sf::RenderTarget* target);
-	void render(sf::RenderTarget* target);
+	virtual void NextCycle() {
+
+	}
+	virtual void render(sf::RenderWindow& window);
 };
 
