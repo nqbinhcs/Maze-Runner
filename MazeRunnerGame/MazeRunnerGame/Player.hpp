@@ -21,47 +21,28 @@ using namespace sf;
 class Player : public MazeObject
 {
 private:
+	bool isLose;
+private:
 	static sf::Image playerImages[4];
 	static bool loadPlayerImages;
-	//float movementSpeed;
-public:
-	//MazeCoordinate posPlayer;
-private: 
-
-	float xOffset;
-	float yOffset;
-
-	float widthRoomPlayer;
-	float heightRoomPlayer;
-
-protected:
-	void initVariables();
-	void initShape();
-
 public:
 	Player(MazeCoordinate pos, float xOffset, float yOffset, float width, float height);
 	virtual ~Player();
 
-	void setWidthPlayer(float width) {
-		widthRoomPlayer = width;
-	}
-
-	void setHeightPlayer(float height) {
-		heightRoomPlayer = height;
-	}
-
-	void setPosStart(MazeCoordinate posStart) {
-		curMazePosition = posStart;
-	}
-
 	bool checkIsConnect(shared_ptr<Maze> curMaze, shared_ptr<Room>, MazeCoordinate posNew);
 
+	void setLose(bool lose) {
+		isLose = lose;
+	}
+	bool getLose() {
+		return isLose;
+	}
+
+	bool CollisionTrap(shared_ptr<Maze> curMaze, MazeCoordinate posNew);
+	bool CollisionGuard(shared_ptr<Maze> curMaze, MazeCoordinate posNew);
 
 	//Functions
 	void updateInput(int direction, shared_ptr<Maze> curMaze);
-	void updateWindowBoundsCollision(const sf::RenderTarget* target);
 	void update(const sf::RenderTarget* target, int direction, shared_ptr<Maze> curMaze);
-	void render(sf::RenderTarget* target);
-	void render(sf::RenderWindow& window);
 	void updateDirecPlayer(int i);
 };
