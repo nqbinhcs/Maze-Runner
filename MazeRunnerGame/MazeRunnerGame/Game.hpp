@@ -90,7 +90,7 @@ public:
 	~Game();
 
 	//Accessors
-	const bool& getEndGame() const;
+	bool getEndGame();
 
 
 	//Game processing
@@ -116,7 +116,10 @@ public:
 	void updateTimeInfo();
 	void updateCoinsInfo();
 	void updateLevel();
+
 	//Functions
+	void resetGame();
+
 	
 };
 

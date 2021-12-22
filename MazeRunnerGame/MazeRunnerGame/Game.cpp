@@ -10,6 +10,7 @@ MyLevel level[7] = { MyLevel{3, 3} , MyLevel{ 5, 5 }, MyLevel{ 9, 9 }, MyLevel{ 
 void Game::initVariables()
 {
 	//Init state of game is Menu state
+	//m_State = MenuState;
 	m_State = MenuState;
 	this->m_EndGame = false;
 	this->m_Time.setCDTime(3603);
@@ -32,7 +33,7 @@ void Game::initWindow()
 	//init display
 	this->m_pMenu = std::shared_ptr<Menu>(new Menu(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this->m_pModeGame = std::shared_ptr<ModeGame>(new ModeGame(SCREEN_WIDTH, SCREEN_HEIGHT));
-	this->m_pGameOver = std::shared_ptr<GameOver>(new GameOver());
+	this->m_pGameOver = std::shared_ptr<GameOver>(new GameOver(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
 	this->m_pLevelComplete = std::shared_ptr<LevelComplete>(new LevelComplete());
 
@@ -144,8 +145,9 @@ Game::~Game()
 //@DESCR: Check whether the Game is ended
 //@PARAM: None
 //@RETURN: the state of the game: FALSE - running | TRUE - ended
-const bool& Game::getEndGame() const
+bool Game::getEndGame()
 {
+	this->m_EndGame = m_Time.isOver();
 	return this->m_EndGame;
 }
 
@@ -203,52 +205,92 @@ void Game::pollEvents()
 					this->m_pWindow->close();
 
 				//Menu
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+				if (m_State == MenuState)
 				{
-					m_pMenu->moveUp();
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				{
-					m_pMenu->moveDown();
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-				{
-					switch (m_pMenu->GetPressedItem())
+					
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 					{
-					case 0:
-						//new game
+						m_pMenu->moveUp();
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+					{
+						m_pMenu->moveDown();
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+					{
+						cout << "Enter press!\n";
+						switch (m_pMenu->GetPressedItem())
+						{
+						case 0:
+							//new game
 
-						//Rendering select mode and Getting the difficulty of the game
-						m_pModeGame->runModeGame(*m_pWindow);
+							//Rendering select mode and Getting the difficulty of the game
+							m_pModeGame->runModeGame(*m_pWindow);
 
-						//For getting the difficulty of the game, use method m_pModeGmae  "int m_pModeGame->GetPressedItem()"
+							//For getting the difficulty of the game, use method m_pModeGmae  "int m_pModeGame->GetPressedItem()"
 
-						//Because of entering new game, so current game state is InGameState
-						m_State = InGameState;
+							//Because of entering new game, so current game state is InGameState
+							m_State = InGameState;
 
-						break;
-					case 1:
-						//continue
-						break;
+							break;
+						case 1:
+							//continue
+							break;
 
-					case 2:
-						//high
-						break;
-					case 3:
-						//help
-						break;
-					case 4:
-						//exit
-						break;
+						case 2:
+							//high
+							break;
+						case 3:
+							//help
+							break;
+						case 4:
+							//exit
+							break;
+						}
+						/*		break;
+						default:
+							break;*/
 					}
 					break;
-			default:
-				break;
 				}
 
-				//For fun
-				if (temp.key.code == sf::Keyboard::BackSpace)
-					this->m_State = LevelCompleteState;
+				//Difficulty Complete
+				if (m_State == DifficultyCompleteState)
+				{
+					//Press Enter to exit
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+					{
+						//Reset all Game
+						resetGame();
+						m_State = MenuState;
+					}
+					break;
+				}
+
+				//Gameover
+				if (m_State == GameOverState)
+				{
+					//Press Enter to exit
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+					{
+						//Reset all Game
+						resetGame();
+						m_State = MenuState;
+					}
+					break;
+				}
+
+				
+				//In Game
+				if (m_State == InGameState)
+				{
+					//m_State = LevelCompleteState;
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+					{
+						m_State = LevelCompleteState;
+					}
+					break;
+				}
 				break;
 
 			}
@@ -327,6 +369,16 @@ void Game::render()
 		return;
 	}
 
+	//-----------------------------Game Over-----------------------------
+	if (getEndGame())
+	{
+		m_State = GameOverState;
+		renderDisplayStates(m_State);
+		this->m_pWindow->display();
+		return;
+	}
+
+
 	//-----------------------------In Game-----------------------------
 
 	//Render Gui
@@ -367,10 +419,7 @@ void Game::render()
 		m_TimeInfo[i].drawMyText(m_pWindow);
 	}
 
-	//Press Enter to next maze
-
-	// - - - - - - Begin Testing: Next maze - - - - - - 
-
+	
 	if (m_State == NextStageState)
 	{
 		delay(0.7);
@@ -393,12 +442,12 @@ void Game::render()
 
 	if (m_State == LevelCompleteState || m_Player->getPosition() == curMaze->finalPos)
 	{
-		
+		cout << "LEVEL~~~ : " << m_Level << '\n';
 		renderDisplayStates(NextStageState);
 		m_State = NextStageState;
 	}
 	
-	// - - - - - -  End Testing - - - - - -
+	
 
 	this->m_pWindow->display();
 }
@@ -541,3 +590,12 @@ void Game::updateLevel() {
 	m_LevelInfo.alignTextCenter();
 	m_LevelInfo.alignTextMiddle();
 }
+
+void Game::resetGame()
+{
+	this->m_EndGame = false;
+	this->m_Time.setCDTime(3603);
+	this->m_Time.start();
+	setLevel(0);
+}
+

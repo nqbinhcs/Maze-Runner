@@ -14,21 +14,21 @@ LevelComplete::LevelComplete()
 	sf::Vector2u textureBackgroundSize = textureBackground.getSize();
 	textureBackgroundSize.x /= 2;
 	textureBackgroundSize.y /= 2;
-
 	spriteBackground.setOrigin(textureBackgroundSize.x, textureBackgroundSize.y);
-
 	spriteBackground.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-
-	spriteBackground.scale(0.75, 0.75);
+	spriteBackground.scale(0.7, 0.85);
 
 
 	// Load total time text
-	font.loadFromFile(FONT_GAME);
+	
+	smallText[0].setCharacterSpacing(1.5);
+	smallText[0].alignTextCenter();
+	smallText[0].setTextPosition(550, 500);
+	
 
-	text.setFont(font);
-	text.setCharacterSize(40);
-	text.setFillColor(sf::Color::Cyan);
-	text.setStyle(sf::Text::Bold);
+	smallText[1].setCharacterSpacing(1.5);
+	smallText[1].alignTextCenter();
+	smallText[1].setTextPosition(400, 550);
 
 }
 
@@ -49,8 +49,12 @@ void LevelComplete::draw(sf::RenderWindow& window, int time)
 	std::stringstream ss;
 	ss << "TIME " << time << "S";
 	std::string timeText = ss.str();
-	text.setString(timeText);
-	//The condition to use setPosition, a string must have a particular value
-	setPositionText(text, SCREEN_HEIGHT / 2 + 70);
-	window.draw(text);
+
+	smallText[0].setText(timeText, SECOND_FONT_GAME, 50, sf::Text::Bold, sf::Color::White);
+	smallText[0].drawMyText(window);
+
+	smallText[1].setText("THAT WAS IMPRESSIVE!", SECOND_FONT_GAME, 50, sf::Text::Bold, sf::Color::White);
+	smallText[1].drawMyText(window);
+
+
 }

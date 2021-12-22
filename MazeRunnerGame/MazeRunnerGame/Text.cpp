@@ -220,6 +220,12 @@ void MyText::drawMyText(sf::RenderTarget* window) {         // vẽ text lên wi
 
 }
 
+void MyText::drawMyText(sf::RenderTarget& window)
+{
+    window.draw(m_Box);
+    window.draw(m_sfText);
+}
+
 void MyText::updateBound()
 {
     sf::FloatRect textBound(m_sfText.getGlobalBounds());

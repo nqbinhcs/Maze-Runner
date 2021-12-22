@@ -5,7 +5,7 @@
 #include <iostream>
 
 #define FONT_GAME "Fonts/TitleFont.ttf"
-
+#define SECOND_FONT_GAME "Fonts/GamestationCond.otf"
 
 class MyText
 {
@@ -80,4 +80,7 @@ public:
 
 public:
     void drawMyText(sf::RenderTarget* window);
+    void drawMyText(sf::RenderTarget &window);
+
+
 };

@@ -14,7 +14,7 @@ protected:
 	sf::Texture textureBackground;
 	sf::Sprite spriteBackground;
 	sf::Font fontGameName;
-	sf::Text gameName;
+	MyText text;
 
 public:
 	Display();
