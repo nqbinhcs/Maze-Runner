@@ -178,9 +178,9 @@ void MyText::setBoxOutlineThickness(float thickness) {
     m_Box.setOutlineThickness(thickness);
 }
 
-void MyText::rotate(float angle) {
-    m_sfText.setRotation(angle);
-    m_Box.setRotation(angle);
+void MyText::scaleBox(float scaleSize)
+{
+    m_Box.setScale(scaleSize, scaleSize);
 }
 
 void MyText::alignTextLeft(){
@@ -213,19 +213,6 @@ void MyText::alignTextBottom(){
     setTextPosition(getTextPositionX(), m_Box.getPosition().y + m_Box.getSize().y);
 }
 
-void MyText::drawMyText(sf::RenderTarget* window) {         // vẽ text lên window
-    // Draw it
-   window->draw(m_Box);
-   window->draw(m_sfText);
-
-}
-
-void MyText::drawMyText(sf::RenderTarget& window)
-{
-    window.draw(m_Box);
-    window.draw(m_sfText);
-}
-
 void MyText::updateBound()
 {
     sf::FloatRect textBound(m_sfText.getGlobalBounds());
@@ -235,4 +222,22 @@ void MyText::updateBound()
         m_Bound = textBound;
     else
         m_Bound = rectBound;
+}
+
+void MyText::rotate(float angle) {
+    m_sfText.setRotation(angle);
+    m_Box.setRotation(angle);
+}
+
+void MyText::scale(float scaleSize)
+{
+    scaleText(scaleSize);
+    scaleBox(scaleSize);
+}
+
+void MyText::drawMyText(sf::RenderTarget& window) {         // vẽ text lên window
+    // Draw it
+    window.draw(m_Box);
+    window.draw(m_sfText);
+
 }

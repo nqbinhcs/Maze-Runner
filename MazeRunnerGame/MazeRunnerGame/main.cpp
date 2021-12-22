@@ -11,9 +11,24 @@ int main()
 	Clock clock;
 	float timer = 0, delay = 0.1;
 	
+	//Button m_Help;
+	//cout << OFFSET_HELP_X << " " << OFFSET_HELP_Y << " " << BUTTON_WIDTH << " " << BUTTON_HEIGHT << endl;
+	//m_Help.setButton(sf::Vector2f(10, 10), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
+	//	sf::Color::Black, sf::Color::Black,
+	//	"Help", FONT_GAME, 32, sf::Text::Style::Bold, sf::Color::White, "");
+	//cout << m_Help.m_Text.getTextPositionX() << " " << m_Help.m_Text.getTextPositionY() << endl;
+	////MyText a("ahihi", FONT_GAME, 30, sf::Text::Style::Bold, sf::Color::Red);
+	//{
 
-	game.render();
-	
+	//	game.m_pWindow->clear(sf::Color::White);
+	//	m_Help.drawButton(*game.m_pWindow);
+	//	m_Help.m_Text.drawMyText(*game.m_pWindow);
+	//	game.m_pWindow->display();
+	//}
+	// char c;
+	// cin >> c;
+		//game.render();
+	//
 	//Game loop
 	while (game.running())
 	{

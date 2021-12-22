@@ -52,6 +52,25 @@ void Game::initFonts()
 	}
 }
 
+//@DESCR: Initialize settings and parameters of buttons
+//@PARAM: None
+//@RETURN: None
+void Game::initButtons()
+{
+	m_Help.setButton(sf::Vector2f(OFFSET_HELP_X, OFFSET_HELP_Y), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
+		sf::Color::Black, sf::Color::Transparent,
+		"Help", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "");
+
+	m_RestartGame.setButton(sf::Vector2f(OFFSET_RESTART_X, OFFSET_RESTART_Y), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
+		sf::Color::Black, sf::Color::Transparent,
+		"Restart", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "");
+
+	m_ReturnMenu.setButton(sf::Vector2f(OFFSET_RETURN_MENU_X, OFFSET_RETURN_MENU_Y), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
+		sf::Color::Black, sf::Color::Transparent,
+		"Menu", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "");
+}
+
+
 //@DESCR: Initialize settings and parameters of text
 //@PARAM: None
 //@RETURN: None
@@ -124,6 +143,7 @@ Game::Game()
 	this->initVariables();
 	this->initWindow();
 	this->initFonts();
+	this->initButtons();
 	this->initText();
 	//this->initMap();
 	curMaze = std::shared_ptr<Maze>(new Maze(MAZE_X, MAZE_Y,
@@ -162,8 +182,6 @@ const bool Game::running() const
 //@DESCR: Get events from user
 //@PARAM: None
 //@RETURN: None
-//**************************************NEED HELP**************************************
-//@BUG: waitEvent can't catch CLOSE event
 void Game::pollEvents()
 {
 	sf::Event temp;
@@ -395,13 +413,13 @@ void Game::render()
 	//Game.hpp: 32
 
 	//Render Maze
-	sf::RectangleShape mazeBound;
+	/*sf::RectangleShape mazeBound;
 	mazeBound.setPosition(sf::Vector2f(OFFSET_MAZE_X, OFFSET_MAZE_Y));
 	mazeBound.setSize(sf::Vector2f(SCREEN_MAZE_WIDTH, SCREEN_MAZE_HEIGHT));
 	mazeBound.setOutlineColor(Color(sf::Color::White));
 	mazeBound.setOutlineThickness(5);
 
-	this->m_pWindow->draw(mazeBound);
+	this->m_pWindow->draw(mazeBound);*/
 	curMaze->AddMazeRoomsToRenderer(*m_pWindow);
 
 	m_Player->render(*m_pWindow);
@@ -411,12 +429,12 @@ void Game::render()
 	updateTimeInfo();
 	updateCoinsInfo();
 
-	m_Title.drawMyText(m_pWindow);
+	m_Title.drawMyText(*m_pWindow);
 	//m_LevelInfo.drawMyText(m_pWindow);
 
 	for (int i(0); i < 2; i++) {
-		m_CoinsInfo[i].drawMyText(m_pWindow);
-		m_TimeInfo[i].drawMyText(m_pWindow);
+		m_CoinsInfo[i].drawMyText(*m_pWindow);
+		m_TimeInfo[i].drawMyText(*m_pWindow);
 	}
 
 	
@@ -438,7 +456,7 @@ void Game::render()
 
 	// Update level
 	updateLevel();
-	m_LevelInfo.drawMyText(m_pWindow);
+	m_LevelInfo.drawMyText(*m_pWindow);
 
 	if (m_State == LevelCompleteState || m_Player->getPosition() == curMaze->finalPos)
 	{
@@ -448,6 +466,10 @@ void Game::render()
 	}
 	
 	
+	// Button display
+	m_Help.drawButton(*m_pWindow);
+	m_RestartGame.drawButton(*m_pWindow);
+	m_ReturnMenu.drawButton(*m_pWindow);
 
 	this->m_pWindow->display();
 }

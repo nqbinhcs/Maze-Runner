@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 #include <string>
 #include "DefinedVariables.hpp"
 #include <iostream>
@@ -62,11 +62,9 @@ public:
     void setBoxFillColor(sf::Color color);
     void setBoxOutlineColor(sf::Color color);
     void setBoxOutlineThickness(float thickness);
-
+    void scaleBox(float scaleSize);
 
 public:
-    void rotate(float angle);
-
     void alignTextLeft();
     void alignTextCenter();
     void alignTextRight();
@@ -78,9 +76,8 @@ public:
 public:
     void updateBound();
 
+    void rotate(float angle);
+    void scale(float scaleSize);
 public:
-    void drawMyText(sf::RenderTarget* window);
-    void drawMyText(sf::RenderTarget &window);
-
-
+    void drawMyText(sf::RenderTarget& window);
 };

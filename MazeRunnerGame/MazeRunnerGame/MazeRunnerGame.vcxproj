@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Coordinate.cpp" />
     <ClCompile Include="Display.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Text.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.hpp" />
     <ClInclude Include="Clock.hpp" />
     <ClInclude Include="Coordinate.hpp" />
     <ClInclude Include="DefinedVariables.hpp" />

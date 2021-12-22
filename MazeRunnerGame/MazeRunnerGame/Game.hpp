@@ -21,6 +21,7 @@
 #include "LevelComplete.hpp"
 #include "Menu.hpp"
 #include "ModeGame.hpp"
+#include "Button.hpp"
 
 using namespace sf;
 
@@ -66,8 +67,10 @@ private:
 	MyText m_LevelInfo;
 	MyText m_TimeInfo[2];
 	MyText m_CoinsInfo[2];
-	//TextBox m_GamePause;
-	//TextBox m_GameExit;
+	
+	Button m_Help;
+	Button m_ReturnMenu;
+	Button m_RestartGame;
 
 	//static
 	MyClock m_Time; //total times
@@ -77,6 +80,7 @@ private:
 	void initVariables();
 	void initWindow();
 	void initFonts();
+	void initButtons();
 	void initText();
 	void initMap();
 
@@ -123,13 +127,14 @@ public:
 	
 };
 
-
 #define SCREEN_TITLE_WIDTH	(SCREEN_WIDTH - 2 * SPACE)
 #define SCREEN_TITLE_HEIGHT	(OFFSET_MAZE_Y - 2 * SPACE) 
 #define OFFSET_TITLE_X		SPACE
 #define OFFSET_TITLE_Y		SPACE
 
 #define NUMBER_OF_BOXES 3
+#define NUMBER_OF_BUTTONS 3
+
 #define SCREEN_INFO_HEIGHT (SCREEN_MAZE_HEIGHT / NUMBER_OF_BOXES)
 #define SCREEN_INFO_WIDTH (SCREEN_WIDTH - SCREEN_MAZE_WIDTH - 2 * SPACE)	
 
@@ -146,8 +151,15 @@ public:
 #define OFFSET_COINS_INFO_X OFFSET_COINS_X
 #define OFFSET_COINS_INFO_Y (OFFSET_COINS_Y + SCREEN_INFO_HEIGHT / 2)
 
-#define OFFSET_PAUSE_X OFFSET_LEVEL_X
-#define OFFSET_PAUSE_Y (OFFSET_COINS_Y + SCREEN_INFO_HEIGHT)
+#define BUTTON_HEIGHT (SCREEN_INFO_HEIGHT / 2)
+#define BUTTON_WIDTH (SCREEN_INFO_WIDTH / (NUMBER_OF_BUTTONS + 1))
+#define BUTTON_SPACE (BUTTON_WIDTH / (NUMBER_OF_BUTTONS + 1))
 
-#define OFFSET_EXIT_X OFFSET_LEVEL_X
-#define OFFSET_EXIT_Y (OFFSET_PAUSE_Y + SCREEN_INFO_HEIGHT)
+#define OFFSET_HELP_X (OFFSET_LEVEL_X + BUTTON_SPACE)
+#define OFFSET_HELP_Y (OFFSET_TIME_Y + SCREEN_INFO_HEIGHT + BUTTON_HEIGHT / 2)
+
+#define OFFSET_RESTART_X (OFFSET_HELP_X + BUTTON_WIDTH + BUTTON_SPACE)
+#define OFFSET_RESTART_Y OFFSET_HELP_Y
+
+#define OFFSET_RETURN_MENU_X (OFFSET_RESTART_X + BUTTON_WIDTH + BUTTON_SPACE)
+#define OFFSET_RETURN_MENU_Y OFFSET_HELP_Y
