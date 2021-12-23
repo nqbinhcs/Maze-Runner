@@ -28,11 +28,12 @@ GameOver::GameOver(float width, float height) : Display(width, height)
 	text.setBoxOutlineThickness(100);
 	text.setBoxOutlineColor(sf::Color::White);
 
+	smallText.resize(1);
 
-	smallText.setText("GUD LUCK ON YOUR NEXT GAME!", SECOND_FONT_GAME, 50, sf::Text::Bold, sf::Color::White);
-	smallText.setCharacterSpacing(1.5);
-	smallText.alignTextCenter();
-	smallText.setTextPosition(SCREEN_WIDTH / 2, 500);
+	smallText[0].setText("GUD LUCK ON YOUR NEXT GAME!", SECOND_FONT_GAME, 50, sf::Text::Bold, sf::Color::White);
+	smallText[0].setCharacterSpacing(1.5);
+	smallText[0].alignTextCenter();
+	smallText[0].setTextPosition(SCREEN_WIDTH / 2, 500);
 
 }
 
@@ -45,6 +46,6 @@ void GameOver::draw(sf::RenderWindow &window)
 		//std::cout << "CALL GAMEOVER DRAW\n";
 		window.draw(spriteBackground); // vẽ background menu
 		text.drawMyText(window);
-		smallText.drawMyText(window);
+		smallText[0].drawMyText(window);
 		// window.draw(gameName); // vẽ tiêu đề 
 }

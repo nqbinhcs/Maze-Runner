@@ -7,9 +7,6 @@
 
 class LevelComplete :public Display
 {
-private:
-	sf::Font font;
-	MyText smallText[2];
 
 public:
 	LevelComplete();

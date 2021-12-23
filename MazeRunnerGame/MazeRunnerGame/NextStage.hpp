@@ -5,9 +5,6 @@
 
 class NextStage :public Display
 {
-private:
-	sf::Font font;
-
 public:
 	NextStage();
 	virtual ~NextStage();

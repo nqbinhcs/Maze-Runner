@@ -2,6 +2,7 @@
 #ifndef Display_hpp
 #define Display_hpp
 #include "Text.hpp"
+#include <vector>
 
 #define IMG_GAMEOVER "Images/GameOver.png"
 #define IMG_NEXTSTAGE "Images/NextStage.png"
@@ -14,7 +15,9 @@ protected:
 	sf::Texture textureBackground;
 	sf::Sprite spriteBackground;
 	sf::Font fontGameName;
+	sf::Font font;
 	MyText text;
+	std::vector<MyText> smallText;
 
 public:
 	Display();

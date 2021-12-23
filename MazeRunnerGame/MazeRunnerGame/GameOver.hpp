@@ -5,9 +5,6 @@
 
 class GameOver :public Display
 {
-private:
-	sf::Font font;
-	MyText smallText;
 
 public:
 	GameOver();

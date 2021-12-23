@@ -3,6 +3,7 @@
 LevelComplete::LevelComplete()
 {
 
+
 	// Load BackGround
 	if (!textureBackground.loadFromFile(IMG_LEVELCOMPLETE))
 	{
@@ -20,6 +21,7 @@ LevelComplete::LevelComplete()
 
 
 	// Load total time text
+	smallText.resize(2);
 	
 	smallText[0].setCharacterSpacing(1.5);
 	smallText[0].alignTextCenter();

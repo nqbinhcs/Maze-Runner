@@ -9,7 +9,6 @@ class Menu :public Display
 {
 private:
 	int selectOption;
-	sf::Font font;
 	sf::Text text[_MAX_CHOICE_MENU];
 	sf::Text GameTittle;
 

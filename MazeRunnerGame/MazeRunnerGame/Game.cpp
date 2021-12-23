@@ -185,29 +185,7 @@ const bool Game::running() const
 void Game::pollEvents()
 {
 	sf::Event temp;
-	//if (m_pWindow->waitEvent(m_Event)) 
-	//{
-	//	while (this->m_pWindow->pollEvent(temp))
-	//	{
-	//		switch (temp.type)
-	//		{
-	//		case sf::Event::Closed:
-	//			this->m_pWindow->close();
-	//			break;
-	//
-	//		case sf::Event::KeyPressed:
-	//			if (temp.key.code == sf::Keyboard::Escape)
-	//				this->m_pWindow->close();
-	//			//For fun
-	//			if (temp.key.code == sf::Keyboard::Enter)
-	//				this->m_State = LevelCompleteState;
-	//			break;
-	//		
-	//		}
-	//		
-	//	}
-	//}
-
+	
 	//if (m_pWindow->waitEvent(m_Event)) 
 	{
 		while (this->m_pWindow->pollEvent(temp))
@@ -405,19 +383,6 @@ void Game::render()
 		this->m_pWindow->draw(this->m_EndGameText);
 
 	
-	
-	//Use it, command:
-	//Game.cpp: 173, 176, 73, (58 to 61), 
-	//Game.hpp: 32
-
-	//Render Maze
-	/*sf::RectangleShape mazeBound;
-	mazeBound.setPosition(sf::Vector2f(OFFSET_MAZE_X, OFFSET_MAZE_Y));
-	mazeBound.setSize(sf::Vector2f(SCREEN_MAZE_WIDTH, SCREEN_MAZE_HEIGHT));
-	mazeBound.setOutlineColor(Color(sf::Color::White));
-	mazeBound.setOutlineThickness(5);
-
-	this->m_pWindow->draw(mazeBound);*/
 	curMaze->AddMazeRoomsToRenderer(*m_pWindow);
 
 	m_Player->render(*m_pWindow);
@@ -485,7 +450,7 @@ void Game::renderDisplayStates(GameState state)
 
 	if (state == DifficultyCompleteState)
 	{
-		m_pLevelComplete->draw(*m_pWindow, 0);
+		m_pLevelComplete->draw(*m_pWindow, m_Time.getRunningTime());
 		return;
 	}
 
