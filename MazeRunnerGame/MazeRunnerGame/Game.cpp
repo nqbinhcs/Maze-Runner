@@ -343,10 +343,8 @@ void Game::update()
 {
 	this->pollEvents();
 
-	//Testing code - Always Nextstage
 
-
-	if (this->m_EndGame == false)
+	if (this->m_EndGame == false && m_State == InGameState)
 	{
 		if (m_Event.type == sf::Event::KeyPressed)
 			this->updatePlayer();
