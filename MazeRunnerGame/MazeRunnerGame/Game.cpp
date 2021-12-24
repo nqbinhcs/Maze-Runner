@@ -128,7 +128,7 @@ void Game::setLevel(int _level)
 	m_Player->updateDirecPlayer(0);
 	m_Player->setLose(false);
 
-	//m_Player->setPosStart(curMaze->startPos);
+	//m_Player->setPosStart(curMaze->startPos);;
 	//m_Player->setWidthPlayer(curMaze->getWidthRoom());
 	//m_Player->setHeightPlayer(curMaze->getHeightRoom());
 	m_Player->updateDirecPlayer(0);
