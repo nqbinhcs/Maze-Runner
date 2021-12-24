@@ -2,25 +2,22 @@
 #include "PathFinder.hpp"
 class BFS : public PathFinder
 {
-	vector<shared_ptr<Room>> findPathOnly(shared_ptr<Room> start, shared_ptr<Room> end);
-	vector<shared_ptr<Room>> findPathShowingProcess(shared_ptr<Room> start, shared_ptr<Room> end);
+	virtual vector<shared_ptr<Room>> findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option = 0);
 };
 
 class DFS : public PathFinder
 {
-	vector<shared_ptr<Room>> findPathOnly(shared_ptr<Room> start, shared_ptr<Room> end);
-	vector<shared_ptr<Room>> findPathShowingProcess(shared_ptr<Room> start, shared_ptr<Room> end);
+	virtual vector<shared_ptr<Room>> findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option = 0);
 };
 
 class Dijkstra : public PathFinder
 {
-	vector<shared_ptr<Room>> findPathOnly(shared_ptr<Room> start, shared_ptr<Room> end);
-	vector<shared_ptr<Room>> findPathShowingProcess(shared_ptr<Room> start, shared_ptr<Room> end);
+	virtual vector<shared_ptr<Room>> findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option = 0);
 };
 
 class AStar : public PathFinder
 {
-	vector<shared_ptr<Room>> findPathOnly(shared_ptr<Room> start, shared_ptr<Room> end);
-	vector<shared_ptr<Room>> findPathShowingProcess(shared_ptr<Room> start, shared_ptr<Room> end);
+	int calcH(shared_ptr<Room> room, shared_ptr<Room> end);
+	virtual vector<shared_ptr<Room>> findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option = 0);
 };
 

@@ -112,7 +112,15 @@ void Game::nextLevel()
 	if (m_Level >= MAX_LEVEL - 1) 
 		return;
 	m_Level++;
-	std::cout << m_Level << '\n';
+	setLevel(m_Level);
+}
+
+//@DESCR: Changing from "current" level to new level
+//@PARAM: new level
+//@RETURN: None
+void Game::setLevel(int _level)
+{
+	m_Level = _level;
 	curMaze->SetMaze(level[m_Level].x, level[m_Level].y, m_Level + 1, *m_pWindow);
 
 	m_Player->setPosition(curMaze->startPos);
@@ -124,15 +132,6 @@ void Game::nextLevel()
 	//m_Player->setWidthPlayer(curMaze->getWidthRoom());
 	//m_Player->setHeightPlayer(curMaze->getHeightRoom());
 	m_Player->updateDirecPlayer(0);
-}
-
-//@DESCR: Changing from "current" level to new level
-//@PARAM: new level
-//@RETURN: None
-void Game::setLevel(int _level)
-{
-	m_Level = _level;
-	curMaze->SetMaze(level[m_Level].x, level[m_Level].y, m_Level + 1, *m_pWindow);
 }
 
 //@DESCR: Constructor of Game

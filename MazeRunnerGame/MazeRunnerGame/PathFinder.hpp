@@ -1,10 +1,10 @@
 #pragma once
 #include "Maze.hpp"
+#include <queue>
 
 class PathFinder
 {
 public:
-	virtual vector<shared_ptr<Room>> findPathOnly(shared_ptr<Room> start, shared_ptr<Room> end) = 0;
-	virtual vector<shared_ptr<Room>> findPathShowingProcess(shared_ptr<Room> start, shared_ptr<Room> end) = 0;
+	virtual vector<shared_ptr<Room>> findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option = 0) = 0;
 };
 
