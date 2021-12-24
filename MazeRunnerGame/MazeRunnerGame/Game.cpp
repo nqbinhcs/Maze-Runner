@@ -9,9 +9,7 @@ MyLevel level[7] = { MyLevel{3, 3} , MyLevel{ 5, 5 }, MyLevel{ 9, 9 }, MyLevel{ 
 //@RETURN: None
 void Game::initVariables()
 {
-	//Init state of game is Menu state
-	//m_State = MenuState;
-	m_State = MenuState;
+	m_State = MenuState; //Obviously, we always in MenuState when entering game
 	this->m_EndGame = false;
 	this->m_Time.setCDTime(3603);
 	this->m_Time.start();
@@ -20,26 +18,26 @@ void Game::initVariables()
 	
 }
 
+
 //@DESCR: Initialize parameter of Game's screen
 //@PARAM: None
 //@RETURN: None
 void Game::initWindow()
 {
+	//Init window
 	this->m_VideoMode = sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT);
 	this->m_pWindow = new sf::RenderWindow(this->m_VideoMode, NAME_GAME, sf::Style::Close | sf::Style::Titlebar);
 	this->m_pWindow->setFramerateLimit(60);
 
-
-	//init display
+	//Init displays
 	this->m_pMenu = std::shared_ptr<Menu>(new Menu(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this->m_pModeGame = std::shared_ptr<ModeGame>(new ModeGame(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this->m_pGameOver = std::shared_ptr<GameOver>(new GameOver(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
 	this->m_pLevelComplete = std::shared_ptr<LevelComplete>(new LevelComplete());
 
-	// Turn off key repetition
-	//this->m_pWindow->setKeyRepeatEnabled(0);
 }
+
 
 //@DESCR: Initialze settings of fonts
 //@PARAM: None
@@ -51,6 +49,7 @@ void Game::initFonts()
 		std::cout << " ! ERROR::GAME::INITFONTS::COULD NOT LOAD TitleFont.ttf" << "\n";
 	}
 }
+
 
 //@DESCR: Initialize settings and parameters of buttons
 //@PARAM: None
@@ -94,15 +93,6 @@ void Game::initText()
 	initCoinsInfo();
 }
 
-//@DESCR: Initialize settings of m_Map
-//@PARAM: None
-//@RETURN: None
-void Game::initMap() {
-	//this->m_Map.creatGameMap();
-	//this->m_Map.setdisplayMap();
-	//Set location of m_Player
-	//this->m_Player.setLocaStart(this->m_Map.getColStart(), this->m_Map.getRowStart());
-}
 
 //@DESCR: Changing from "current" level to "current + 1" level
 //@PARAM: None
@@ -114,6 +104,7 @@ void Game::nextLevel()
 	m_Level++;
 	setLevel(m_Level);
 }
+
 
 //@DESCR: Changing from "current" level to new level
 //@PARAM: new level
@@ -128,11 +119,9 @@ void Game::setLevel(int _level)
 	m_Player->updateDirecPlayer(0);
 	m_Player->setLose(false);
 
-	//m_Player->setPosStart(curMaze->startPos);;
-	//m_Player->setWidthPlayer(curMaze->getWidthRoom());
-	//m_Player->setHeightPlayer(curMaze->getHeightRoom());
 	m_Player->updateDirecPlayer(0);
 }
+
 
 //@DESCR: Constructor of Game
 //@PARAM: None
@@ -144,14 +133,13 @@ Game::Game()
 	this->initFonts();
 	this->initButtons();
 	this->initText();
-	//this->initMap();
 	curMaze = std::shared_ptr<Maze>(new Maze(MAZE_X, MAZE_Y,
 		OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_WIDTH,
 		SCREEN_MAZE_HEIGHT, 1, false, *m_pWindow));
 	m_Player = std::shared_ptr<Player>(new Player(curMaze->startPos, OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
-	//reset level to 0
-	setLevel(0);
+	setLevel(0); //Level 0 when entering game
 }
+
 
 //@DESCR: Destructor of Game
 //@PARAM: None
@@ -160,6 +148,7 @@ Game::~Game()
 {
 	delete this->m_pWindow;
 }
+
 
 //@DESCR: Check whether the Game is ended
 //@PARAM: None
@@ -170,6 +159,7 @@ bool Game::getEndGame()
 	return this->m_EndGame;
 }
 
+
 //@DESCR: Check whether the Game is running
 //@PARAM: None
 //@RETURN: the state of the game: FALSE - ended | TRUE - running
@@ -178,10 +168,12 @@ const bool Game::running() const
 	return this->m_pWindow->isOpen() /*&& this->m_EndGame == false*/;
 }
 
+
+
 //@DESCR: Get events from user
 //@PARAM: None
 //@RETURN: None
-void Game::pollEvents()
+void Game::pollEvents() 
 {
 	sf::Event temp;
 	
@@ -200,7 +192,7 @@ void Game::pollEvents()
 					this->m_pWindow->close();
 
 				//Menu
-				if (m_State == MenuState)
+				if (m_State == MenuState) //Check if we are in MenuState
 				{
 					
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -216,8 +208,7 @@ void Game::pollEvents()
 						cout << "Enter press!\n";
 						switch (m_pMenu->GetPressedItem())
 						{
-						case 0:
-							//new game
+						case 0: //"NEW GAME" option
 
 							//Rendering select mode and Getting the difficulty of the game
 							m_pModeGame->runModeGame(*m_pWindow);
@@ -228,23 +219,23 @@ void Game::pollEvents()
 							m_State = InGameState;
 
 							break;
-						case 1:
-							//continue
+
+						case 1: //"CONTINUE" option
+					
 							break;
 
-						case 2:
-							//high
+						case 2: //"HIGH SCORE" option
+							
 							break;
-						case 3:
-							//help
+
+						case 3: //"HELP" option
+
 							break;
-						case 4:
-							//exit
+
+						case 4: //"EXIT" option
+	
 							break;
 						}
-						/*		break;
-						default:
-							break;*/
 					}
 					break;
 				}
@@ -279,7 +270,6 @@ void Game::pollEvents()
 				//In Game
 				if (m_State == InGameState)
 				{
-					//m_State = LevelCompleteState;
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 					{
 						m_State = LevelCompleteState;
@@ -294,6 +284,7 @@ void Game::pollEvents()
 	}
 	this->m_Event = temp;
 }
+
 
 //@DESCR: Update m_Player's changes, including position
 //@PARAM: None
@@ -372,7 +363,7 @@ void Game::render()
 	}
 
 
-	//-----------------------------In Game-----------------------------
+	//-----------------------------In Game + Next Stage-----------------------------
 
 	//Render Gui
 	this->renderGui(this->m_pWindow);
@@ -387,12 +378,10 @@ void Game::render()
 	m_Player->render(*m_pWindow);
 
 	// Info display
-	//updateLevel();
 	updateTimeInfo();
 	updateCoinsInfo();
 
 	m_Title.drawMyText(*m_pWindow);
-	//m_LevelInfo.drawMyText(m_pWindow);
 
 	for (int i(0); i < 2; i++) {
 		m_CoinsInfo[i].drawMyText(*m_pWindow);
@@ -400,7 +389,8 @@ void Game::render()
 	}
 
 	
-	if (m_State == NextStageState)
+	//-----------------------------Next Stage-----------------------------
+	if (m_State == NextStageState) 
 	{
 		delay(0.7);
 

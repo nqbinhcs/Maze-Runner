@@ -16,7 +16,7 @@ Menu::Menu(float width, float height) :Display(width, height)
 	   do dònng chữ New Game nằm đầu nên ta cho mặc định khi vào Menu, chức năng này được chọn */
 
 	
-	delta_effect = 120;
+	delta_effect = 0;
 
 	int delta = 100;
 	GameTittle.setFont(font);

@@ -34,6 +34,9 @@ struct MyLevel {
 
 class Game
 {
+	//I don't know how to categorize the methods which be used in each function ._.
+	//I think the effective ways in this situation are semantic comments :<
+	//I will group all revelant functions into a block and descibe some new functions and attributes
 public:
 	sf::RenderWindow* m_pWindow;
 private:
@@ -41,24 +44,30 @@ private:
 	bool m_EndGame;
 	sf::Event m_Event;
 
-	//Game State
+	//----------------Game State atrributes----------------
 	GameState m_State;
 
-	//Display
 
-	shared_ptr<Menu> m_pMenu;
-	shared_ptr<ModeGame> m_pModeGame;
+	//----------------Display attributes----------------
+	//@DESCR: Proven some displays for user such as: Menu screen, GameOver screen, ....
+	shared_ptr<Menu> m_pMenu; //New Game, Continue, ....
+	shared_ptr<ModeGame> m_pModeGame; //Easy, Medium, Hard, ....
 	shared_ptr<GameOver> m_pGameOver;
 	shared_ptr<NextStage> m_pNextStage;
 	shared_ptr<LevelComplete> m_pLevelComplete;
 
-	//In Game
-	shared_ptr<Maze> curMaze;
 
+	//----------------"In Game processing"  atrributes----------------
+	shared_ptr<Maze> curMaze;
 	shared_ptr<Player> m_Player;
 	int m_Points;
 
-	//Gui
+	//----------------Stat attributes----------------
+	MyClock m_Time; //total times
+	int m_Level; //current levels
+
+
+	//----------------GUI atrributes----------------
 	sf::Font m_Font;
 	sf::Text m_GuiText;
 	sf::Text m_EndGameText;
@@ -72,58 +81,55 @@ private:
 	Button m_ReturnMenu;
 	Button m_RestartGame;
 
-	//static
-	MyClock m_Time; //total times
-	int m_Level; //current levels
 
-	//GUI functions
+	//----------------Initial GUI functions----------------
 	void initVariables();
 	void initWindow();
 	void initFonts();
 	void initButtons();
 	void initText();
-	void initMap();
 
-	//Processing functions
-	void nextLevel();
-	void setLevel(int _level);
-
-public:
-	//Constructors and Destructors
-	Game();
-	~Game();
-
-	//Accessors
-	bool getEndGame();
-
-
-	//Game processing
-	const bool running() const;
-	void pollEvents();
-
-	void updatePlayer();
-	//void updateCollision();
-	void updateGui();
-	void update();
-
-	void renderGui(sf::RenderTarget* target);
-	void render();
-
-	void renderDisplayStates(GameState);
-
-	//Modifiers
 	void initTitle();
 	void initLevelInfo();
 	void initTimeInfo();
 	void initCoinsInfo();
 
+
+	//----------------Update GUI functions----------------
+	void updatePlayer();
+	void updateGui();
 	void updateTimeInfo();
 	void updateCoinsInfo();
 	void updateLevel();
 
-	//Functions
-	void resetGame();
 
+	//----------------Render GUI functions----------------
+	void renderGui(sf::RenderTarget* target);
+	void renderDisplayStates(GameState); //render above Display attributes
+
+
+	//----------------"In game processing" functions----------------
+	void nextLevel();
+	void setLevel(int _level);
+	void resetGame(); //reset all variables of game aka the second initVariables =))))
+
+public:
+
+	//--------Constructors and Destructors--------
+	Game();
+	~Game();
+
+	//--------Accessors functions--------
+	bool getEndGame();
+	const bool running() const;
+	void pollEvents(); //Follow my flow in Game.cpp :D
+
+	//--------Update GUI functions--------
+	void update();
+
+	//--------Render GUI functions--------
+	void render();
+	
 	
 };
 
