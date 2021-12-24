@@ -29,6 +29,8 @@ vector<shared_ptr<Room>> BFS::findPath(shared_ptr<Room> start, shared_ptr<Room> 
 
 		for (auto v : u->adjRooms)
 		{
+			if (u->checkConnectRoom(v) == false)
+				continue;
 			auto vPos = v->roomPos;
 			
 			if (!preRoom[vPos.getX()][vPos.getY()])
@@ -97,6 +99,8 @@ vector<shared_ptr<Room>> DFS::findPath(shared_ptr<Room> start, shared_ptr<Room> 
 
 		for (auto v : u->adjRooms)
 		{
+			if (u->checkConnectRoom(v) == false)
+				continue;
 			auto vPos = v->roomPos;
 
 			if (v == dest) 
@@ -155,6 +159,8 @@ vector<shared_ptr<Room>> Dijkstra::findPath(shared_ptr<Room> start, shared_ptr<R
 
 		for (auto v : u->adjRooms)
 		{
+			if (u->checkConnectRoom(v) == false)
+				continue;
 			auto vPos = v->roomPos;
 
 			if (dist[vPos.getX()][vPos.getY()] > curDist + 1)
