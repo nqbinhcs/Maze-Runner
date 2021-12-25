@@ -112,7 +112,7 @@ public:
 		mazeY_RoomCount = mazeY_Room;
 		
 		level = startLevel;
-		maxLevel = maxLevel;
+		maxLevel = finalLevel;
 
 		countRoom_Random = random;
 
