@@ -22,6 +22,7 @@
 #include "Menu.hpp"
 #include "ModeGame.hpp"
 #include "Button.hpp"
+#include "Helper.hpp"
 
 using namespace sf;
 
@@ -46,7 +47,7 @@ private:
 
 	//----------------Game State atrributes----------------
 	GameState m_State;
-
+	Helper m_Helper;
 
 	//----------------Display attributes----------------
 	//@DESCR: Proven some displays for user such as: Menu screen, GameOver screen, ....

@@ -1,13 +1,13 @@
 #include "Clock.hpp"
 #include <iostream>
 
-uint32_t MyClock::getRunningTime() {
+uint32_t MyClock::getRunningTimeInSec() {
 	return difftime(time(0), m_StartTime);
 }
 
 uint32_t MyClock::getCurrentCDTime() {
-	//std::cout << getRunningTime() << std::endl;
-	return (m_CDTime > getRunningTime() ? (m_CDTime - getRunningTime()) : 0);
+	//std::cout << getRunningTimeInSec() << std::endl;
+	return (m_CDTime > getRunningTimeInSec() ? (m_CDTime - getRunningTimeInSec()) : 0);
 }
 
 void MyClock::start() {
@@ -15,7 +15,7 @@ void MyClock::start() {
 }
 
 bool MyClock::isOver() {
-	return getRunningTime() > m_CDTime;
+	return getRunningTimeInSec() > m_CDTime;
 }
 
 void MyClock::setCDTime(uint32_t time) {

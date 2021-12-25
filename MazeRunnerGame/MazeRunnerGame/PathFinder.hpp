@@ -1,6 +1,7 @@
 #pragma once
 #include "Maze.hpp"
 #include <queue>
+#include <iostream>
 
 class PathFinder
 {

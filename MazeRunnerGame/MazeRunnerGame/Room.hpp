@@ -93,6 +93,10 @@ public:
 	Room(const Room& obj);
 	~Room();
 
+	sf::Vector2f getPosition() {
+		return sf::Vector2f(positionX, positionY);
+	}
+
 	int getWidthRoom() {
 		return widthRoom;
 	}

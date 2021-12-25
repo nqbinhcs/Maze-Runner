@@ -1,8 +1,9 @@
 #include "MazeAlgorithms.hpp"
+#include <queue>
+const int MAX_SIZE = 50;
 
 
 // -----------------------------BFS IMPLEMENTATIONS-----------------------------
-
 vector<shared_ptr<Room>> BFS::findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option)
 {
 	if (start == end)
@@ -12,11 +13,13 @@ vector<shared_ptr<Room>> BFS::findPath(shared_ptr<Room> start, shared_ptr<Room> 
 
 	vector < vector< shared_ptr<Room> > > preRoom(MAX_SIZE, vector< shared_ptr<Room> >(MAX_SIZE, 0));
 	vector< shared_ptr<Room> > trace;
+	vector< shared_ptr<Room> > progress;
 	queue< shared_ptr<Room> > qu;
 
 	qu.push(start);
-	preRoom[start->roomPos.getX()][start->roomPos.getY()] = start;
-	
+	progress.push_back(start);
+	preRoom[start->roomPos.getX()][start->roomPos.getY()] = end;
+
 	while (!qu.empty())
 	{
 		auto u = qu.front();
@@ -25,27 +28,30 @@ vector<shared_ptr<Room>> BFS::findPath(shared_ptr<Room> start, shared_ptr<Room> 
 		qu.pop();
 
 		if (u == end)
-			return;
+			break;
 
 		for (auto v : u->adjRooms)
 		{
 			if (u->checkConnectRoom(v) == false)
 				continue;
+
 			auto vPos = v->roomPos;
-			
+
 			if (!preRoom[vPos.getX()][vPos.getY()])
 			{
 				preRoom[vPos.getX()][vPos.getY()] = u;
 				qu.push(v);
+				progress.push_back(v);
 			}
 		}
 	}
+
 
 	int endX = end->roomPos.getX();
 	int endY = end->roomPos.getY();
 	auto curEnd = end;
 
-	while (preRoom[endX][endY] && preRoom[endX][endY] != start)
+	while (preRoom[endX][endY] && preRoom[endX][endY] != end)
 	{
 		trace.push_back(curEnd);
 		curEnd = preRoom[endX][endY];
@@ -59,11 +65,16 @@ vector<shared_ptr<Room>> BFS::findPath(shared_ptr<Room> start, shared_ptr<Room> 
 		reverse(trace.begin(), trace.end());
 	}
 
+	/*for (auto& room : trace)
+	{
+		std::cout << room->roomPos.getX() << " " << room->roomPos.getY() << endl;
+	}*/
+	if (option)
+		return progress;
 	return trace;
 }
 
 // -----------------------------DFS IMPLEMENTATIONS-----------------------------
-
 vector<shared_ptr<Room>> DFS::findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option)
 {
 	if (start == end)
@@ -71,112 +82,46 @@ vector<shared_ptr<Room>> DFS::findPath(shared_ptr<Room> start, shared_ptr<Room> 
 		return vector<shared_ptr<Room>>(1, start);
 	}
 
+	vector < vector< shared_ptr<Room> > > preRoom(MAX_SIZE, vector< shared_ptr<Room> >(MAX_SIZE, 0));
 	vector< shared_ptr<Room> > trace;
+	vector< shared_ptr<Room> > progress;
 	vector< shared_ptr<Room> > roomStack;
-	vector< vector < bool > > visited(MAX_SIZE, vector < bool >(MAX_SIZE, 0));
-	shared_ptr<Room> dest = end;
-	bool found = false;
 
 	roomStack.push_back(start);
-	visited[start->roomPos.getX()][start->roomPos.getY()] = true;
+	preRoom[start->roomPos.getX()][start->roomPos.getY()] = end;
 
 	while (!roomStack.empty())
 	{
 		auto u = roomStack.back();
 		auto uPos = u->roomPos;
 
+		progress.push_back(u);
 		roomStack.pop_back();
 
-		if (found)
-		{
-			if (dest->checkConnectRoom(u))
-			{
-				trace.push_back(u);
-				u = dest;
-			}
-			continue;
-		}
+		if (u == end)
+			break;
 
 		for (auto v : u->adjRooms)
 		{
 			if (u->checkConnectRoom(v) == false)
 				continue;
+
 			auto vPos = v->roomPos;
 
-			if (v == dest) 
+			if (!preRoom[vPos.getX()][vPos.getY()])
 			{
-				found = true;
-				break;
-			}
-
-			if (!visited[vPos.getX()][vPos.getY()])
-			{
-				roomStack.push_back(v);
-				visited[vPos.getX()][vPos.getY()] = true;
-			}
-		}
-	}
-
-	if (!trace.empty())
-	{
-		reverse(trace.begin(), trace.end());
-		trace.push_back(end);
-	}
-
-	return trace;
-}
-
-// -----------------------------DIJKSTRA IMPLEMENTATIONS------------------------
-
-vector<shared_ptr<Room>> Dijkstra::findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option)
-{
-	if (start == end)
-	{
-		return vector<shared_ptr<Room>>(1, start);
-	}
-
-	const int inf = MAX_SIZE * MAX_SIZE + 1;
-	vector< vector< int > > dist(MAX_SIZE, vector< int >(MAX_SIZE, inf));
-	vector < vector< shared_ptr<Room> > >preRoom(MAX_SIZE, vector< shared_ptr<Room> >(MAX_SIZE, 0));
-	vector< shared_ptr<Room> > trace;
-
-	priority_queue<pair<int, shared_ptr<Room>>, vector<pair<int, shared_ptr<Room>>>, greater<pair<int, shared_ptr<Room>>> > pq;
-
-	dist[start->roomPos.getX()][start->roomPos.getY()] = 0;
-	preRoom[start->roomPos.getX()][start->roomPos.getY()] = start;
-	pq.push({ 0, start });
-
-	while (!pq.empty())
-	{
-		int curDist = pq.top().first;
-		auto u = pq.top().second;
-		auto uPos = u->roomPos;
-
-		pq.pop();
-
-		if (dist[uPos.getX()][uPos.getY()] != curDist)
-			continue;
-
-		for (auto v : u->adjRooms)
-		{
-			if (u->checkConnectRoom(v) == false)
-				continue;
-			auto vPos = v->roomPos;
-
-			if (dist[vPos.getX()][vPos.getY()] > curDist + 1)
-			{
-				dist[vPos.getX()][vPos.getY()] = curDist + 1;
 				preRoom[vPos.getX()][vPos.getY()] = u;
-				pq.push({ curDist + 1 , v });
+				roomStack.push_back(v);
 			}
 		}
 	}
+
 
 	int endX = end->roomPos.getX();
 	int endY = end->roomPos.getY();
 	auto curEnd = end;
 
-	while (preRoom[endX][endY] && preRoom[endX][endY] != start)
+	while (preRoom[endX][endY] && preRoom[endX][endY] != end)
 	{
 		trace.push_back(curEnd);
 		curEnd = preRoom[endX][endY];
@@ -190,10 +135,83 @@ vector<shared_ptr<Room>> Dijkstra::findPath(shared_ptr<Room> start, shared_ptr<R
 		reverse(trace.begin(), trace.end());
 	}
 
+	/*for (auto& room : trace)
+	{
+		std::cout << room->roomPos.getX() << " " << room->roomPos.getY() << endl;
+	}*/
+
+	if (option)
+		return progress;
 	return trace;
 }
 
+
+// -----------------------------DIJKSTRA IMPLEMENTATIONS------------------------
+//vector<shared_ptr<Room>> Dijkstra::findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option)
+//{
+//	if (start == end)
+//	{
+//		return vector<shared_ptr<Room>>(1, start);
+//	}
+//
+//	const int inf = MAX_SIZE * MAX_SIZE + 1;
+//	vector< vector< int > > dist(MAX_SIZE, vector< int >(MAX_SIZE, inf));
+//	vector < vector< shared_ptr<Room> > >preRoom(MAX_SIZE, vector< shared_ptr<Room> >(MAX_SIZE, 0));
+//	vector< shared_ptr<Room> > trace;
+//
+//	priority_queue<pair<int, shared_ptr<Room>>, vector<pair<int, shared_ptr<Room>>>, greater<pair<int, shared_ptr<Room>>> > pq;
+//
+//	dist[start->roomPos.getX()][start->roomPos.getY()] = 0;
+//	preRoom[start->roomPos.getX()][start->roomPos.getY()] = start;
+//	pq.push({ 0, start });
+//
+//	while (!pq.empty())
+//	{
+//		int curDist = pq.top().first;
+//		auto u = pq.top().second;
+//		auto uPos = u->roomPos;
+//
+//		pq.pop();
+//
+//		if (dist[uPos.getX()][uPos.getY()] != curDist)
+//			continue;
+//
+//		for (auto v : u->adjRooms)
+//		{
+//			auto vPos = v->roomPos;
+//
+//			if (dist[vPos.getX()][vPos.getY()] > curDist + 1)
+//			{
+//				dist[vPos.getX()][vPos.getY()] = curDist + 1;
+//				preRoom[vPos.getX()][vPos.getY()] = u;
+//				pq.push({ curDist + 1 , v });
+//			}
+//		}
+//	}
+//
+//	int endX = end->roomPos.getX();
+//	int endY = end->roomPos.getY();
+//	auto curEnd = end;
+//
+//	while (preRoom[endX][endY] && preRoom[endX][endY] != start)
+//	{
+//		trace.push_back(curEnd);
+//		curEnd = preRoom[endX][endY];
+//		endX = curEnd->roomPos.getX();
+//		endY = curEnd->roomPos.getY();
+//	}
+//
+//	if (!trace.empty())
+//	{
+//		trace.push_back(start);
+//		reverse(trace.begin(), trace.end());
+//	}
+//
+//	return trace;
+//}
+
 // -----------------------------A-STAR IMPLEMENTATIONS--------------------------
+
 
 int AStar::calcH(shared_ptr<Room> room, shared_ptr<Room> end)
 {
@@ -202,6 +220,7 @@ int AStar::calcH(shared_ptr<Room> room, shared_ptr<Room> end)
 
 vector<shared_ptr<Room>> AStar::findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option)
 {
+	std::cout << "CALL SOLVE\n";
 	int max_size = 50;
 	int inf = max_size * max_size + 1;
 	vector < vector < int > > F(max_size, vector < int >(max_size, inf));
@@ -229,6 +248,8 @@ vector<shared_ptr<Room>> AStar::findPath(shared_ptr<Room> start, shared_ptr<Room
 		int uY = u->roomPos.getY();
 
 		if (F[uX][uY] < curF) continue;
+
+		//std::cout << "======POP " << uX << ' ' << uY << ' ' << curF << '\n';
 
 		if (option) result.push_back(u);
 

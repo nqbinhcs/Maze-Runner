@@ -364,6 +364,12 @@ void Game::render()
 
 
 	//-----------------------------In Game + Next Stage-----------------------------
+	
+	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
+	if (m_Helper.isHelping == false)
+		m_Helper.help(1, curMaze->FindRoomByPos(curMaze->startPos), curMaze->FindRoomByPos(curMaze->finalPos));
+	m_Helper.showInstruction(*m_pWindow);
+	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
 
 	//Render Gui
 	this->renderGui(this->m_pWindow);
@@ -392,6 +398,10 @@ void Game::render()
 	//-----------------------------Next Stage-----------------------------
 	if (m_State == NextStageState) 
 	{
+		/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/ 
+		m_Helper.updateHelpStatus(false);
+		/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
+		
 		delay(0.7);
 
 		//Win a difficulty mode
@@ -413,6 +423,7 @@ void Game::render()
 	if (m_State == LevelCompleteState || m_Player->getPosition() == curMaze->finalPos)
 	{
 		cout << "LEVEL~~~ : " << m_Level << '\n';
+		//testing
 		renderDisplayStates(NextStageState);
 		m_State = NextStageState;
 	}
@@ -439,7 +450,7 @@ void Game::renderDisplayStates(GameState state)
 
 	if (state == DifficultyCompleteState)
 	{
-		m_pLevelComplete->draw(*m_pWindow, m_Time.getRunningTime());
+		m_pLevelComplete->draw(*m_pWindow, m_Time.getRunningTimeInSec());
 		return;
 	}
 

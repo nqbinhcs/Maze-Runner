@@ -16,7 +16,8 @@ public:
 
 public:
 	uint32_t getCurrentCDTime();
-	uint32_t getRunningTime();
+	uint32_t getRunningTimeInSec();
+	uint32_t getRunningTimeInMiliSec();
 	void setCDTime(uint32_t time);
 	std::string getCDTime();
 };
