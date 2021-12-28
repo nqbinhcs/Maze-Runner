@@ -180,7 +180,7 @@ void MyText::setBoxOutlineThickness(float thickness) {
 
 void MyText::scaleBox(float scaleSize)
 {
-    m_Box.setScale(scaleSize, scaleSize);
+    m_Box.setScale(scaleSize, scaleSize);   
 }
 
 void MyText::alignTextLeft(){
@@ -232,6 +232,7 @@ void MyText::rotate(float angle) {
 void MyText::scale(float scaleSize)
 {
     scaleText(scaleSize);
+
     scaleBox(scaleSize);
 }
 

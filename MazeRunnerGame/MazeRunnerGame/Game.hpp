@@ -23,10 +23,11 @@
 #include "ModeGame.hpp"
 #include "Button.hpp"
 #include "Helper.hpp"
+#include "HelpAlgorithmMenu.hpp"
 
 using namespace sf;
 
-enum GameState { MenuState, InGameState, LevelCompleteState, GameOverState, NextStageState, DifficultyCompleteState};
+enum GameState { MenuState, InGameState, InHelpState, LevelCompleteState, GameOverState, NextStageState, DifficultyCompleteState};
 
 struct MyLevel {
 	int x, y;
@@ -55,6 +56,7 @@ private:
 	shared_ptr<ModeGame> m_pModeGame; //Easy, Medium, Hard, ....
 	shared_ptr<GameOver> m_pGameOver;
 	shared_ptr<NextStage> m_pNextStage;
+	shared_ptr<HelpAlgorithmMenu> m_pHelpMenu;
 	shared_ptr<LevelComplete> m_pLevelComplete;
 
 

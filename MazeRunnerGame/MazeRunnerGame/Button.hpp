@@ -3,7 +3,7 @@
 #include <string>
 
 #define NORMAL_BUTTON_SIZE 1
-#define CHOSEN_BUTTON_SIZE 1.2
+#define CHOSEN_BUTTON_SIZE 1.1
 
 class Button
 {
@@ -18,13 +18,13 @@ public:
 	sf::FloatRect m_Bound;
 public:
 	Button() {};
-	~Button() {};	
+	~Button() {};
 public:
 	void setTextBox(sf::Vector2f position, sf::Vector2f boxSize,
 		sf::Color fillColor, sf::Color outlineColor,
 		std::string text, std::string font,
 		float textSize, sf::Uint32 style, sf::Color color);
-	
+
 	void setSpriteOriginToCentroid();
 	void setSpriteOrigin(sf::Vector2f position);
 	void setSpritePosition(sf::Vector2f position);
@@ -43,7 +43,10 @@ public:
 	void scale(float scaleSize);
 
 	bool isClick(sf::RenderWindow* pWindow);
+	bool isClickV1(sf::RenderWindow* pWindow);
 	bool isMouseover(sf::RenderWindow* pWindow);
+	bool isMouseoverV1(sf::RenderWindow* pWindow);
+
 
 	void makeChosen();
 	void makeNormal();

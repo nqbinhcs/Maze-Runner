@@ -34,6 +34,7 @@ void Game::initWindow()
 	this->m_pModeGame = std::shared_ptr<ModeGame>(new ModeGame(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this->m_pGameOver = std::shared_ptr<GameOver>(new GameOver(SCREEN_WIDTH, SCREEN_HEIGHT));
 	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
+	this->m_pHelpMenu = std::shared_ptr<HelpAlgorithmMenu>(new HelpAlgorithmMenu());
 	this->m_pLevelComplete = std::shared_ptr<LevelComplete>(new LevelComplete());
 
 }
@@ -186,7 +187,44 @@ void Game::pollEvents()
 			case sf::Event::Closed:
 				this->m_pWindow->close();
 				break;
+				//------------------CLICK EVENT------------------
+			case sf::Event::MouseButtonPressed:
+				if (m_State == InGameState)
+				{
+					if (m_Help.isClickV1(m_pWindow))
+					{
+						m_Help.makeChosen();
+					}
 
+					if (m_ReturnMenu.isClickV1(m_pWindow))
+					{
+						m_ReturnMenu.makeChosen();
+					}
+
+					if (m_RestartGame.isClickV1(m_pWindow))
+					{
+						m_RestartGame.makeChosen();
+					}
+
+					break;
+				}
+				if (m_State == InHelpState) //Choosing Algorithm
+				{
+					if (m_pHelpMenu->isExit(m_pWindow)) //Check exit
+					{
+						//back to normal
+						m_State = InGameState;
+						m_Help.makeNormal();
+						m_RestartGame.makeNormal();
+						m_ReturnMenu.makeNormal();
+					}
+					else
+						m_pHelpMenu->pollEvent(m_pWindow); //Choose Algorithms
+					break;
+				}
+				break;
+
+				//------------------BUTTON EVENT------------------
 			case sf::Event::KeyPressed:
 				if (temp.key.code == sf::Keyboard::Escape)
 					this->m_pWindow->close();
@@ -434,7 +472,37 @@ void Game::render()
 	m_RestartGame.drawButton(*m_pWindow);
 	m_ReturnMenu.drawButton(*m_pWindow);
 
+	//-----------------------------In Help State-----------------------------
+	if (m_State == InHelpState)
+	{
+		renderDisplayStates(m_State);
+	}
+
+
 	this->m_pWindow->display();
+
+
+	if (m_ReturnMenu.isChosen())
+	{
+		resetGame();
+		m_State = MenuState;
+		m_ReturnMenu.makeNormal();
+		m_Help.makeNormal();
+		m_RestartGame.makeNormal();
+		return;
+	}
+
+	if (m_Help.isChosen())
+	{
+		m_State = InHelpState;
+		return;
+	}
+
+	if (m_RestartGame.isChosen())
+	{
+		return;
+	}
+
 }
 
 //@DESCR: Render Game's particular state such as: GameOver, NextStage, LevelComplete
@@ -464,6 +532,13 @@ void Game::renderDisplayStates(GameState state)
 	{
 
 		m_pNextStage->draw(*m_pWindow);
+		return;
+	}
+
+	if (state == InHelpState)
+	{
+		if (!m_pHelpMenu->isRun())
+			m_pHelpMenu->draw(*m_pWindow);
 		return;
 	}
 }

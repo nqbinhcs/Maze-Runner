@@ -151,6 +151,7 @@
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="HelpAlgorithmMenu.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="LevelComplete.cpp" />
     <ClCompile Include="main.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Display.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameOver.hpp" />
+    <ClInclude Include="HelpAlgorithmMenu.hpp" />
     <ClInclude Include="Helper.hpp" />
     <ClInclude Include="LevelComplete.hpp" />
     <ClInclude Include="Maze.hpp" />

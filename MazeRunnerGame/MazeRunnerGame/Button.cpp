@@ -2,7 +2,15 @@
 
 bool Button::isClick(sf::RenderWindow* pWindow)
 {
+	/*std::cout << "Is left mouse pressed : " << sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) << '\n';*/
 	if (isMouseover(pWindow) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		return true;
+	return false;
+}
+
+bool Button::isClickV1(sf::RenderWindow* pWindow)
+{
+	if (isMouseoverV1(pWindow) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 		return true;
 	return false;
 }
@@ -19,6 +27,16 @@ bool Button::isMouseover(sf::RenderWindow* pWindow)
 	}
 
 	return m_isChosen;
+}
+
+bool Button::isMouseoverV1(sf::RenderWindow* pWindow)
+{
+	sf::Vector2i mousePos(sf::Mouse::getPosition(*pWindow));
+
+	if (m_Bound.contains(sf::Vector2f(mousePos.x, mousePos.y))) {
+		return true;
+	}
+	return false;
 }
 
 void Button::setTextBox(sf::Vector2f position, sf::Vector2f boxSize,
@@ -39,7 +57,7 @@ void Button::setSpriteOriginToCentroid()
 	sf::Vector2f spriteCenter = sf::Vector2f(
 		spriteBound.top + spriteBound.height / 2,
 		spriteBound.left + spriteBound.width / 2);
-	
+
 	setSpriteOrigin(spriteCenter);
 }
 
@@ -60,7 +78,7 @@ void Button::setSprite(std::string imageFile)
 	}
 
 	m_Sprite.setTexture(m_Texture);
-	
+
 	setSpriteOriginToCentroid();
 }
 
@@ -81,12 +99,12 @@ void Button::setButton(sf::Vector2f position, sf::Vector2f boxSize,
 	if (imageFile != "")
 	{
 		setSprite(imageFile);
-		
+
 		sf::FloatRect spriteBound = m_Sprite.getGlobalBounds();
 		sf::Vector2f boxCenter = sf::Vector2f(
 			m_Text.m_Bound.top + m_Text.m_Bound.height / 2,
 			m_Text.m_Bound.left + m_Text.m_Bound.width / 2);
-		float scale = (m_Text.m_Bound.height * m_Text.m_Bound.width) / 
+		float scale = (m_Text.m_Bound.height * m_Text.m_Bound.width) /
 			(spriteBound.height * spriteBound.width);
 
 		scaleSprite(scale);
