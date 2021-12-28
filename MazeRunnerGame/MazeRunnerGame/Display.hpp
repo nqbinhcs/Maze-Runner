@@ -8,6 +8,7 @@
 #define IMG_NEXTSTAGE "Images/NextStage.png"
 #define IMG_LEVELCOMPLETE "Images/LevelComplete.png"
 #define IMG_THEME_BACKGROUND "Images/Theme.png"
+#define IMG_HELP "Images/HelpMenu.png"
 
 class Display
 {
