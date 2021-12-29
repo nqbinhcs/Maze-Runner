@@ -43,10 +43,10 @@ enum RoomType
 	NONE,
 	START,
 	END,
-	FINAL,
 	KEY,
 	TRAP,
-	GUARD
+	GUARD,
+	COIN
 };
 
 class Room
@@ -93,10 +93,6 @@ public:
 	Room(const Room& obj);
 	~Room();
 
-	sf::Vector2f getPosition() {
-		return sf::Vector2f(positionX, positionY);
-	}
-
 	int getWidthRoom() {
 		return widthRoom;
 	}
@@ -126,5 +122,14 @@ public:
 	void AddRoomToRenderer(sf::RenderWindow& target);
 
 	bool checkConnectRoom(std::shared_ptr<Room> isRoomConnect);
+
+	std::shared_ptr<Room> checkPosConnectRoom(MazeCoordinate pos) {
+		for (int i = 0; i < connectRooms.size(); i++) {
+			if (connectRooms[i]->roomPos == pos) {
+				return connectRooms[i];
+			}
+		}
+		return NULL;
+	}
 };
 
