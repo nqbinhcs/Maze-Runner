@@ -24,6 +24,7 @@
 #include "Button.hpp"
 #include "Helper.hpp"
 #include "HelpAlgorithmMenu.hpp"
+#include "MazeFactory.hpp"
 
 using namespace sf;
 
@@ -36,6 +37,8 @@ struct MyLevel {
 
 class Game
 {
+private:
+	static std::shared_ptr<LevelMaze> levelMaze;
 	//I don't know how to categorize the methods which be used in each function ._.
 	//I think the effective ways in this situation are semantic comments :<
 	//I will group all revelant functions into a block and descibe some new functions and attributes
@@ -112,8 +115,8 @@ private:
 
 
 	//----------------"In game processing" functions----------------
-	void nextLevel();
-	void setLevel(int _level);
+	void nextLevel(bool check);
+	void setLevel(int _level, bool check);
 	void resetGame(); //reset all variables of game aka the second initVariables =))))
 
 public:
@@ -144,10 +147,10 @@ public:
 #define NUMBER_OF_BOXES 3
 #define NUMBER_OF_BUTTONS 3
 
-#define SCREEN_INFO_HEIGHT (SCREEN_MAZE_HEIGHT / NUMBER_OF_BOXES)
-#define SCREEN_INFO_WIDTH (SCREEN_WIDTH - SCREEN_MAZE_WIDTH - 2 * SPACE)	
+#define SCREEN_INFO_HEIGHT (SCREEN_MAZE_Y / NUMBER_OF_BOXES)
+#define SCREEN_INFO_WIDTH (SCREEN_WIDTH - SCREEN_MAZE_X - 2 * SPACE)	
 
-#define OFFSET_LEVEL_X (OFFSET_MAZE_X + SCREEN_MAZE_WIDTH + 5)
+#define OFFSET_LEVEL_X (OFFSET_MAZE_X + SCREEN_MAZE_X + 5)
 #define OFFSET_LEVEL_Y OFFSET_MAZE_Y
 
 #define OFFSET_TIME_X OFFSET_LEVEL_X

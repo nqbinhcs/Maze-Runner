@@ -84,6 +84,9 @@
     <ClCompile Include="HelpAlgorithmMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MazeCoin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefinedVariables.hpp">
@@ -165,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HelpAlgorithmMenu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeCoin.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

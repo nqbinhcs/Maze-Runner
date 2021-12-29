@@ -99,7 +99,9 @@ public:
 	int getHeightRoom() {
 		return heightRoom;
 	}
-
+	MazeCoordinate getPosition() {
+		return roomPos;
+	}
 	//Create Room Rect
 	void MakeRoomRect(int& xOffset, int& yOffset, int& xSplits, int& ySplits, const int& mazeWidth, const int& mazeHeight);
 

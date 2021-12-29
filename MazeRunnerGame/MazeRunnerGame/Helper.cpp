@@ -54,7 +54,7 @@ void Helper::showPath(sf::RenderTarget& window)
 		sf::RectangleShape roomBackground;
 		roomBackground.setFillColor(sf::Color(255, 165, 0));
 		roomBackground.setSize(sf::Vector2f(m_Path[i]->getWidthRoom(), m_Path[i]->getHeightRoom()));
-		roomBackground.setPosition(m_Path[i]->getPosition());
+		//roomBackground.setPosition(m_Path[i]->getPosition());
 
 		window.draw(roomBackground);
 	}
@@ -78,7 +78,7 @@ void Helper::showProgress(sf::RenderTarget& window)
 		sf::RectangleShape roomBackground;
 		roomBackground.setFillColor(sf::Color(0, green, 255));
 		roomBackground.setSize(sf::Vector2f(m_Progress[i]->getWidthRoom(), m_Progress[i]->getHeightRoom()));
-		roomBackground.setPosition(m_Progress[i]->getPosition());
+		//roomBackground.setPosition(m_Progress[i]->getPosition());
 
 		window.draw(roomBackground);
 	}
