@@ -16,9 +16,14 @@ private:
 	shared_ptr<PathFinder> m_pPathFinder;
 	
 	vector<shared_ptr<Room>> m_Path;
+	vector<int> m_PathShower;
+
 	vector<shared_ptr<Room>> m_Progress;
-	
+	vector<int> m_ProgressShower;
+
 	MyClock m_Clock;
+
+	int curRoom1, curRoom2;
 
 	bool m_ShownPath = false;
 	bool m_ShownProgress = false;
