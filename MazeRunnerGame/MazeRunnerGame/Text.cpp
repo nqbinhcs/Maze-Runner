@@ -72,7 +72,7 @@ void MyText::updateContent() {                                // cập nhật te
 }
 
 void MyText::scaleText(float scaleSize) {                      // thay đổi kích thước chữ theo độ co giãn
-    this->m_sfText.setCharacterSize(scaleSize * m_sfText.getCharacterSize());
+    this->m_sfText.setScale(sf::Vector2f(scaleSize, scaleSize));
 }
 
 void MyText::setCharacterSize(float size) {                         // thay đổi kích thước chữ theo kích thước
