@@ -158,6 +158,7 @@
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="MazeAlgorithms.cpp" />
     <ClCompile Include="MazeChest.cpp" />
+    <ClCompile Include="MazeCoin.cpp" />
     <ClCompile Include="MazeGuard.cpp" />
     <ClCompile Include="MazeKey.cpp" />
     <ClCompile Include="MazeTrap.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Maze.hpp" />
     <ClInclude Include="MazeAlgorithms.hpp" />
     <ClInclude Include="MazeChest.hpp" />
+    <ClInclude Include="MazeCoin.hpp" />
     <ClInclude Include="MazeCreationInterface.hpp" />
     <ClInclude Include="MazeFactory.hpp" />
     <ClInclude Include="MazeGuard.hpp" />

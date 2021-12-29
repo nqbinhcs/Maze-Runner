@@ -21,6 +21,8 @@ using namespace sf;
 class Player : public MazeObject
 {
 private:
+	int totalCoin;
+private:
 	bool isLose;
 private:
 	static sf::Image playerImages[4];
@@ -38,11 +40,15 @@ public:
 		return isLose;
 	}
 
-	bool CollisionTrap(shared_ptr<Maze> curMaze, MazeCoordinate posNew);
-	bool CollisionGuard(shared_ptr<Maze> curMaze, MazeCoordinate posNew);
+	bool CollisionTrap(shared_ptr<Maze> curMaze, MazeCoordinate pos);
+	bool CollisionGuard(shared_ptr<Maze> curMaze, MazeCoordinate pos);
+	bool CollisionKey(shared_ptr<Maze> curMaze, MazeCoordinate pos);
+	bool CollisionCoin(shared_ptr<Maze> curMaze, MazeCoordinate pos);
+	bool CollisionChest(shared_ptr<Maze> curMaze, MazeCoordinate pos);
 
 	//Functions
 	void updateInput(int direction, shared_ptr<Maze> curMaze);
 	void update(const sf::RenderTarget* target, int direction, shared_ptr<Maze> curMaze);
 	void updateDirecPlayer(int i);
+	void checkCllisionObject(shared_ptr<Maze> curMaze);
 };

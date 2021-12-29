@@ -4,11 +4,14 @@
 #include "MazeChest.hpp"
 #include "MazeGuard.hpp"
 #include "MazeTrap.hpp"
+#include "MazeCoin.hpp"
+
+#include <stack>
+#include <queue>
+#include <cstddef>
+#include <iostream>
 //#include "Coordinate.hpp"
 #pragma once
-
-#define TRAP_START 3
-#define GUARD_START 3
 
 //Random Element Function
 template <typename T, typename A>
@@ -21,124 +24,183 @@ T randomElement(std::vector<T, A>& vec)
 	return element;
 }
 
-class Maze
-{
-
+class Maze {
 private:
-	bool isTakenKey;
-	bool isTakenChest;
-private:
-	//X and Y counts of the maze (total rooms = X*Y)
-	int mazeX_RoomCount;
-	int mazeY_RoomCount;
+	vector<bool> isTakeKey;
+	vector<bool> isTakeCoin;
+	bool isTakeChest;
 
-	//Information about rendering size for the maze
 	int mazeX_Offset;
 	int mazeY_Offset;
+private:
+	vector<int> countRoom_Random;
+private:
+	vector<int> countTrap;
+	vector<int> countGuard;
+	vector<int> countKey;
+	vector<int> countCoin;
+private:
+	int level;
+	int maxLevel;
+
+	vector<int> mazeX_RoomCount;
+	vector<int> mazeY_RoomCount;
+
 	int mazeX_Size;
 	int mazeY_Size;
-
-	//All rooms in the Maze
-	std::vector<std::shared_ptr<Room>> allRooms;
-
-	//All rooms with objects in them - DON'T USE
-	std::vector <std::shared_ptr<Room>> obstacleRooms;
-
-	//All objects in this maze (guard, trap) <Don't use>
-	std::vector<std::shared_ptr<MazeObject>> objectsInMaze;
-
-
-public:
-	std::shared_ptr<MazeGuard> mazeGuardPtr;
-	std::shared_ptr<MazeTrap> mazeTrapPtr;
-	std::vector<std::shared_ptr<MazeGuard>> mazeGuard;
-	std::vector<std::shared_ptr<MazeTrap>> mazeTrap;
-	std::shared_ptr<MazeKey> mazeKey;
-	std::shared_ptr<MazeChest> mazeChest;
-public:
-	int mazeLevel;	//Current Game Level
-
-	//Start and End Position of Maze
+private:
+	int roomRandom;
+	int numKey;
+	int numTrap;
+	int numGuard;
+	int numRoomX;
+	int numRoomY;
+	int numCoin;
+private:
 	MazeCoordinate startPos;
 	MazeCoordinate finalPos;
 
-	//Constructors and Destructors
-	Maze(int xCount, int yCount, int xOffset, int yOffset, int xSize, int ySize, int level, bool showCreation, sf::RenderWindow& window);
-	Maze(const Maze& other);
-	Maze();
-	~Maze();
+private:
+	//All rooms in the Maze
+	std::vector<std::shared_ptr<Room>> allRooms;
+
+	//All rooms can have objects in them
+	std::vector <std::shared_ptr<Room>> obstacleRooms;
+private:
+	std::vector<std::shared_ptr<MazeGuard>> mazeGuard;
+	std::vector<std::shared_ptr<MazeTrap>> mazeTrap;
+
+	std::vector < std::shared_ptr<MazeKey>> mazeKey;
+	std::shared_ptr<MazeChest> mazeChest;
+	std::vector < std::shared_ptr<MazeCoin>> mazeCoin;
+
 public:
-	void setTakenKey(bool take) {
-		isTakenKey = take;
+	int getLevel() {
+		return level;
 	}
-	void setTakenChest(bool take) {
-		isTakenChest = take;
+	MazeCoordinate getStartPos() {
+		return startPos;
 	}
-
-	bool getTakenKey() {
-		return isTakenKey;
+	MazeCoordinate getFinalPos() {
+		return finalPos;
 	}
-	bool getTakenChest() {
-		return isTakenChest;
+	int getNumRoomX() {
+		return numRoomX;
 	}
-public:
-	float getMazeX_Offset() {
-		return mazeX_Offset;
+	int getNumRoomY() {
+		return numRoomY;
 	}
-	float getMazeY_Offset() {
-		return mazeY_Offset;
+	int getSizeKey() {
+		return numKey;
 	}
-	float getWidthRoom() {
-		return int(mazeX_Size / mazeX_RoomCount);
+	int getSizeTrap() {
+		return numTrap;
 	}
-	float getHeightRoom() {
-		return int(mazeY_Size / mazeY_RoomCount);
+	int getSizeGuard() {
+		return numGuard;
 	}
-	float getNumRow() {
-		return mazeY_RoomCount;
-	}
-	float getNumCol() {
-		return mazeX_RoomCount;
+	int getSizeCoin() {
+		return numCoin;
 	}
 public:
-	//Resets the Maze based off current parameters
-	void ResetMaze(sf::RenderWindow& window);
+	bool completeLevel() {
+		for (int i = 0; i < isTakeKey.size(); i++) {
+			if (isTakeKey[i] == false) {
+				return false;
+			}
+		}
+		if (isTakeChest == false) {
+			return false;
+		}
+		return true;
+	}
+	bool getActiveTrap(int i) {
+		return mazeTrap[i]->getActive();
+	}
+	MazeCoordinate getPos(int i, int type) {
+		if (type == 1) {
+			return mazeTrap[i]->getPosition();
+		}
+		else if (type == 2) {
+			return mazeGuard[i]->getPosition();
+		}
+		else if (type == 3) {
+			return mazeKey[i]->getPosition();
+		}
+		else if (type == 4) {
+			return mazeCoin[i]->getPosition();
+		}
+	}
+	void setTake(int i, int type) {
+		if (type == 1) {
+			isTakeKey[i] = true;
+		}
+		else if (type == 2) {
+			isTakeCoin[i] = true;
+		}
+		else if (type == 3) {
+			isTakeChest = true;
+		}
+	}
+public:
+	Maze(int XOffset, int YOffset, int mazeX, int mazeY, vector<int> mazeX_Room, vector<int> mazeY_Room,
+		int startLevel, int finalLevel, vector<int> random,
+		vector<int> key, vector<int> trap, vector<int> guard, vector<int> coin) {
+		mazeX_Offset = XOffset;
+		mazeY_Offset = YOffset;
 
-	//Sets the maze based off of input parameters
-	void SetMaze(int x, int y, int level, sf::RenderWindow& window);
+		mazeX_Size = mazeX;
+		mazeY_Size = mazeY;
 
-	//Sets the maze up for the next level
-	void NextLevelMaze(sf::RenderWindow& window);
+		mazeX_RoomCount = mazeX_Room;
+		mazeY_RoomCount = mazeY_Room;
 
-	//Checks what point is in the direction dir relative to the Coordinate pos
-	void ChangePosition(MazeCoordinate& pos, directions dir);
+		level = startLevel;
+		maxLevel = finalLevel;
 
-	//Creates all the rooms and connects them
-	void CreateRooms(sf::RenderWindow& window);
+		countRoom_Random = random;
 
-	//Create a maze using a backtracking algorithm
-	void CarveMaze(sf::RenderWindow& window);
+		countKey = key;
+		countTrap = trap;
+		countGuard = guard;
+		countCoin = coin;
+	}
 
-	//Creates objects in the maze rooms designated during the maze creation. Only called if difficulty is greater than 0
+public:
+	bool isWin();
+	void UpdateMaze(bool next);
 
-	//Put Key in a random position in the maze where there is currently no other object.
-	void CreateKey();
-
-	void CreateObjects();
-
-	//Find a room by the position
-	std::shared_ptr<Room> FindRoomByPos(MazeCoordinate pos);
-
-	//Adds an outline of the maze area to the renderer
-	void MazeOutline(sf::RenderTarget* target);
-
-	//Adds each room and an outline to the renderer
-	void AddMazeRoomsToRenderer(sf::RenderWindow& window);
-
-	//Advances each item one increment in its own cycle of behavior
+public:
+	float getWidthRoom();
+	float getHeightRoom();
+public:
+	bool CheckGetKeyAtPos(MazeCoordinate pos);
+	bool CheckGetAllKey();
 
 	void NextMazeCycle();
 
+	std::shared_ptr<Room> FindRoomByPos(MazeCoordinate pos);
+private:
+	void PrepareInforLevel();
+	void ResetMaze();
+	void UpdateLevel(bool next);
+
+	void ChangePosition(MazeCoordinate& pos, directions dir);
+	void CreateRooms();
+	void CarveMaze();
+
+	void CreateObjects();
+
+	void CreateKeys();
+	void CreatChest();
+	void CreatCoins();
+
+	bool checkBorder(MazeCoordinate pos);
+	void RandomConnectRoom();
+
+
+public:
+	void AddMazeRoomsToRenderer(sf::RenderWindow& window);
 	void AddMazeObstaclesToRenderer(sf::RenderWindow& window);
-	//void BFS_Algorithm(MazeCoordinate posNow);
 };
+

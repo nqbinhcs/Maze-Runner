@@ -100,7 +100,7 @@ void Helper::showPath(sf::RenderTarget& window)
 		sf::RectangleShape roomBackground;
 		roomBackground.setFillColor(color[m_PathShower[i]]);
 		roomBackground.setSize(sf::Vector2f(m_Path[i]->getWidthRoom(), m_Path[i]->getHeightRoom()));
-		roomBackground.setPosition(m_Path[i]->getPosition());
+		roomBackground.setPosition(m_Path[i]->getPositionInScreen());
 
 		window.draw(roomBackground);
 
@@ -127,7 +127,7 @@ void Helper::showProgress(sf::RenderTarget& window)
 		sf::RectangleShape roomBackground;
 		roomBackground.setFillColor(sf::Color(0, green, 255));
 		roomBackground.setSize(sf::Vector2f(m_Progress[i]->getWidthRoom(), m_Progress[i]->getHeightRoom()));
-		roomBackground.setPosition(m_Progress[i]->getPosition());
+		roomBackground.setPosition(m_Progress[i]->getPositionInScreen());
 
 		window.draw(roomBackground);
 	}
@@ -137,7 +137,7 @@ void Helper::showProgress(sf::RenderTarget& window)
 
 void Helper::showInstruction(sf::RenderTarget& window)
 {
-	switch (m_Phase) 
+	switch (m_Phase)
 	{
 	case 0:
 		this->showProgress(window);

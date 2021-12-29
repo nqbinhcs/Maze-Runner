@@ -2,6 +2,7 @@
 
 
 MyLevel level[7] = { MyLevel{3, 3} , MyLevel{ 5, 5 }, MyLevel{ 9, 9 }, MyLevel{ 15, 15 }, MyLevel{ 20, 20 }, MyLevel{ 23, 23 }, MyLevel{ 30, 30 } };
+std::shared_ptr<LevelMaze> Game::levelMaze = NULL;
 
 
 //@DESCR: Initialize variables of Game
@@ -98,24 +99,24 @@ void Game::initText()
 //@DESCR: Changing from "current" level to "current + 1" level
 //@PARAM: None
 //@RETURN: None
-void Game::nextLevel()
+void Game::nextLevel(bool check)
 {
-	if (m_Level >= MAX_LEVEL - 1) 
+	if (m_Level >= MAX_LEVEL - 1)
 		return;
 	m_Level++;
-	setLevel(m_Level);
+	setLevel(m_Level, check);
 }
 
 
 //@DESCR: Changing from "current" level to new level
 //@PARAM: new level
 //@RETURN: None
-void Game::setLevel(int _level)
+void Game::setLevel(int _level, bool check)
 {
 	m_Level = _level;
-	curMaze->SetMaze(level[m_Level].x, level[m_Level].y, m_Level + 1, *m_pWindow);
+	curMaze->UpdateMaze(check);
 
-	m_Player->setPosition(curMaze->startPos);
+	m_Player->setPosition(curMaze->getStartPos());
 	m_Player->setSize(curMaze->getWidthRoom(), curMaze->getHeightRoom());
 	m_Player->updateDirecPlayer(0);
 	m_Player->setLose(false);
@@ -134,11 +135,11 @@ Game::Game()
 	this->initFonts();
 	this->initButtons();
 	this->initText();
-	curMaze = std::shared_ptr<Maze>(new Maze(MAZE_X, MAZE_Y,
-		OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_WIDTH,
-		SCREEN_MAZE_HEIGHT, 1, false, *m_pWindow));
-	m_Player = std::shared_ptr<Player>(new Player(curMaze->startPos, OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
-	setLevel(0); //Level 0 when entering game
+	//Choose easy, medium or hard.
+	levelMaze = std::shared_ptr<LevelMaze>(new HardLevelMaze());
+	curMaze = levelMaze->OrderLevelMaze();
+	m_Player = std::shared_ptr<Player>(new Player(curMaze->getStartPos(), OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
+	setLevel(0, true); //Level 0 when entering game
 }
 
 
@@ -405,7 +406,7 @@ void Game::render()
 	
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
 	if (m_Helper.isHelping == false)
-		m_Helper.help(1, curMaze->FindRoomByPos(curMaze->startPos), curMaze->FindRoomByPos(curMaze->finalPos));
+		m_Helper.help(1, curMaze->FindRoomByPos(curMaze->getStartPos()), curMaze->FindRoomByPos(curMaze->getFinalPos()));
 	m_Helper.showInstruction(*m_pWindow);
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
 
@@ -418,8 +419,12 @@ void Game::render()
 
 	
 	curMaze->AddMazeRoomsToRenderer(*m_pWindow);
-
+	curMaze->AddMazeObstaclesToRenderer(*m_pWindow);
+	if (rand() % 100 == 0) {
+		curMaze->NextMazeCycle();
+	}
 	m_Player->render(*m_pWindow);
+	m_Player->checkCllisionObject(curMaze);
 
 	// Info display
 	updateTimeInfo();
@@ -432,14 +437,10 @@ void Game::render()
 		m_TimeInfo[i].drawMyText(*m_pWindow);
 	}
 
-	
+
 	//-----------------------------Next Stage-----------------------------
-	if (m_State == NextStageState) 
+	if (m_State == NextStageState || curMaze->completeLevel() == true)
 	{
-		/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/ 
-		m_Helper.updateHelpStatus(false);
-		/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
-		
 		delay(0.7);
 
 		//Win a difficulty mode
@@ -449,16 +450,34 @@ void Game::render()
 		}
 		else
 		{
-			nextLevel();
+			nextLevel(true);
+			m_State = InGameState;
+		}
+	}
+	if (m_Player->getLose() == true)
+	{
+		delay(0.7);
+
+		//Win a difficulty mode
+		if (m_Level == MAX_LEVEL - 1)
+		{
+			m_State = DifficultyCompleteState;
+		}
+		else
+		{
+			nextLevel(false);
 			m_State = InGameState;
 		}
 	}
 
+	
+	//-----------------------------Next Stage-----------------------------
+	
 	// Update level
 	updateLevel();
 	m_LevelInfo.drawMyText(*m_pWindow);
 
-	if (m_State == LevelCompleteState || m_Player->getPosition() == curMaze->finalPos)
+	if (m_State == LevelCompleteState || m_Player->getPosition() == curMaze->getFinalPos())
 	{
 		cout << "LEVEL~~~ : " << m_Level << '\n';
 		//testing
@@ -656,6 +675,6 @@ void Game::resetGame()
 	this->m_EndGame = false;
 	this->m_Time.setCDTime(3603);
 	this->m_Time.start();
-	setLevel(0);
+	setLevel(0, true);
 }
 

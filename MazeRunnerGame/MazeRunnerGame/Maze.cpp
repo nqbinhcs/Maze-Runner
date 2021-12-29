@@ -1,113 +1,89 @@
 #include "Maze.hpp"
-#include <stack>
-#include <queue>
-#include <cstddef>
-#include <iostream>
 
-Maze::Maze(int xCount, int yCount, int xOffset, int yOffset, int xSize, int ySize, int level, bool showCreation, sf::RenderWindow& window) :
-	mazeX_RoomCount(xCount), 
-	mazeY_RoomCount(yCount),
-	mazeX_Offset(xOffset), 
-	mazeY_Offset(yOffset), 
-	mazeX_Size(xSize), 
-	mazeY_Size(ySize), 
-	mazeLevel(level)
-{
-	//mazeRect.(xSize, ySize);
-	CreateRooms(window);
-	CarveMaze(window);
-
-
-	isTakenKey = false;
-	isTakenChest = false;
+bool Maze::isWin() {
+	if (level == maxLevel - 1) {
+		return true;
+	}
+	return false;
 }
 
-Maze::Maze(const Maze& other) :
-	mazeX_RoomCount(other.mazeX_RoomCount),
-	mazeY_RoomCount(other.mazeY_RoomCount),
-	allRooms(other.allRooms),
-	objectsInMaze(other.objectsInMaze),
-	startPos(other.startPos),
-	finalPos(other.finalPos)
-{
+void Maze::UpdateMaze(bool next) {
+	UpdateLevel(next);
+	ResetMaze();
 
-	isTakenKey = false;
-	isTakenChest = false;
+	//Create Maze.
+	CreateRooms();
+	CarveMaze();
+
+	RandomConnectRoom();
+
+	CreateKeys();
+	CreatChest();
+	CreatCoins();
+
+	CreateObjects();
 }
 
-Maze::Maze()
-{
-	;
+float Maze::getWidthRoom() {
+	return int(mazeX_Size / numRoomX);
 }
-/*
-Maze& Maze::operator=(const Maze &other)
-{
-	allRooms = other.allRooms;
-	allTraps = other.allTraps;
-	mazeX_RoomCount = other.mazeX_RoomCount;
-	mazeY_RoomCount = other.mazeY_RoomCount;
-	mazeKeyPtr = other.mazeKeyPtr;
-	mazeDoorPtr = other.mazeDoorPtr;
-	startPos = other.startPos;
-	finalPos = other.finalPos;
-	return *this;
-}*/
-
-Maze::~Maze()
-{
+float Maze::getHeightRoom() {
+	return int(mazeY_Size / numRoomY);
 }
 
+bool Maze::CheckGetKeyAtPos(MazeCoordinate pos) {
+	for (int i = 0; i < mazeKey.size(); i++) {
+		if (mazeKey[i]->getPosition() == pos) {
+			isTakeKey[i] = true;
+			return true;
+		}
+	}
+}
+bool Maze::CheckGetAllKey() {
+	for (int i = 0; i < isTakeKey.size(); i++) {
+		if (isTakeKey[i] == false) {
+			return false;
+		}
+	}
+	return true;
+}
 
-//@DESCR: Resets the Maze based off current parameters
-//@PARAM: None.
-//@RETURN: None
-void Maze::ResetMaze(sf::RenderWindow& window)
-{
+void Maze::PrepareInforLevel() {
+	roomRandom = countRoom_Random[level];
+	numKey = countKey[level];
+	numTrap = countTrap[level];
+	numGuard = countGuard[level];
+	numCoin = countCoin[level];
 
-	isTakenKey = false;
-	isTakenChest = false;
+	numRoomX = mazeX_RoomCount[level];
+	numRoomY = mazeY_RoomCount[level];
+
+	for (int i = 0; i < numKey; i++) {
+		isTakeKey.push_back(false);
+	}
+	for (int i = 0; i < numCoin; i++) {
+		isTakeCoin.push_back(false);
+	}
+	isTakeChest = false;
+}
+void Maze::ResetMaze() {
 	//Clear all previous vectors
 	allRooms.clear();
 	obstacleRooms.clear();
-	objectsInMaze.clear();
 	mazeGuard.resize(0);
 	mazeTrap.resize(0);
-	//Create Maze.
-	CreateRooms(window);
-	CarveMaze(window);
-	CreateKey();
-	if (mazeLevel >= TRAP_START) {
-		CreateObjects();
+	mazeKey.resize(0);
+	mazeCoin.resize(0);
+
+}
+void Maze::UpdateLevel(bool next) {
+	if (next == true) {
+		level++;
 	}
+	PrepareInforLevel();
 }
 
-//@DESCR: Sets the maze based off of input parameters
-//@PARAM: None.
-//@RETURN: None
-void Maze::SetMaze(int x, int y, int level, sf::RenderWindow& window)
-{
-	mazeX_RoomCount = x;
-	mazeY_RoomCount = y;
-	mazeLevel = level;
-	ResetMaze(window);
-}
-
-//@DESCR: Sets the maze up for the next level
-//@PARAM: None.
-//@RETURN: None
-void Maze::NextLevelMaze(sf::RenderWindow& window)
-{
-	mazeLevel++;
-	mazeX_RoomCount++;
-	mazeY_RoomCount++;
-	ResetMaze(window);
-}
-
-//@DESCR: Checks what point is in the direction dir relative to the Coordinate pos
-//@PARAM: None.
-//@RETURN: None
-void Maze::ChangePosition(MazeCoordinate& pos, directions dir)
-{
+void Maze::ChangePosition(MazeCoordinate& pos, directions dir) {
 	switch (dir)
 	{
 	case UP:
@@ -128,25 +104,19 @@ void Maze::ChangePosition(MazeCoordinate& pos, directions dir)
 		break;
 	}
 }
-
-//@DESCR: Creates all the rooms and connects them
-//@PARAM: None.
-//@RETURN: None
-void Maze::CreateRooms(sf::RenderWindow& window)
-{
+void Maze::CreateRooms() {
 	directions allDir[] = { UP, LEFT, DOWN, RIGHT };
 
 	//Creates all the rooms
-	for (int x = 0; x < mazeX_RoomCount; x++)
+	for (int x = 0; x < numRoomX; x++)
 	{
-		for (int y = 0; y < mazeY_RoomCount; y++)
+		for (int y = 0; y < numRoomY; y++)
 		{
-			int widthRoom = (int)ceil(mazeX_Size / (mazeX_RoomCount));
-			int heightRoom = (int)ceil(mazeY_Size / (mazeY_RoomCount));
+			int widthRoom = (int)ceil(mazeX_Size / (numRoomX));
+			int heightRoom = (int)ceil(mazeY_Size / (numRoomX));
 			std::shared_ptr<Room> newPtr(new Room(MazeCoordinate(x, y), widthRoom, heightRoom));
 
-			newPtr->MakeRoomRect(mazeX_Offset, mazeY_Offset, mazeX_RoomCount, mazeY_RoomCount, mazeX_Size, mazeY_Size);
-			//newPtr->AddRoomToRenderer(window);
+			newPtr->MakeRoomRect(mazeX_Offset, mazeY_Offset, numRoomX, numRoomY, mazeX_Size, mazeY_Size);
 			allRooms.push_back(newPtr);
 		}
 	}
@@ -170,12 +140,7 @@ void Maze::CreateRooms(sf::RenderWindow& window)
 				});
 		});
 }
-
-//@DESCR: Create a maze using a backtracking algorithm
-//@PARAM: None.
-//@RETURN: shared_ptr<Room>
-void Maze::CarveMaze(sf::RenderWindow& window)
-{
+void Maze::CarveMaze() {
 	//This vector acts as a stack that contains the current maze path
 	std::vector<std::shared_ptr<Room>> currentPath;
 
@@ -190,7 +155,7 @@ void Maze::CarveMaze(sf::RenderWindow& window)
 	startPos = curRoomPtr->roomPos;
 	curRoomPtr->roomTypes.push_back(START);
 
-	while (inMazeCounter < mazeX_RoomCount * mazeY_RoomCount)
+	while (inMazeCounter < numRoomX * numRoomY)
 	{
 		//If the current room is not in the maze yet, put it into the maze and remove it from any available rooms vectors on adjacent rooms
 		if (!curRoomPtr->inMaze)
@@ -221,7 +186,7 @@ void Maze::CarveMaze(sf::RenderWindow& window)
 			}
 
 			//If the maze level passes the level at which we want to spawn traps, we start spawning traps
-			if (mazeLevel > TRAP_START)
+			if (numGuard != 0 || numTrap != 0)
 			{
 				//Places rooms that can have obstacles a distance apart based off of trap spacing
 				int obstacleSpacing = 3;
@@ -246,10 +211,6 @@ void Maze::CarveMaze(sf::RenderWindow& window)
 			curRoomPtr->AssignRoomTextures();
 			nextRoomPtr->AssignRoomTextures();
 
-			//Don't draw step by step.
-			//curRoomPtr->AddRoomToRenderer(window);
-			//nextRoomPtr->AddRoomToRenderer(window);
-
 			//Removes the next room from the available rooms for the current room 
 			curRoomPtr->availRooms.erase(std::find(begin(curRoomPtr->availRooms), end(curRoomPtr->availRooms), nextRoomPtr));
 
@@ -263,67 +224,206 @@ void Maze::CarveMaze(sf::RenderWindow& window)
 			curRoomPtr = currentPath.back();
 		}
 	}
-
-	//Places the exit to the maze
-	std::shared_ptr<Room> finalRoom = FindRoomByPos(finalPos);
-	mazeChest = std::shared_ptr<MazeChest>(new MazeChest(finalRoom->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / mazeX_RoomCount), int(mazeX_Size / mazeX_RoomCount)));
-	finalRoom->roomTypes.push_back(END);
 }
 
-//Creates objects in the maze rooms designated during the maze creation. Only called if difficulty is greater than 0
+void Maze::CreateObjects() {
+	std::shared_ptr<Room> curRoomPtr;
+	for (int i = 0; i < numTrap; i++) {
+		do
+		{
+			curRoomPtr = randomElement(obstacleRooms);
+		} while (curRoomPtr->roomTypes.size() != 0);
+		curRoomPtr->roomTypes.push_back(TRAP);
+		mazeTrap.push_back(std::shared_ptr<MazeTrap>(new MazeTrap(curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
+	}
+	for (int i = 0; i < numGuard; i++) {
+		do
+		{
+			curRoomPtr = randomElement(obstacleRooms);
+			if (curRoomPtr->roomTypes.size() == 0 && curRoomPtr->connectRooms.size() == 3) {
+				break;
+			}
+		} while (1);
+		cout << "Connect: " << curRoomPtr->connectRooms.size() << endl;
+		curRoomPtr->roomTypes.push_back(TRAP);
+		mazeGuard.push_back(std::shared_ptr<MazeGuard>(new MazeGuard(curRoomPtr, curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
+	}
 
-void Maze::CreateObjects()
-{
-	int guard = 0.025 * obstacleRooms.size();
-	int trap = 0.05 * obstacleRooms.size();
-	cout << guard << endl;
-	cout << trap << endl;
-	int i = 0;
-	int hai = sqrt(obstacleRooms.size());
-	/*while (guard > 0 && trap > 0) {
-		int ran = rand() % obstacleRooms.size();
-		if (obstacleRooms[ran]->roomTypes.size() == 0)
+
+	/*
+	int trap = numTrap;
+	int guard = numGuard;
+
+	for (int i = 0; i < obstacleRooms.size() - 1; i++) {
+		if (obstacleRooms[i]->roomTypes.size() == 0)
 		{
 			i++;
-			if (obstacleRooms[ran]->connectRooms.size() == 3 && mazeLevel > GUARD_START && guard > 0 && i % 10 == 0)
+			if (obstacleRooms[i]->connectRooms.size() == 3 && guard > 0 && i % 3 == 0)
 			{
 				guard--;
-				obstacleRooms[ran]->roomTypes.push_back(GUARD);
-				mazeGuard.push_back(std::shared_ptr<MazeGuard>(new MazeGuard(obstacleRooms[ran], obstacleRooms[ran]->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / mazeX_RoomCount), int(mazeX_Size / mazeX_RoomCount))));
+				obstacleRooms[i]->roomTypes.push_back(GUARD);
+				mazeGuard.push_back(std::shared_ptr<MazeGuard>(new MazeGuard(obstacleRooms[i], obstacleRooms[i]->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
 			}
-			else if (trap > 0 && i % 10 == 0)
+			else if (trap > 0 && i % 3 == 0)
 			{
 				trap--;
-				obstacleRooms[ran]->roomTypes.push_back(TRAP);
-				mazeTrap.push_back(std::shared_ptr<MazeTrap>(new MazeTrap(obstacleRooms[ran]->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / mazeX_RoomCount), int(mazeX_Size / mazeX_RoomCount))));
+				obstacleRooms[i]->roomTypes.push_back(TRAP);
+				mazeTrap.push_back(std::shared_ptr<MazeTrap>(new MazeTrap(obstacleRooms[i]->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
 			}
 		}
 	}*/
-	for_each(begin(obstacleRooms), end(obstacleRooms), [&](std::shared_ptr<Room> curRoomPtr) {
-		if (curRoomPtr->roomTypes.size() == 0)
-		{
-			i++;
-			if (curRoomPtr->connectRooms.size() == 3 && mazeLevel > GUARD_START && guard > 0 && i % 4 == 0)
+
+
+	/*if (guard == numGuard) {
+		for (int i = 0; i < numGuard * 2; i++) {
+			if (guard == 0) {
+				return;
+			}
+			std::shared_ptr<Room> curRoomPtr = randomElement(obstacleRooms);
+			if (curRoomPtr->connectRooms.size() == 3 && guard > 0)
 			{
 				guard--;
 				curRoomPtr->roomTypes.push_back(GUARD);
-				mazeGuard.push_back(std::shared_ptr<MazeGuard>(new MazeGuard(curRoomPtr, curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / mazeX_RoomCount), int(mazeX_Size / mazeX_RoomCount))));
-			}
-			else if(trap > 0 && i % 4 == 0)
-			{
-				trap--;
-				curRoomPtr->roomTypes.push_back(TRAP);
-				mazeTrap.push_back(std::shared_ptr<MazeTrap>(new MazeTrap(curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / mazeX_RoomCount), int(mazeX_Size / mazeX_RoomCount))));
+				mazeGuard.push_back(std::shared_ptr<MazeGuard>(new MazeGuard(curRoomPtr, curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
 			}
 		}
-		});
+	}*/
+}
+void Maze::NextMazeCycle() {
+	for (int i = 0; i < mazeGuard.size(); i++) {
+		mazeGuard[i]->NextCycle();
+	}
+
+	for (int i = 0; i < mazeTrap.size(); i++) {
+		mazeTrap[i]->NextCycle();
+	}
 }
 
-//@DESCR: Find a room by the position
-//@PARAM: Base on position of room.
-//@RETURN: shared_ptr<Room>
-std::shared_ptr<Room> Maze::FindRoomByPos(MazeCoordinate pos)
-{
+void Maze::CreateKeys() {
+	std::shared_ptr<Room> curRoomPtr;
+	for (int i = 0; i < numKey; i++) {
+		do
+		{
+			curRoomPtr = randomElement(allRooms);
+		} while (curRoomPtr->roomTypes.size() > 0);
+		curRoomPtr->roomTypes.push_back(KEY);
+		mazeKey.push_back(std::shared_ptr<MazeKey>(new MazeKey(curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
+	}
+
+}
+void Maze::CreatChest() {
+	//Places the exit to the maze
+	std::shared_ptr<Room> finalRoom = FindRoomByPos(finalPos);
+	mazeChest = std::shared_ptr<MazeChest>(new MazeChest(finalRoom->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY)));
+	finalRoom->roomTypes.push_back(END);
+}
+void Maze::CreatCoins() {
+	std::shared_ptr<Room> curRoomPtr;
+	for (int i = 0; i < numCoin; i++) {
+		do
+		{
+			curRoomPtr = randomElement(allRooms);
+		} while (curRoomPtr->roomTypes.size() > 0);
+		curRoomPtr->roomTypes.push_back(COIN);
+		mazeCoin.push_back(std::shared_ptr<MazeCoin>(new MazeCoin(curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
+	}
+}
+
+bool Maze::checkBorder(MazeCoordinate pos) {
+	if (pos.getX() == 0 || pos.getX() == numRoomX || pos.getY() == 0 || pos.getY() == numRoomY) {
+		return true;
+	}
+	return false;
+}
+void Maze::RandomConnectRoom() {
+	for (int i = 1; i < numRoomY - 1; i += 1) {
+		for (int j = 1; j < numRoomX - 1; j += 1) {
+			if (roomRandom == 0) {
+				return;
+			}
+			int pos = i * numRoomX + j;
+			if (pos % 4 == 0) {
+
+				MazeCoordinate posCenter = allRooms[i * numRoomX + j]->roomPos;
+				int random[4] = { 1, 2, 3 ,4 };
+				int i_ran = 0;
+				while (checkBorder(posCenter) == false && allRooms[i * numRoomX + j]->connectRooms.size() <= 2) {
+					//int random = rand() % 4 + 1;
+					if (random[i_ran] == 1) {
+						//Kiểm tra ô bên trái có đã kết nối với room center
+						std::shared_ptr<Room> checkRoom = allRooms[i * numRoomX + j]->checkPosConnectRoom(MazeCoordinate(posCenter.getX() - 1, posCenter.getY()));
+						if (checkRoom == NULL) {
+							checkRoom = FindRoomByPos(MazeCoordinate(posCenter.getX() - 1, posCenter.getY()));
+							if (checkRoom != NULL) {
+								allRooms[i * numRoomX + j]->ConnectRoom(checkRoom);
+								checkRoom->ConnectRoom(allRooms[i * numRoomX + j]);
+
+								//Assign each room's respective room texture then add them to the renderer
+								allRooms[i * numRoomX + j]->AssignRoomTextures();
+								checkRoom->AssignRoomTextures();
+								roomRandom--;
+							}
+						}
+						i_ran++;
+					}
+					else if (random[i_ran] == 2) {
+						//Kiểm tra ô bên phải có đã kết nối với room center
+						std::shared_ptr<Room> checkRoom = allRooms[i * numRoomX + j]->checkPosConnectRoom(MazeCoordinate(posCenter.getX() + 1, posCenter.getY()));
+						if (checkRoom == NULL) {
+							checkRoom = FindRoomByPos(MazeCoordinate(posCenter.getX() + 1, posCenter.getY()));
+							if (checkRoom != NULL) {
+								allRooms[i * numRoomX + j]->ConnectRoom(checkRoom);
+								checkRoom->ConnectRoom(allRooms[i * numRoomX + j]);
+
+								//Assign each room's respective room texture then add them to the renderer
+								allRooms[i * numRoomX + j]->AssignRoomTextures();
+								checkRoom->AssignRoomTextures();
+								roomRandom--;
+							}
+						}
+						i_ran++;
+					}
+					else if (random[i_ran] == 3) {
+						//Kiểm tra ô bên trên có đã kết nối với room center
+						std::shared_ptr<Room> checkRoom = allRooms[i * numRoomX + j]->checkPosConnectRoom(MazeCoordinate(posCenter.getX(), posCenter.getY() - 1));
+						if (checkRoom == NULL) {
+							checkRoom = FindRoomByPos(MazeCoordinate(posCenter.getX(), posCenter.getY() - 1));
+							if (checkRoom != NULL) {
+								allRooms[i * numRoomX + j]->ConnectRoom(checkRoom);
+								checkRoom->ConnectRoom(allRooms[i * numRoomX + j]);
+
+								//Assign each room's respective room texture then add them to the renderer
+								allRooms[i * numRoomX + j]->AssignRoomTextures();
+								checkRoom->AssignRoomTextures();
+								roomRandom--;
+							}
+						}
+						i_ran++;
+					}
+					else if (random[i_ran] == 4) {
+						//Kiểm tra ô bên dưới có đã kết nối với room center
+						std::shared_ptr<Room> checkRoom = allRooms[i * numRoomX + j]->checkPosConnectRoom(MazeCoordinate(posCenter.getX(), posCenter.getY() + 1));
+						if (checkRoom == NULL) {
+							checkRoom = FindRoomByPos(MazeCoordinate(posCenter.getX(), posCenter.getY() + 1));
+							if (checkRoom != NULL) {
+								allRooms[i * numRoomX + j]->ConnectRoom(checkRoom);
+								checkRoom->ConnectRoom(allRooms[i * numRoomX + j]);
+
+								//Assign each room's respective room texture then add them to the renderer
+								allRooms[i * numRoomX + j]->AssignRoomTextures();
+								checkRoom->AssignRoomTextures();
+								roomRandom--;
+							}
+						}
+						i_ran++;
+					}
+				}
+			}
+		}
+	}
+}
+
+std::shared_ptr<Room> Maze::FindRoomByPos(MazeCoordinate pos) {
 	auto iter = (std::find_if(begin(allRooms), end(allRooms), [&](std::shared_ptr<Room> checkRoom) {
 		return checkRoom->roomPos == pos;
 		}));
@@ -333,75 +433,36 @@ std::shared_ptr<Room> Maze::FindRoomByPos(MazeCoordinate pos)
 	}
 	else
 	{
-		return nullptr;
+		return NULL;
 	}
 }
 
-//@DESCR: None
-//@PARAM: None
-//@RETURN: None
-void Maze::MazeOutline(sf::RenderTarget* target)
-{
-	//mazeRect.update(target);
-}
-
-//@DESCR: Render maze on window.  Draw each cell(room)
-//@PARAM: delay const 0.
-//@RETURN: None
-void Maze::AddMazeRoomsToRenderer(sf::RenderWindow& window)
-{
-	/*std::shared_ptr<Room> endRoom = FindRoomByPos(finalPos);
-	endRoom->SetRoomEnd();*/
+void Maze::AddMazeRoomsToRenderer(sf::RenderWindow& window) {
 	for_each(begin(allRooms), end(allRooms), [&](std::shared_ptr<Room> curRoomPtr)
 		{
 			curRoomPtr->AddRoomToRenderer(window);
 		});
-	
-	if (isTakenKey == false) {
-		mazeKey->render(window);
+
+	for (int i = 0; i < mazeKey.size(); i++) {
+		if (isTakeKey[i] == false) {
+			mazeKey[i]->render(window);
+		}
 	}
-	if (isTakenChest == false) {
+	for (int i = 0; i < mazeCoin.size(); i++) {
+		if (isTakeCoin[i] == false) {
+			mazeCoin[i]->render(window);
+		}
+	}
+	if (isTakeChest == false) {
 		mazeChest->render(window);
 	}
-	//MazeOutline();
 }
-
-void Maze::NextMazeCycle()
-{
-	if (mazeLevel >= GUARD_START) {
-		for (int i = 0; i < mazeGuard.size(); i++) {
-			mazeGuard[i]->NextCycle();
-		}
-	}
-
-	if (mazeLevel >= TRAP_START) {
-		for (int i = 0; i < mazeTrap.size(); i++) {
-			mazeTrap[i]->NextCycle();
-		}
-	}
-}
-
 void Maze::AddMazeObstaclesToRenderer(sf::RenderWindow& window) {
-	if (mazeLevel >= GUARD_START) {
-		for (int i = 0; i < mazeGuard.size(); i++) {
-			mazeGuard[i]->render(window);
-		}
+	for (int i = 0; i < mazeGuard.size(); i++) {
+		mazeGuard[i]->render(window);
 	}
 
-	if (mazeLevel >= TRAP_START) {
-		for (int i = 0; i < mazeTrap.size(); i++) {
-			mazeTrap[i]->render(window);
-		}
+	for (int i = 0; i < mazeTrap.size(); i++) {
+		mazeTrap[i]->render(window);
 	}
-}
-
-void Maze::CreateKey()
-{
-	std::shared_ptr<Room> curRoomPtr;
-	do
-	{
-		curRoomPtr = randomElement(allRooms);
-	} while (curRoomPtr->roomTypes.size() > 0);
-	curRoomPtr->roomTypes.push_back(KEY);
-	mazeKey = std::shared_ptr<MazeKey>(new MazeKey(curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / mazeX_RoomCount), int(mazeX_Size / mazeX_RoomCount)));
 }
