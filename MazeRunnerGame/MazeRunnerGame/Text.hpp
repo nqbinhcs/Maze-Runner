@@ -64,6 +64,14 @@ public:
     void setBoxOutlineThickness(float thickness);
     void scaleBox(float scaleSize);
 
+    void setBoxOriginToLeft();
+    void setBoxOriginToCenter();
+    void setBoxOriginToRight();
+
+    void setBoxOriginToTop();
+    void setBoxOriginToMiddle();
+    void setBoxOriginToBottom();
+
 public:
     void alignTextLeft();
     void alignTextCenter();
@@ -73,7 +81,16 @@ public:
     void alignTextMiddle();
     void alignTextBottom();
 
+    void alignBoxLeft();
+    void alignBoxCenter();
+    void alignBoxRight();
+    
+    void alignBoxTop();
+    void alignBoxMiddle();
+    void alignBoxBottom();
+
 public:
+
     void updateBound();
 
     void rotate(float angle);

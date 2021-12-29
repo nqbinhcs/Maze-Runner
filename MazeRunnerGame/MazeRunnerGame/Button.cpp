@@ -44,6 +44,7 @@ void Button::setTextBox(sf::Vector2f position, sf::Vector2f boxSize,
 	std::string Text, std::string font,
 	float textSize, sf::Uint32 style, sf::Color color)
 {
+
 	m_Text.setBox(position, boxSize, fillColor, outlineColor);
 	m_Text.setText(Text, font, textSize, style, color);
 
@@ -109,6 +110,7 @@ void Button::setButton(sf::Vector2f position, sf::Vector2f boxSize,
 
 		scaleSprite(scale);
 		setSpritePosition(boxCenter);
+		setSpriteOriginToCentroid();
 	}
 
 	updateBound();

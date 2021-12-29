@@ -149,10 +149,14 @@ void MyText::setTextOriginToBottom() {
 }
 
 void MyText::setBox(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, sf::Color outlineColor) {
-    setBoxPosition(position);
     setBoxSize(size);
     setBoxFillColor(fillColor);
     setBoxOutlineColor(outlineColor);
+    
+    setBoxOriginToCenter();
+    setBoxOriginToMiddle();
+    setBoxPosition(position);
+
 }
 
 void MyText::setBoxPosition(sf::Vector2f position) {
@@ -183,36 +187,101 @@ void MyText::scaleBox(float scaleSize)
     m_Box.setScale(scaleSize, scaleSize);   
 }
 
+void MyText::setBoxOriginToLeft() {
+    sf::FloatRect boxRect(this->m_Box.getLocalBounds());
+  
+    this->m_Box.setOrigin(boxRect.left, m_Box.getOrigin().y);
+}
+
+void MyText::setBoxOriginToCenter() {
+    sf::FloatRect boxRect(this->m_Box.getLocalBounds());
+
+    this->m_Box.setOrigin(boxRect.left + boxRect.width / 2, m_Box.getOrigin().y);
+}
+
+void MyText::setBoxOriginToRight() {
+    sf::FloatRect boxRect(this->m_Box.getLocalBounds());
+
+    this->m_Box.setOrigin(boxRect.left + boxRect.width, m_Box.getOrigin().y);
+}
+
+void MyText::setBoxOriginToTop() {
+    sf::FloatRect boxRect(this->m_Box.getLocalBounds());
+
+    this->m_Box.setOrigin(m_Box.getOrigin().x, boxRect.top);
+}
+
+void MyText::setBoxOriginToMiddle() {
+    sf::FloatRect boxRect(this->m_Box.getLocalBounds());
+
+    this->m_Box.setOrigin(m_Box.getOrigin().x, boxRect.top + boxRect.height / 2);
+}
+
+void MyText::setBoxOriginToBottom() {
+    sf::FloatRect boxRect(this->m_Box.getLocalBounds());
+
+    this->m_Box.setOrigin(m_Box.getOrigin().x, boxRect.top + boxRect.height);
+}
+
 void MyText::alignTextLeft(){
     setTextOriginToLeft();
-    setTextPosition(m_Box.getPosition().x, getTextPositionY());
+    setTextPosition(m_Box.getGlobalBounds().left, getTextPositionY());
 }
 
 void MyText::alignTextCenter(){
     setTextOriginToCenter();
-    setTextPosition(m_Box.getPosition().x + m_Box.getSize().x / 2, getTextPositionY());
+    setTextPosition(m_Box.getGlobalBounds().left + m_Box.getSize().x / 2, getTextPositionY());
 }
 
 void MyText::alignTextRight(){
     setTextOriginToRight();
-    setTextPosition(m_Box.getPosition().x + m_Box.getSize().x, getTextPositionY());
+    setTextPosition(m_Box.getGlobalBounds().left + m_Box.getSize().x, getTextPositionY());
 }
 
 void MyText::alignTextTop(){
     setTextOriginToTop();
-    setTextPosition(getTextPositionX(), m_Box.getPosition().y);
+    setTextPosition(getTextPositionX(), m_Box.getGlobalBounds().top);
 }
 
 void MyText::alignTextMiddle(){
     setTextOriginToMiddle();
-    setTextPosition(getTextPositionX(), m_Box.getPosition().y + m_Box.getSize().y / 2);
+    setTextPosition(getTextPositionX(), m_Box.getGlobalBounds().top + m_Box.getSize().y / 2);
 }
 
 void MyText::alignTextBottom(){
     setTextOriginToBottom();
-    setTextPosition(getTextPositionX(), m_Box.getPosition().y + m_Box.getSize().y);
+    setTextPosition(getTextPositionX(), m_Box.getGlobalBounds().top + m_Box.getSize().y);
 }
 
+void MyText::alignBoxLeft() {
+    setBoxOriginToLeft();
+    setBoxPosition(sf::Vector2f(0, m_Box.getPosition().y));
+}
+
+void MyText::alignBoxCenter() {
+    setBoxOriginToCenter();
+    setBoxPosition(sf::Vector2f(SCREEN_WIDTH / 2.f, m_Box.getPosition().y));
+}
+
+void MyText::alignBoxRight() {
+    setBoxOriginToRight();
+    setBoxPosition(sf::Vector2f(SCREEN_WIDTH, m_Box.getPosition().y));
+}
+
+void MyText::alignBoxTop() {
+    setBoxOriginToTop();
+    setBoxPosition(sf::Vector2f(m_Box.getPosition().x, 0));
+}
+
+void MyText::alignBoxMiddle() {
+    setBoxOriginToMiddle();
+    setBoxPosition(sf::Vector2f(m_Box.getPosition().x, SCREEN_HEIGHT / 2.f));
+}
+
+void MyText::alignBoxBottom() {
+    setBoxOriginToBottom();
+    setBoxPosition(sf::Vector2f(m_Box.getPosition().x, SCREEN_HEIGHT));
+}
 void MyText::updateBound()
 {
     sf::FloatRect textBound(m_sfText.getGlobalBounds());
@@ -232,8 +301,8 @@ void MyText::rotate(float angle) {
 void MyText::scale(float scaleSize)
 {
     scaleText(scaleSize);
-
     scaleBox(scaleSize);
+    updateBound();
 }
 
 void MyText::drawMyText(sf::RenderTarget& window) {         // vẽ text lên window
