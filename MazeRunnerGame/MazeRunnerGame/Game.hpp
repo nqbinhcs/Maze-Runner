@@ -39,6 +39,7 @@ class Game
 {
 private:
 	static std::shared_ptr<LevelMaze> levelMaze;
+	static int timeCycle;
 	//I don't know how to categorize the methods which be used in each function ._.
 	//I think the effective ways in this situation are semantic comments :<
 	//I will group all revelant functions into a block and descibe some new functions and attributes

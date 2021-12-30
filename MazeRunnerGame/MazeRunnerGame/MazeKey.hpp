@@ -1,7 +1,7 @@
 #include "MazeObject.hpp"
 #pragma once
 
-#define IMG_MAZEKEY "Images/Start.png"
+#define IMG_MAZEKEY "Images/Key.png"
 
 class MazeKey :	public MazeObject
 {

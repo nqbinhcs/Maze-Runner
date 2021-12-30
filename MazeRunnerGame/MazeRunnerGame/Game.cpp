@@ -3,7 +3,7 @@
 
 MyLevel level[7] = { MyLevel{3, 3} , MyLevel{ 5, 5 }, MyLevel{ 9, 9 }, MyLevel{ 15, 15 }, MyLevel{ 20, 20 }, MyLevel{ 23, 23 }, MyLevel{ 30, 30 } };
 std::shared_ptr<LevelMaze> Game::levelMaze = NULL;
-
+int Game::timeCycle = 0;
 
 //@DESCR: Initialize variables of Game
 //@PARAM: None
@@ -420,8 +420,12 @@ void Game::render()
 	
 	curMaze->AddMazeRoomsToRenderer(*m_pWindow);
 	curMaze->AddMazeObstaclesToRenderer(*m_pWindow);
-	if (rand() % 100 == 0) {
+	if (timeCycle % 50 == 0) {
 		curMaze->NextMazeCycle();
+	}
+	timeCycle++;
+	if (timeCycle == 100) {
+		timeCycle = 0;
 	}
 	m_Player->render(*m_pWindow);
 	m_Player->checkCllisionObject(curMaze);
@@ -442,7 +446,10 @@ void Game::render()
 	if (m_State == NextStageState || curMaze->completeLevel() == true)
 	{
 		delay(0.7);
-
+		if (curMaze->isWin() == true) {
+			cout << "YOU WIN\n";
+			exit(0);
+		}
 		//Win a difficulty mode
 		if (m_Level == MAX_LEVEL - 1)
 		{

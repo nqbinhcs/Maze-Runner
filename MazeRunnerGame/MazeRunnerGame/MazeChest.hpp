@@ -1,8 +1,8 @@
 #include "MazeObject.hpp"
 #pragma once
 
-#define IMG_MAZE_CHEST_START "Images/Lock.png"
-#define IMG_MAZE_CHEST_WIN "Images/Lock.png"
+#define IMG_MAZE_CHEST_START "Images/Chest.png"
+#define IMG_MAZE_CHEST_WIN "Images/Chest.png"
 
 class MazeChest : public MazeObject
 {

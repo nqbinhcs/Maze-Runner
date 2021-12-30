@@ -8,20 +8,23 @@ bool Maze::isWin() {
 }
 
 void Maze::UpdateMaze(bool next) {
-	UpdateLevel(next);
-	ResetMaze();
+	if (next == true) {
+		ResetMaze();
+		UpdateLevel(next);
 
-	//Create Maze.
-	CreateRooms();
-	CarveMaze();
+		//Create Maze.
+		CreateRooms();
+		CarveMaze();
 
-	RandomConnectRoom();
+		RandomConnectRoom();
 
-	CreateKeys();
-	CreatChest();
-	CreatCoins();
+		CreatChest();
+		CreateKeys();
+		CreatCoins();
 
-	CreateObjects();
+		CreateObjects();
+		cout << "LEVEL: " << level << endl;
+	}
 }
 
 float Maze::getWidthRoom() {
