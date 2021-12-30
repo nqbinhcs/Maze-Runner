@@ -156,7 +156,7 @@
     <ClCompile Include="LevelComplete.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
-    <ClCompile Include="MazeAlgorithms.cpp" />
+    <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="MazeChest.cpp" />
     <ClCompile Include="MazeCoin.cpp" />
     <ClCompile Include="MazeGuard.cpp" />
@@ -182,7 +182,6 @@
     <ClInclude Include="Helper.hpp" />
     <ClInclude Include="LevelComplete.hpp" />
     <ClInclude Include="Maze.hpp" />
-    <ClInclude Include="MazeAlgorithms.hpp" />
     <ClInclude Include="MazeChest.hpp" />
     <ClInclude Include="MazeCoin.hpp" />
     <ClInclude Include="MazeCreationInterface.hpp" />
