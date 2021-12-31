@@ -28,7 +28,7 @@ void StateMenu::pollEvents() {
 				switch (m_pMenu->GetPressedItem())
 				{
 				case 0:
-					this->context_->TransitionTo(new StateModeSelect);
+					this->context_->TransitionTo(ContextGame::getStateModeSelect());
 					return;
 					break;
 
@@ -41,7 +41,8 @@ void StateMenu::pollEvents() {
 					break;
 
 				case 3: //"HELP" option
-
+					this->context_->TransitionTo(ContextGame::getStateHelpInstruction());
+					return;
 					break;
 
 				case 4: //"EXIT" option

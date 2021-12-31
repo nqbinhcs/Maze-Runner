@@ -1,6 +1,6 @@
-#include "StateDifficultyComplete.hpp"
+#include "StateHelpInstruction.hpp"
 
-void StateDifficultyComplete::pollEvents()
+void StateHelpInstruction::pollEvents()
 {
 	sf::Event event;
 	while (m_pWindow->pollEvent(event))
@@ -13,7 +13,7 @@ void StateDifficultyComplete::pollEvents()
 
 		case sf::Event::KeyPressed:
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				this->context_->TransitionTo(ContextGame::getStateMenu());
 				return;
 			}
@@ -24,12 +24,14 @@ void StateDifficultyComplete::pollEvents()
 	return;
 }
 
-void StateDifficultyComplete::update(){
+void StateHelpInstruction::update()
+{
 }
 
-void StateDifficultyComplete::render() {
+void StateHelpInstruction::render()
+{
 	m_pWindow->clear(sf::Color(128, 128, 128));
-	//m_pLevelComplete->draw(*m_pWindow, m_Time.getRunningTimeInSec());
-	m_pLevelComplete->draw(*m_pWindow, 10);
+	m_pInstruction->draw(*m_pWindow);
 	this->m_pWindow->display();
 }
+

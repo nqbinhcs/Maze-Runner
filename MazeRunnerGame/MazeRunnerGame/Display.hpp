@@ -9,6 +9,7 @@
 #define IMG_LEVELCOMPLETE "Images/LevelComplete.png"
 #define IMG_THEME_BACKGROUND "Images/Theme.png"
 #define IMG_HELP "Images/HelpMenu.png"
+#define IMG_INSTRUCTION "Images/Instruction.png"
 
 class Display
 {

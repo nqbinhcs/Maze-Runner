@@ -1,6 +1,6 @@
-#include "StateDifficultyComplete.hpp"
+#include "StateOverGame.hpp"
 
-void StateDifficultyComplete::pollEvents()
+void StateOverGame::pollEvents()
 {
 	sf::Event event;
 	while (m_pWindow->pollEvent(event))
@@ -24,12 +24,14 @@ void StateDifficultyComplete::pollEvents()
 	return;
 }
 
-void StateDifficultyComplete::update(){
+void StateOverGame::update()
+{
 }
 
-void StateDifficultyComplete::render() {
+void StateOverGame::render()
+{
 	m_pWindow->clear(sf::Color(128, 128, 128));
-	//m_pLevelComplete->draw(*m_pWindow, m_Time.getRunningTimeInSec());
-	m_pLevelComplete->draw(*m_pWindow, 10);
+	m_pGameOver->draw(*m_pWindow);
 	this->m_pWindow->display();
 }
+

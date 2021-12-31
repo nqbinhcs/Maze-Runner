@@ -394,8 +394,8 @@ void StateInGame::pollEvents()
 		if (m_ReturnMenu.isChosen())
 		{
 			resetGame();
-			//m_State = MenuState;
 			m_ReturnMenu.makeNormal();
+			context_->TransitionTo(new StateMenu);
 			return;
 		}
 
@@ -472,15 +472,16 @@ void StateInGame::render()
 	if (m_State == NextStageState || curMaze->completeLevel() == true)
 	{
 		delay(0.7);
-		if (curMaze->isWin() == true) {
+		/*if (curMaze->isWin() == true) {
 			cout << "YOU WIN\n";
 			exit(0);
-		}
+		}*/
 		//Win a difficulty mode
-		if (m_Level == MAX_LEVEL - 1)
+		if (m_Level == 3)
 		{
+			std::cout << "YO\n";
 			//m_State = DifficultyCompleteState;
-			//this->context_->TransitionTo(new StateDifficultyComplete);
+			this->context_->TransitionTo(new StateDifficultyComplete);
 		}
 		else
 		{
@@ -524,6 +525,7 @@ void StateInGame::render()
 	m_Help.drawButton(*m_pWindow);
 	m_RestartGame.drawButton(*m_pWindow);
 	m_ReturnMenu.drawButton(*m_pWindow);
+
 
 	//-----------------------------In Help State-----------------------------
 	if (m_State == InHelpState)

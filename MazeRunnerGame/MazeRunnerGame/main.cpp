@@ -7,27 +7,18 @@
 
 sf::RenderWindow* SingletonRenderWindow::window = nullptr;
 
-//StateMenu* ContextGame::stateMenu_ = new StateMenu;
-//StateModeSelect* ContextGame::stateModeSelect_ = new StateModeSelect;
-//StateInGame* ContextGame::stateInGame_ = new StateInGame;
+StateMenu* ContextGame::stateMenu_ = new StateMenu;
+StateInGame* ContextGame::stateInGame_ = new StateInGame;
+StateModeSelect* ContextGame::stateModeSelect_ = new StateModeSelect;
+StateDemo* ContextGame::stateDemo_ = new StateDemo;
+StateDifficultyComplete* ContextGame::stateDifficultyComplete_ = new StateDifficultyComplete;
+StateOverGame* ContextGame::stateOverGame_ = new StateOverGame;
+StateHelpInstruction* ContextGame::stateHelpInstruction_ = new StateHelpInstruction;
+StateContinue* ContextGame::stateContinue_ = new StateContinue;
 
 int main()
 {
 	srand(time(0));
-
-	////Khởi tạo game
-	//Game game;
-	//Clock clock;
-	//float timer = 0, delay = 0.1;
-	//
-	//
-	//while (game.running())
-	//{
-	//	game.update();
-	//	game.render();
-	//}
-
-	//return 0;
 
 	ContextGame* context = new ContextGame(new StateMenu);
 	while (SingletonRenderWindow::getInstance()->isOpen())
@@ -37,6 +28,9 @@ int main()
 		context->render();
 
 	}
+
+	//clear memory
+	ContextGame::makeDelete();
 	
 
 }

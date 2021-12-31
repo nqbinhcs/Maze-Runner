@@ -1,97 +1,97 @@
 #pragma once
 #include "StateGame.hpp"
 
-enum GameState { InGameState, InHelpState, NextStageState, LevelCompleteState };
-
-struct MyLevel {
-	int x, y;
-};
-
-class StateInGame : public StateGame {
-private:
-	static std::shared_ptr<LevelMaze> levelMaze;
-	static int timeCycle;
-public:
-	sf::RenderWindow* m_pWindow;
-	sf::Event m_Event;
-private:
-	//----------------Game State atrributes----------------
-	GameState m_State;
-	Helper m_Helper;
-	bool m_EndGame;
-
-	//----------------Display attributes----------------
-	shared_ptr<NextStage> m_pNextStage;
-	shared_ptr<HelpAlgorithmMenu> m_pHelpMenu;
-
-
-	//----------------"In Game processing"  atrributes----------------
-	shared_ptr<Maze> curMaze;
-	shared_ptr<Player> m_Player;
-	int m_Points;
-
-	//----------------Stat attributes----------------
-	MyClock m_Time; //total times
-	int m_Level; //current levels
-
-
-	//----------------GUI atrributes----------------
-	sf::Font m_Font;
-	sf::Text m_GuiText;
-	sf::Text m_EndGameText;
-
-	MyText m_Title;
-	MyText m_LevelInfo;
-	MyText m_TimeInfo[2];
-	MyText m_CoinsInfo[2];
-
-	Button m_Help;
-	Button m_ReturnMenu;
-	Button m_RestartGame;
-
-public:
-	StateInGame();
-
-public:
-	//----------------Initial GUI functions----------------
-	void initVariables();
-	void initWindow();
-	void initFonts();
-	void initButtons();
-	void initText();
-
-	void initTitle();
-	void initLevelInfo();
-	void initTimeInfo();
-	void initCoinsInfo();
-
-
-	//----------------Update GUI functions----------------
-	void updatePlayer();
-	void updateGui();
-	void updateTimeInfo();
-	void updateCoinsInfo();
-	void updateLevel();
-
-
-	//----------------Render GUI functions----------------
-	void renderGui(sf::RenderTarget* target);
-	void renderDisplayStates(GameState); //render above Display attributes
-
-
-	//----------------"In game processing" functions----------------
-	void nextLevel(bool check);
-	void setLevel(int _level, bool check);
-	void resetGame(); //reset all variables of game aka the second initVariables =))))
-	bool getEndGame();
-
-
-public:
-	void pollEvents() override;
-	void update() override;
-	void render() override;
-
-};
+//enum GameState { InGameState, InHelpState, NextStageState, LevelCompleteState };
+//
+//struct MyLevel {
+//	int x, y;
+//};
+//
+//class StateInGame : public StateGame {
+//private:
+//	static std::shared_ptr<LevelMaze> levelMaze;
+//	static int timeCycle;
+//public:
+//	sf::RenderWindow* m_pWindow;
+//	sf::Event m_Event;
+//private:
+//	//----------------Game State atrributes----------------
+//	GameState m_State;
+//	Helper m_Helper;
+//	bool m_EndGame;
+//
+//	//----------------Display attributes----------------
+//	shared_ptr<NextStage> m_pNextStage;
+//	shared_ptr<HelpAlgorithmMenu> m_pHelpMenu;
+//
+//
+//	//----------------"In Game processing"  atrributes----------------
+//	shared_ptr<Maze> curMaze;
+//	shared_ptr<Player> m_Player;
+//	int m_Points;
+//
+//	//----------------Stat attributes----------------
+//	MyClock m_Time; //total times
+//	int m_Level; //current levels
+//
+//
+//	//----------------GUI atrributes----------------
+//	sf::Font m_Font;
+//	sf::Text m_GuiText;
+//	sf::Text m_EndGameText;
+//
+//	MyText m_Title;
+//	MyText m_LevelInfo;
+//	MyText m_TimeInfo[2];
+//	MyText m_CoinsInfo[2];
+//
+//	Button m_Help;
+//	Button m_ReturnMenu;
+//	Button m_RestartGame;
+//
+//public:
+//	StateInGame();
+//
+//public:
+//	//----------------Initial GUI functions----------------
+//	void initVariables();
+//	void initWindow();
+//	void initFonts();
+//	void initButtons();
+//	void initText();
+//
+//	void initTitle();
+//	void initLevelInfo();
+//	void initTimeInfo();
+//	void initCoinsInfo();
+//
+//
+//	//----------------Update GUI functions----------------
+//	void updatePlayer();
+//	void updateGui();
+//	void updateTimeInfo();
+//	void updateCoinsInfo();
+//	void updateLevel();
+//
+//
+//	//----------------Render GUI functions----------------
+//	void renderGui(sf::RenderTarget* target);
+//	void renderDisplayStates(GameState); //render above Display attributes
+//
+//
+//	//----------------"In game processing" functions----------------
+//	void nextLevel(bool check);
+//	void setLevel(int _level, bool check);
+//	void resetGame(); //reset all variables of game aka the second initVariables =))))
+//	bool getEndGame();
+//
+//
+//public:
+//	void pollEvents() override;
+//	void update() override;
+//	void render() override;
+//
+//};
 
 #define SCREEN_TITLE_WIDTH	(SCREEN_WIDTH - 2 * SPACE)
 #define SCREEN_TITLE_HEIGHT	(OFFSET_MAZE_Y - 2 * SPACE) 

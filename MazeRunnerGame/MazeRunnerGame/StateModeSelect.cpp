@@ -26,7 +26,7 @@ void StateModeSelect::pollEvents()
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-				this->context_->TransitionTo(new StateInGame);
+				this->context_->TransitionTo(ContextGame::getStateInGame());
 				return;
 			}
 			break;

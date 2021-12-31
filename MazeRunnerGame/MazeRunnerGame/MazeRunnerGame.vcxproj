@@ -153,6 +153,7 @@
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="HelpAlgorithmMenu.cpp" />
     <ClCompile Include="Helper.cpp" />
+    <ClCompile Include="Instruction.cpp" />
     <ClCompile Include="LevelComplete.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
@@ -168,11 +169,15 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="MazeObject.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="StateContinue.cpp" />
+    <ClCompile Include="StateDemo.cpp" />
     <ClCompile Include="StateDifficultyComplete.cpp" />
     <ClCompile Include="StateGame.cpp" />
+    <ClCompile Include="StateHelpInstruction.cpp" />
     <ClCompile Include="StateInGame.cpp" />
     <ClCompile Include="StateMenu.cpp" />
     <ClCompile Include="StateModeSelect.cpp" />
+    <ClCompile Include="StateOverGame.cpp" />
     <ClCompile Include="Text.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +191,7 @@
     <ClInclude Include="Header.hpp" />
     <ClInclude Include="HelpAlgorithmMenu.hpp" />
     <ClInclude Include="Helper.hpp" />
+    <ClInclude Include="Instruction.hpp" />
     <ClInclude Include="LevelComplete.hpp" />
     <ClInclude Include="Maze.hpp" />
     <ClInclude Include="MazeChest.hpp" />
@@ -202,11 +208,15 @@
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="MazeObject.hpp" />
     <ClInclude Include="Room.hpp" />
+    <ClInclude Include="StateContinue.hpp" />
+    <ClInclude Include="StateDemo.hpp" />
     <ClInclude Include="StateDifficultyComplete.hpp" />
     <ClInclude Include="StateGame.hpp" />
+    <ClInclude Include="StateHelpInstruction.hpp" />
     <ClInclude Include="StateInGame.hpp" />
     <ClInclude Include="StateMenu.hpp" />
     <ClInclude Include="StateModeSelect.hpp" />
+    <ClInclude Include="StateOverGame.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Text.hpp" />
   </ItemGroup>
