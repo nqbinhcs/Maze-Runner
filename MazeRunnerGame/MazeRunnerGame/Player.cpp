@@ -26,6 +26,7 @@ Player::Player(MazeCoordinate pos, float xOffset, float yOffset, float width, fl
 
 	//this->initVariables();
 	//this->initShape();
+	timesPlayer = 3;
 }
 
 //@DESCR: Destructor of Game

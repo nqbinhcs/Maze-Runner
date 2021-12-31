@@ -98,6 +98,7 @@ void StateInGame::nextLevel(bool check)
 //@RETURN: None
 void StateInGame::setLevel(int _level, bool check)
 {
+
 	m_Level = _level;
 	curMaze->UpdateMaze(check);
 
@@ -105,6 +106,7 @@ void StateInGame::setLevel(int _level, bool check)
 	m_Player->setSize(curMaze->getWidthRoom(), curMaze->getHeightRoom());
 	m_Player->updateDirecPlayer(0);
 	m_Player->setLose(false);
+	m_Player->resetTimes(check);
 
 	m_Player->updateDirecPlayer(0);
 }
@@ -115,13 +117,22 @@ void StateInGame::setLevel(int _level, bool check)
 //@RETURN: None
 StateInGame::StateInGame()
 {
-	std::cout << "INIT INGAME\n";
 	initWindow();
 	initVariables();
 	initFonts();
 	initButtons();
 	initText();
+	/*if(ContextGame::getStateModeSelect()->getPressedItem() == 0)
+		levelMaze = std::shared_ptr<LevelMaze>(new EasyLevelMaze());
+
+	if (ContextGame::getStateModeSelect()->getPressedItem() == 1)
+		levelMaze = std::shared_ptr<LevelMaze>(new MediumLevelMaze());
+
+	if (ContextGame::getStateModeSelect()->getPressedItem() == 2)
+		levelMaze = std::shared_ptr<LevelMaze>(new HardLevelMaze());*/
+
 	levelMaze = std::shared_ptr<LevelMaze>(new HardLevelMaze());
+
 	curMaze = levelMaze->OrderLevelMaze();
 	m_Player = std::shared_ptr<Player>(new Player(curMaze->getStartPos(), OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
 	setLevel(0, true); //Level 0 when entering game
@@ -324,6 +335,9 @@ void StateInGame::pollEvents()
 				{
 					if (m_Help.isClickV1(m_pWindow))
 					{
+						//
+						//run
+						//
 						m_Help.makeChosen();
 					}
 
@@ -339,6 +353,7 @@ void StateInGame::pollEvents()
 
 					break;
 				}
+
 				if (m_State == GameState::InHelpState) //Choosing Algorithm
 				{
 					if (m_pHelpMenu->isExit(m_pWindow)) //Check exit
@@ -426,6 +441,7 @@ void StateInGame::update()
 
 void StateInGame::render()
 {
+
 	m_pWindow->clear(sf::Color(128, 128, 128));
 
 	//-----------------------------In Game + Next Stage-----------------------------
@@ -469,27 +485,24 @@ void StateInGame::render()
 
 
 	//-----------------------------Next Stage-----------------------------
+	if (m_Player->loseLevel()) { //GameOver
+		exit(0);
+	}
 	if (m_State == NextStageState || curMaze->completeLevel() == true)
 	{
 		delay(0.7);
-		/*if (curMaze->isWin() == true) {
-			cout << "YOU WIN\n";
-			exit(0);
-		}*/
+
 		//Win a difficulty mode
-		if (m_Level == 3)
-		{
-			std::cout << "YO\n";
-			//m_State = DifficultyCompleteState;
+		if (curMaze->isWin() == true) {
 			this->context_->TransitionTo(new StateDifficultyComplete);
 		}
-		else
-		{
-			nextLevel(true);
-			m_State = InGameState;
-		}
+		
+		nextLevel(true);
+		m_State = InGameState;
 	}
-	if (m_Player->getLose() == true)
+
+
+	if (m_Player->getLose() == true) //Restart
 	{
 		delay(0.7);
 

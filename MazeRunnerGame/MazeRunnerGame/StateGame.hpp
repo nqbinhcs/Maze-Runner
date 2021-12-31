@@ -201,6 +201,11 @@ public:
 	void update() override;
 
 	void render() override;
+
+public:
+	int getPressedItem() {
+		return m_pModeGame->GetPressedItem();
+	}
 };
 
 

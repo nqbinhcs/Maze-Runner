@@ -27,7 +27,8 @@ void StateMenu::pollEvents() {
 			{
 				switch (m_pMenu->GetPressedItem())
 				{
-				case 0:
+				case 0: 
+
 					this->context_->TransitionTo(ContextGame::getStateModeSelect());
 					return;
 					break;

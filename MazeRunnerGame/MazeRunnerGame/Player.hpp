@@ -23,6 +23,7 @@ class Player : public MazeObject
 private:
 	int totalCoin;
 private:
+	int timesPlayer;
 	bool isLose;
 private:
 	static sf::Image playerImages[4];
@@ -51,4 +52,19 @@ public:
 	void update(const sf::RenderTarget* target, int direction, shared_ptr<Maze> curMaze);
 	void updateDirecPlayer(int i);
 	void checkCllisionObject(shared_ptr<Maze> curMaze);
+
+	void resetTimes(bool check) {
+		if (check) {
+			timesPlayer = 3;
+		}
+		else {
+			timesPlayer -= 1;
+		}
+	}
+	bool loseLevel() {
+		if (timesPlayer == 0) {
+			return true;
+		}
+		return false;
+	}
 };
