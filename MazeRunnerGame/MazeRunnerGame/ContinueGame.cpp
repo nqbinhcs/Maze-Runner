@@ -88,6 +88,8 @@ void SaveLoadGame::LoadGameContinue(shared_ptr<Maze>& curMaze, shared_ptr<Player
 	//After creat maze, then creat player.
 	m_Player = std::shared_ptr<Player>(new Player(curMaze->getStartPos(), OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
 	m_Player->setPosition(playerPos);
+
+	std::cout << "LOAD SUCCESSFULLY\n";
 }
 void SaveLoadGame::SaveGameContiune(shared_ptr<Maze> curMaze, shared_ptr<Player> m_Player) {
 	fstream f;
@@ -189,5 +191,4 @@ void SaveLoadGame::SaveGameContiune(shared_ptr<Maze> curMaze, shared_ptr<Player>
 	}
 	f.close();
 	cout << "SAVE SUCCESSFUL\n";
-	exit(0);
 }

@@ -23,6 +23,7 @@ void StateInGame::initWindow()
 	this->m_pWindow = SingletonRenderWindow::getInstance();
 	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
 	this->m_pHelpMenu = std::shared_ptr<HelpAlgorithmMenu>(new HelpAlgorithmMenu());
+	
 }
 
 
@@ -115,7 +116,7 @@ void StateInGame::setLevel(int _level, bool check)
 //@DESCR: Constructor of Game
 //@PARAM: None
 //@RETURN: None
-StateInGame::StateInGame()
+StateInGame::StateInGame(bool isContinue)
 {
 	initWindow();
 	initVariables();
@@ -123,18 +124,25 @@ StateInGame::StateInGame()
 	initButtons();
 	initText();
 
-	if(StateModeSelect::pressedItem == 0)
-		levelMaze = std::shared_ptr<LevelMaze>(new EasyLevelMaze());
+	if (isContinue)
+	{
+		load();
+	}
+	else
+	{
+		if (StateModeSelect::pressedItem == 0)
+			levelMaze = std::shared_ptr<LevelMaze>(new EasyLevelMaze());
 
-	if (StateModeSelect::pressedItem == 1)
-		levelMaze = std::shared_ptr<LevelMaze>(new MediumLevelMaze());
+		if (StateModeSelect::pressedItem == 1)
+			levelMaze = std::shared_ptr<LevelMaze>(new MediumLevelMaze());
 
-	if (StateModeSelect::pressedItem == 2)
-		levelMaze = std::shared_ptr<LevelMaze>(new HardLevelMaze());
+		if (StateModeSelect::pressedItem == 2)
+			levelMaze = std::shared_ptr<LevelMaze>(new HardLevelMaze());
 
 
-	curMaze = levelMaze->OrderLevelMaze();
-	m_Player = std::shared_ptr<Player>(new Player(curMaze->getStartPos(), OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
+		curMaze = levelMaze->OrderLevelMaze();
+		m_Player = std::shared_ptr<Player>(new Player(curMaze->getStartPos(), OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
+	}
 }
 
 
@@ -409,6 +417,7 @@ void StateInGame::pollEvents()
 		{
 			resetGame();
 			m_ReturnMenu.makeNormal();
+			save();
 			context_->TransitionTo(new StateMenu);
 			return;
 		}
@@ -466,8 +475,11 @@ void StateInGame::render()
 	}
 	timeCycle++;
 	if (timeCycle == 100) {
+		//Save after 100 timcyles
+		//this->save();
 		timeCycle = 0;
 	}
+	save();
 	m_Player->render(*m_pWindow);
 	m_Player->checkCllisionObject(curMaze);
 

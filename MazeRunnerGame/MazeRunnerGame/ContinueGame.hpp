@@ -24,5 +24,17 @@ public:
 	//Maze appear or hide of coin and key.
 	void LoadGameContinue(shared_ptr<Maze>& curMaze, shared_ptr<Player>& m_Player);
 	void SaveGameContiune(shared_ptr<Maze> curMaze, shared_ptr<Player> m_Player);
+
+	static void copyFileToFile(string src, string des)
+	{
+		ifstream source(src.c_str(), ios::binary);
+		if (!source.is_open()) return;
+		ofstream dest(des.c_str(), ios::binary);
+
+		dest << source.rdbuf();
+
+		source.close();
+		dest.close();
+	}
 };
 

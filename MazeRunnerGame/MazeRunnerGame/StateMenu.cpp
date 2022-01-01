@@ -28,13 +28,17 @@ void StateMenu::pollEvents() {
 				switch (m_pMenu->GetPressedItem())
 				{
 				case 0: 
-
 					this->context_->TransitionTo(new StateModeSelect);
 					return;
 					break;
 
 				case 1: //"CONTINUE" option
-					return;
+
+					if (StateInGame::isOpenSaveFile())
+					{
+						this->context_->TransitionTo(new StateInGame(true));
+						return;
+					}
 					break;
 
 				case 2: //"HIGH SCORE" option

@@ -25,6 +25,7 @@
 #include "HelpAlgorithmMenu.hpp"
 #include "MazeFactory.hpp"
 #include "Instruction.hpp"
+#include "ContinueGame.hpp"
 
 using namespace std;
 
@@ -137,8 +138,9 @@ private:
 	Button m_ReturnMenu;
 	Button m_RestartGame;
 
+
 public:
-	StateInGame();
+	StateInGame(bool isContinue = false);
 
 public:
 	//----------------Initial GUI functions----------------
@@ -178,6 +180,25 @@ public:
 	void pollEvents() override;
 	void update() override;
 	void render() override;
+
+	//-----------Utilities--------------
+	void save() {
+		SaveLoadGame saver("temp.dat");
+		saver.SaveGameContiune(curMaze, m_Player);
+		SaveLoadGame::copyFileToFile("temp.dat", "save.dat");
+	}
+
+	void load() {
+		SaveLoadGame loader("save.dat");
+		loader.LoadGameContinue(curMaze, m_Player);
+	}
+
+	static bool isOpenSaveFile() {
+		ifstream loader("save.dat", ios::binary);
+		bool flg = loader.is_open();
+		loader.close();
+		return flg;
+	}
 
 };
 
