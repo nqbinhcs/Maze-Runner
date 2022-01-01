@@ -39,7 +39,7 @@ Menu::Menu(float width, float height) :Display(width, height)
 	setText(1, "CONTINUE GAME");
 	setPositionText(text[1], 250 + delta);
 
-	setText(2, "HIGH SCORE");
+	setText(2, "VISUAL DEMO");
 	setPositionText(text[2], 330 + delta);
 
 	setText(3, "HELP");

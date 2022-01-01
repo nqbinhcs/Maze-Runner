@@ -27,8 +27,8 @@ HelpAlgorithmMenu::HelpAlgorithmMenu()
 	int BUTTON_WIDTH = 130;
 	int BUTTON_HEIGHT = 100;
 
-	int YPOS = SCREEN_HEIGHT / 2 - 100;
-	int XSTART = 332;
+	int YPOS = SCREEN_HEIGHT / 2 - 70;
+	int XSTART = 395;
 	int XPOS[4] = { XSTART, XSTART + 150, XSTART + 300, XSTART + 450 };
 
 	algos[0].setButton(sf::Vector2f(XPOS[0], YPOS), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
@@ -47,7 +47,7 @@ HelpAlgorithmMenu::HelpAlgorithmMenu()
 		sf::Color::Color(240, 186, 74), sf::Color::Transparent,
 		"Dijkstra", FONT_GAME, 15, sf::Text::Style::Bold, sf::Color::Black, "");
 
-	run.setButton(sf::Vector2f(XPOS[1], YPOS + 130), sf::Vector2f(2 * BUTTON_WIDTH + 20, BUTTON_HEIGHT - 50),
+	run.setButton(sf::Vector2f(XPOS[1] + 77, YPOS + 130), sf::Vector2f(2 * BUTTON_WIDTH + 20, BUTTON_HEIGHT - 50),
 		sf::Color::Color(240, 186, 74), sf::Color::Transparent,
 		"RUN", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::Black, "");
 

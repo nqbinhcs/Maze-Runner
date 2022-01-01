@@ -31,6 +31,9 @@ public:
 	//Updates Guard Location Each Cycle
 	void NextCycle();
 
+	MazeCoordinate getPositionCenter() {
+		return guardCenterRoom->roomPos;
+	}
 };
 
 

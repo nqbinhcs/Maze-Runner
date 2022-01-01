@@ -220,7 +220,6 @@ int AStar::calcH(shared_ptr<Room> room, shared_ptr<Room> end)
 
 vector<shared_ptr<Room>> AStar::findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option)
 {
-	std::cout << "CALL SOLVE\n";
 	int max_size = 50;
 	int inf = max_size * max_size + 1;
 	vector < vector < int > > F(max_size, vector < int >(max_size, inf));
@@ -243,6 +242,8 @@ vector<shared_ptr<Room>> AStar::findPath(shared_ptr<Room> start, shared_ptr<Room
 
 		int curF = t.first;
 		shared_ptr<Room> u = t.second;
+
+		if (u == end) break;
 
 		int uX = u->roomPos.getX();
 		int uY = u->roomPos.getY();

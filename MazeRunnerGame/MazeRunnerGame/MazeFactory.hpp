@@ -64,7 +64,7 @@ public:
 		vector<int> trap = { 0,0, 2, 4 };
 		vector<int> guard = { 0,0,0,3 };
 		vector<int> coin = { 2, 5, 7, 9 };
-		std::shared_ptr<Maze> maze(new Maze(OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_X, SCREEN_MAZE_Y, mazeX_Room, mazeY_Room, -1, 4, random,
+		std::shared_ptr<Maze> maze(new Maze("EASY", OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_X, SCREEN_MAZE_Y, mazeX_Room, mazeY_Room, -1, 4, random,
 			key, trap, guard, coin));
 		return maze;
 	}
@@ -87,7 +87,7 @@ public:
 		vector<int> trap = { 3,5, 7, 9 };
 		vector<int> guard = { 2,3,4,6 };
 		vector<int> coin = { 5, 7, 9, 11 };
-		std::shared_ptr<Maze> maze(new Maze(OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_X, SCREEN_MAZE_Y, mazeX_Room, mazeY_Room, -1, 4, random,
+		std::shared_ptr<Maze> maze(new Maze("MEDIUM", OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_X, SCREEN_MAZE_Y, mazeX_Room, mazeY_Room, -1, 4, random,
 			key, trap, guard, coin));
 		return maze;
 	}
@@ -110,7 +110,7 @@ public:
 		vector<int> trap = { 8, 11, 15, 18 };
 		vector<int> guard = { 5, 7, 10, 13 };
 		vector<int> coin = { 11, 15, 17, 21 };
-		std::shared_ptr<Maze> maze(new Maze(OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_X, SCREEN_MAZE_Y, mazeX_Room, mazeY_Room, -1, 4, random,
+		std::shared_ptr<Maze> maze(new Maze("HARD", OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_X, SCREEN_MAZE_Y, mazeX_Room, mazeY_Room, -1, 4, random,
 			key, trap, guard, coin));
 		return maze;
 	}

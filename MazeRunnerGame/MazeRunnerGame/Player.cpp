@@ -26,6 +26,7 @@ Player::Player(MazeCoordinate pos, float xOffset, float yOffset, float width, fl
 
 	//this->initVariables();
 	//this->initShape();
+	timesPlayed = 3;
 }
 
 //@DESCR: Destructor of Game
@@ -113,7 +114,7 @@ void Player::updateDirecPlayer(int i) {
 
 bool Player::CollisionTrap(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	//Check collision with trap
-	for (int i = 0; i < curMaze->getSizeTrap(); i++) {
+	for (int i = 0; i < curMaze->getSizeObj(1); i++) {
 		if (curMaze->getActiveTrap(i) == true && curMaze->getPos(i, 1) == pos) {
 			isLose = true;
 			cout << "Lose" << endl;
@@ -123,7 +124,7 @@ bool Player::CollisionTrap(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	return false;
 }
 bool Player::CollisionGuard(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
-	for (int i = 0; i < curMaze->getSizeGuard(); i++) {
+	for (int i = 0; i < curMaze->getSizeObj(2); i++) {
 		if (curMaze->getPos(i, 2) == pos) {
 			isLose = true;
 			cout << "Lose" << endl;
@@ -133,7 +134,7 @@ bool Player::CollisionGuard(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	return false;
 }
 bool Player::CollisionKey(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
-	for (int i = 0; i < curMaze->getSizeKey(); i++) {
+	for (int i = 0; i < curMaze->getSizeObj(3); i++) {
 		if (curMaze->getPos(i, 3) == pos) {
 			cout << "Get key.\n";
 			curMaze->setTake(i, 1);
@@ -143,7 +144,7 @@ bool Player::CollisionKey(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	return false;
 }
 bool Player::CollisionCoin(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
-	for (int i = 0; i < curMaze->getSizeCoin(); i++) {
+	for (int i = 0; i < curMaze->getSizeObj(4); i++) {
 		if (curMaze->getPos(i, 4) == pos) {
 			cout << "Get coin.\n";
 			curMaze->setTake(i, 2);

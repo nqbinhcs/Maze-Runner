@@ -17,7 +17,7 @@ LevelComplete::LevelComplete()
 	textureBackgroundSize.y /= 2;
 	spriteBackground.setOrigin(textureBackgroundSize.x, textureBackgroundSize.y);
 	spriteBackground.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	spriteBackground.scale(0.7, 0.85);
+	spriteBackground.scale(1, 1);
 
 
 	// Load total time text
@@ -48,15 +48,15 @@ void LevelComplete::draw(sf::RenderWindow& window, int time)
 	window.draw(spriteBackground);
 
 	//Draw text
-	std::stringstream ss;
-	ss << "TIME " << time << "S";
+	//std::stringstream ss;
+	/*ss << "TIME " << time << "S";
 	std::string timeText = ss.str();
 
 	smallText[0].setText(timeText, SECOND_FONT_GAME, 50, sf::Text::Bold, sf::Color::White);
 	smallText[0].drawMyText(window);
 
 	smallText[1].setText("THAT WAS IMPRESSIVE!", SECOND_FONT_GAME, 50, sf::Text::Bold, sf::Color::White);
-	smallText[1].drawMyText(window);
+	smallText[1].drawMyText(window);*/
 
 
 }
