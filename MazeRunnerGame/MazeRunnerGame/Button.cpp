@@ -54,22 +54,24 @@ void Button::setTextBox(sf::Vector2f position, sf::Vector2f boxSize,
 
 void Button::setSpriteOriginToCentroid()
 {
-	sf::FloatRect spriteBound = m_Sprite.getGlobalBounds();
+	sf::FloatRect spriteBound = m_RootSprite.getLocalBounds();
 	sf::Vector2f spriteCenter = sf::Vector2f(
-		spriteBound.top + spriteBound.height / 2,
-		spriteBound.left + spriteBound.width / 2);
+		spriteBound.left + spriteBound.width / 2,
+		spriteBound.top + spriteBound.height / 2);
 
 	setSpriteOrigin(spriteCenter);
 }
 
 void Button::setSpriteOrigin(sf::Vector2f position)
 {
-	m_Sprite.setOrigin(position);
+	m_RootSprite.setOrigin(position);
+	m_ScaleSprite.setOrigin(position);
 }
 
 void Button::setSpritePosition(sf::Vector2f position)
 {
-	m_Sprite.setPosition(position);
+	m_RootSprite.setPosition(position);
+	m_ScaleSprite.setPosition(position);
 }
 
 void Button::setSprite(std::string imageFile)
@@ -77,15 +79,19 @@ void Button::setSprite(std::string imageFile)
 	if (!m_Texture.loadFromFile(imageFile)) {
 		std::cout << "Load file failed : " << imageFile << std::endl;
 	}
+	else std::cout << imageFile << '\n';
 
-	m_Sprite.setTexture(m_Texture);
+	m_RootSprite.setTexture(m_Texture);
 
 	setSpriteOriginToCentroid();
+
+	m_ScaleSprite = m_RootSprite;
 }
 
 void Button::scaleSprite(float scaleSize)
 {
-	m_Sprite.scale(scaleSize, scaleSize);
+	m_ScaleSprite = m_RootSprite;
+	m_ScaleSprite.scale(sf::Vector2f(scaleSize, scaleSize));
 }
 
 void Button::setButton(sf::Vector2f position, sf::Vector2f boxSize,
@@ -101,16 +107,16 @@ void Button::setButton(sf::Vector2f position, sf::Vector2f boxSize,
 	{
 		setSprite(imageFile);
 
-		sf::FloatRect spriteBound = m_Sprite.getGlobalBounds();
+		sf::FloatRect spriteBound = m_RootSprite.getGlobalBounds();
 		sf::Vector2f boxCenter = sf::Vector2f(
 			m_Text.m_Bound.top + m_Text.m_Bound.height / 2,
 			m_Text.m_Bound.left + m_Text.m_Bound.width / 2);
-		float scale = (m_Text.m_Bound.height * m_Text.m_Bound.width) /
-			(spriteBound.height * spriteBound.width);
 
-		scaleSprite(scale);
-		setSpritePosition(boxCenter);
+		m_RootSprite.setScale(sf::Vector2f(m_Text.m_Bound.width / spriteBound.width, m_Text.m_Bound.height / spriteBound.height));
 		setSpriteOriginToCentroid();
+		setSpritePosition(position);
+
+		m_ScaleSprite = m_RootSprite;
 	}
 
 	updateBound();
@@ -130,16 +136,15 @@ void Button::updateBound()
 	sf::FloatRect textBound(m_Text.m_Bound);
 	sf::FloatRect textureBound(m_Text.m_Bound);
 
-	if (textBound.height <= textureBound.height && textBound.width <= textureBound.width)
-		m_Bound = textureBound;
-	else
-		m_Bound = textBound;
+	m_Bound = textBound;
 }
 
 void Button::scale(float scaleSize)
 {
 	m_Text.scale(scaleSize);
 	scaleSprite(scaleSize);
+
+	updateBound();
 }
 
 void Button::makeChosen()
@@ -161,6 +166,6 @@ bool Button::isChosen()
 
 void Button::drawButton(sf::RenderTarget& window)
 {
-	window.draw(m_Sprite);
+	window.draw(m_ScaleSprite);
 	m_Text.drawMyText(window);
 }

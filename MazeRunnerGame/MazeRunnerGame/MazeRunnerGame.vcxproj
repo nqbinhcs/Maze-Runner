@@ -149,6 +149,7 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="ContinueGame.cpp" />
     <ClCompile Include="Coordinate.cpp" />
+    <ClCompile Include="Demo.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOver.cpp" />
@@ -187,10 +188,10 @@
     <ClInclude Include="ContinueGame.hpp" />
     <ClInclude Include="Coordinate.hpp" />
     <ClInclude Include="DefinedVariables.hpp" />
+    <ClInclude Include="Demo.hpp" />
     <ClInclude Include="Display.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameOver.hpp" />
-    <ClInclude Include="Header.hpp" />
     <ClInclude Include="HelpAlgorithmMenu.hpp" />
     <ClInclude Include="Helper.hpp" />
     <ClInclude Include="Instruction.hpp" />

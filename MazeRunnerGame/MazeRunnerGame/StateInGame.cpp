@@ -446,9 +446,9 @@ void StateInGame::render()
 	//-----------------------------In Game + Next Stage-----------------------------
 
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
-	if (m_Helper.isHelping == false)
+	/*if (m_Helper.isHelping == false)
 		m_Helper.help(2, curMaze->FindRoomByPos(curMaze->getStartPos()), curMaze->FindRoomByPos(curMaze->getFinalPos()));
-	m_Helper.showInstruction(*m_pWindow);
+	m_Helper.showInstruction(*m_pWindow);*/
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
 
 	//Render Gui

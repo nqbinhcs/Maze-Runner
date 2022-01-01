@@ -3,14 +3,15 @@
 #include <string>
 
 #define NORMAL_BUTTON_SIZE 1
-#define CHOSEN_BUTTON_SIZE 1.1
+#define CHOSEN_BUTTON_SIZE 0.85
 
 class Button
 {
 public:
 	MyText m_Text;
 
-	sf::Sprite m_Sprite;
+	sf::Sprite m_RootSprite;
+	sf::Sprite m_ScaleSprite;
 	sf::Texture m_Texture;
 
 	bool m_isChosen = false;

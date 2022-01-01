@@ -74,6 +74,42 @@ vector<shared_ptr<Room>> BFS::findPath(shared_ptr<Room> start, shared_ptr<Room> 
 	return trace;
 }
 
+shared_ptr<Room> BFS::findNearestItem(shared_ptr<Room> start, RoomType roomType) {
+	vector < vector< shared_ptr<Room> > > preRoom(MAX_SIZE, vector< shared_ptr<Room> >(MAX_SIZE, 0));
+	queue< shared_ptr<Room> > qu;
+
+	qu.push(start);
+	preRoom[start->roomPos.getX()][start->roomPos.getY()] = start;
+
+	while (!qu.empty())
+	{
+		auto u = qu.front();
+		auto uPos = u->roomPos;
+
+		qu.pop();
+
+		for (auto v : u->adjRooms)
+		{
+			if (u->checkConnectRoom(v) == false)
+				continue;
+
+			auto vPos = v->roomPos;
+
+			if (!preRoom[vPos.getX()][vPos.getY()])
+			{
+				preRoom[vPos.getX()][vPos.getY()] = u;
+				qu.push(v);
+
+				for (RoomType& type : v->roomTypes)
+					if (type == roomType)
+						return v;
+			}
+		}
+	}
+
+	return NULL;
+}
+
 // -----------------------------DFS IMPLEMENTATIONS-----------------------------
 vector<shared_ptr<Room>> DFS::findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option)
 {

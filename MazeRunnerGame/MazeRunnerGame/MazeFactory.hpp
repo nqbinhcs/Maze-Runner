@@ -116,4 +116,25 @@ public:
 	}
 };
 
+class DemoMaze : public LevelMaze {
+public:
+	DemoMaze() {
 
+	}
+	~DemoMaze() {
+
+	}
+public:
+	std::shared_ptr<Maze> CreatLevelMaze() {
+		vector<int> mazeX_Room = { 25 };
+		vector<int> mazeY_Room = { 25 };
+		vector<int> random = { 31 };
+		vector<int> key = { 0 };
+		vector<int> trap = { 0 };
+		vector<int> guard = { 0 };
+		vector<int> coin = { 0 };
+		std::shared_ptr<Maze> maze(new Maze("DEMO ALGORITHMS", OFFSET_MAZE_X, OFFSET_MAZE_Y, SCREEN_MAZE_X, SCREEN_MAZE_Y, mazeX_Room, mazeY_Room, -1, 1, random,
+			key, trap, guard, coin));
+		return maze;
+	}
+};
