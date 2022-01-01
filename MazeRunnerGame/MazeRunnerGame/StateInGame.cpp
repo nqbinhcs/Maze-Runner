@@ -135,7 +135,6 @@ StateInGame::StateInGame()
 
 	curMaze = levelMaze->OrderLevelMaze();
 	m_Player = std::shared_ptr<Player>(new Player(curMaze->getStartPos(), OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
-	setLevel(0, true); //Level 0 when entering game
 }
 
 
@@ -528,7 +527,7 @@ void StateInGame::render()
 	updateLevel();
 	m_LevelInfo.drawMyText(*m_pWindow);
 
-	if (m_State == LevelCompleteState || m_Player->getPosition() == curMaze->getFinalPos())
+	if (m_State == LevelCompleteState)
 	{
 		cout << "LEVEL~~~ : " << m_Level << '\n';
 		//testing

@@ -23,7 +23,7 @@ class Player : public MazeObject
 private:
 	int totalCoin;
 private:
-	int timesPlayer;
+	int timesPlayed;
 	bool isLose;
 private:
 	static sf::Image playerImages[4];
@@ -34,11 +34,15 @@ public:
 
 	bool checkIsConnect(shared_ptr<Maze> curMaze, shared_ptr<Room>, MazeCoordinate posNew);
 
-	void setLose(bool lose) {
-		isLose = lose;
-	}
 	bool getLose() {
 		return isLose;
+	}
+	int getTimesPlayed() {
+		return timesPlayed;
+	}
+
+	void setLose(bool lose) {
+		isLose = lose;
 	}
 
 	bool CollisionTrap(shared_ptr<Maze> curMaze, MazeCoordinate pos);
@@ -55,14 +59,14 @@ public:
 
 	void resetTimes(bool check) {
 		if (check) {
-			timesPlayer = 3;
+			timesPlayed = 3;
 		}
 		else {
-			timesPlayer -= 1;
+			timesPlayed -= 1;
 		}
 	}
 	bool loseLevel() {
-		if (timesPlayer == 0) {
+		if (timesPlayed == 0) {
 			return true;
 		}
 		return false;
