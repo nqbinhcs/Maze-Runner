@@ -4,17 +4,21 @@
 #include "MazeAlgorithms.hpp"
 #include "Clock.hpp"
 
-#define DELTA_TIME 0.1
-#define WAITING_TIME 1
+#define PATH_START_COLOR 255,80,0
+#define PATH_END_COLOR 255,160,100
+#define PROGRESS_START_COLOR 0,5,255
+#define PROGRESS_END_COLOR 0,255,255
 
+#define NUMBER_COLOR 20
 
-class Helper
+class MazeBot
 {
 public:
-	bool isHelping = false;
+	bool isShowing = false;
+	bool isFinished = false;
 private:
 	shared_ptr<PathFinder> m_pPathFinder;
-	
+
 	vector<shared_ptr<Room>> m_Path;
 	vector<int> m_PathShower;
 
@@ -24,18 +28,13 @@ private:
 	MyClock m_Clock;
 
 	int curRoom1, curRoom2;
-
-	bool m_ShownPath = false;
-	bool m_ShownProgress = false;
-	int m_Phase;
 public:
-	void help(int option, shared_ptr<Room> start, shared_ptr<Room> end);
+	void start(int option, shared_ptr<Room> start, shared_ptr<Room> end);
+	void end();
+
 	void setPathFinder(int option);
-	void updateHelpStatus(bool status);
 
 	void showPath(sf::RenderTarget& window);
 	void showProgress(sf::RenderTarget& window);
 	void showInstruction(sf::RenderTarget& window);
 };
-
-

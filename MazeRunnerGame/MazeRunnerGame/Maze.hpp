@@ -68,7 +68,7 @@ private:
 
 	//All rooms can have objects in them
 	std::vector <std::shared_ptr<Room>> obstacleRooms;
-private:
+public:
 	std::vector<std::shared_ptr<MazeGuard>> mazeGuard;
 	std::vector<std::shared_ptr<MazeTrap>> mazeTrap;
 

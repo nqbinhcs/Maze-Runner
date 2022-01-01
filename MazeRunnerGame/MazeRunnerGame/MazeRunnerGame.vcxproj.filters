@@ -120,6 +120,9 @@
     <ClCompile Include="ContinueGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefinedVariables.hpp">
@@ -206,9 +209,6 @@
     <ClInclude Include="StateGame.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StateMenu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -237,6 +237,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ContinueGame.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Demo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

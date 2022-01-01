@@ -106,7 +106,7 @@ public:
 private:
 	//----------------Game State atrributes----------------
 	GameState m_State;
-	Helper m_Helper;
+	//Helper m_Helper;
 	bool m_EndGame;
 
 	//----------------Display attributes----------------
@@ -275,20 +275,20 @@ public:
 
 
 //VisualDemo
-class StateDemo : public StateGame {
-public:
-	sf::RenderWindow* m_pWindow;
-
-public:
-	StateDemo() {
-		this->m_pWindow = SingletonRenderWindow::getInstance();
-	}
-
-public:
-	void pollEvents() override;
-	void update() override;
-	void render() override;
-};
+//class StateDemo : public StateGame {
+//public:
+//	sf::RenderWindow* m_pWindow;
+//
+//public:
+//	StateDemo() {
+//		this->m_pWindow = SingletonRenderWindow::getInstance();
+//	}
+//
+//public:
+//	void pollEvents() override;
+//	void update() override;
+//	void render() override;
+//};
 
 
 //Instruction

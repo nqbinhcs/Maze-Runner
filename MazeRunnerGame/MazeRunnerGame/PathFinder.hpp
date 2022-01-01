@@ -9,9 +9,6 @@ public:
 	virtual vector<shared_ptr<Room>> findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option = 0) = 0;
 };
 
-#pragma once
-#include "PathFinder.hpp"
-
 enum AlgorithmIndex
 {
 	iBFS = 0,
@@ -23,6 +20,7 @@ class BFS : public PathFinder
 {
 public:
 	vector<shared_ptr<Room>> findPath(shared_ptr<Room> start, shared_ptr<Room> end, bool option = 0);
+	shared_ptr<Room> findNearestItem(shared_ptr<Room> start, RoomType roomType);
 };
 
 class DFS : public PathFinder
