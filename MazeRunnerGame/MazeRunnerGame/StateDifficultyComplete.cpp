@@ -14,7 +14,7 @@ void StateDifficultyComplete::pollEvents()
 		case sf::Event::KeyPressed:
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-				this->context_->TransitionTo(ContextGame::getStateMenu());
+				this->context_->TransitionTo(new StateMenu);
 				return;
 			}
 			break;

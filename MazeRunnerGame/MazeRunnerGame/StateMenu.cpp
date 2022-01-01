@@ -29,7 +29,7 @@ void StateMenu::pollEvents() {
 				{
 				case 0: 
 
-					this->context_->TransitionTo(ContextGame::getStateModeSelect());
+					this->context_->TransitionTo(new StateModeSelect);
 					return;
 					break;
 
@@ -42,7 +42,7 @@ void StateMenu::pollEvents() {
 					break;
 
 				case 3: //"HELP" option
-					this->context_->TransitionTo(ContextGame::getStateHelpInstruction());
+					this->context_->TransitionTo(new StateHelpInstruction);
 					return;
 					break;
 

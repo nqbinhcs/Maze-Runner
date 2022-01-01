@@ -12,12 +12,14 @@ Room::Room(MazeCoordinate pos, int widthRoom, int heightRoom) : roomPos(pos), wi
 	{
 		Room::isTextureNull = false;
 
+
 		Room::roomImages[0b0000].loadFromFile(IMG_0BORDER); 	//None
 		Room::roomImages[0b0001].loadFromFile(IMG_1BORDER_D); 	//Down
 		Room::roomImages[0b0010].loadFromFile(IMG_1BORDER_L);	//Left
 		Room::roomImages[0b0100].loadFromFile(IMG_1BORDER_U);	//Up
 		Room::roomImages[0b1000].loadFromFile(IMG_1BORDER_R);
 
+		std::cout << roomImages[2].getSize().x << ' ' << roomImages[2].getSize().y << '\n';
 
 		Room::roomImages[0b0011].loadFromFile(IMG_2BORDER_DL);
 		Room::roomImages[0b0101].loadFromFile(IMG_2BORDER_DU);
@@ -54,6 +56,7 @@ Room::Room(const Room& other) :
 
 Room::~Room()
 {
+	
 }
 
 //@DESCR: Set position.
@@ -155,6 +158,7 @@ void Room::AddRoomToRenderer(sf::RenderWindow& window)
 //@RETURN: None
 void Room::resizeImage(const sf::Image& originalImage, sf::Image& resizedImage)
 {
+	//if (originalImage.getSize().x <= 0 && originalImage.getSize().y <= 0) return;
 	const sf::Vector2u originalImageSize{ originalImage.getSize() };
 	const sf::Vector2u resizedImageSize{ resizedImage.getSize() };
 	for (unsigned int y{ 0u }; y < resizedImageSize.y; ++y)

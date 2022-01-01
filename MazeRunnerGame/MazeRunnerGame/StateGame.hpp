@@ -37,7 +37,7 @@ public:
 		if (window == nullptr)
 		{
 			window = new sf::RenderWindow(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), NAME_GAME, sf::Style::Close | sf::Style::Titlebar);
-			window->setFramerateLimit(300);
+			window->setFramerateLimit(60);
 		}
 		return window;
 	}
@@ -184,8 +184,11 @@ public:
 
 //SELECT
 class StateModeSelect : public StateGame {
+
 public:
 	sf::RenderWindow* m_pWindow;
+	static int pressedItem;
+
 private:
 	shared_ptr<ModeGame> m_pModeGame;
 
@@ -203,7 +206,8 @@ public:
 	void render() override;
 
 public:
-	int getPressedItem() {
+
+	int PressedItem() {
 		return m_pModeGame->GetPressedItem();
 	}
 };
@@ -311,39 +315,6 @@ private:
     StateGame* state_;
 
 public:
-    static StateMenu* stateMenu_;
-    static StateInGame* stateInGame_;
-    static StateModeSelect* stateModeSelect_;
-	static StateDemo* stateDemo_;
-	static StateDifficultyComplete* stateDifficultyComplete_;
-	static StateOverGame* stateOverGame_;
-	static StateHelpInstruction* stateHelpInstruction_;
-	static StateContinue* stateContinue_;
-
-public: //Utilities
-
-	static StateMenu* getStateMenu() { return stateMenu_; } //getter
-	static StateInGame* getStateInGame() { return stateInGame_; }
-	static StateModeSelect* getStateModeSelect() { return stateModeSelect_; }
-	static StateDemo* getStateDemo() { return stateDemo_; };
-	static StateDifficultyComplete* getStateDifficultyComplete() { return stateDifficultyComplete_; }
-	static StateOverGame* getStateOverGame() { return stateOverGame_;}
-	static StateHelpInstruction* getStateHelpInstruction() { return stateHelpInstruction_; };
-	static StateContinue* getStateContinue() { return stateContinue_; };
-
-	static void makeDelete() //delete
-	{
-		if (stateMenu_) delete stateMenu_;
-		if (stateInGame_) delete stateInGame_;
-		if (stateModeSelect_) delete stateModeSelect_;
-		if (stateDemo_) delete stateDemo_;
-		if (stateDifficultyComplete_) delete stateDifficultyComplete_;
-		if (stateOverGame_) delete stateOverGame_;
-		if (stateHelpInstruction_) delete stateHelpInstruction_;
-		if (stateContinue_) delete stateContinue_;
-	}
-
-public:
     ContextGame(StateGame* state) : state_(nullptr) {
         this->TransitionTo(state);
     }
@@ -354,8 +325,7 @@ public:
     
     void TransitionTo(StateGame* state) {
         std::cout << "Context: Transition to " << typeid(*state).name() << ".\n";
-        //if (this->state_ != nullptr)
-        //    delete this->state_;
+		if (state_) delete state_;
         this->state_ = state;
         this->state_->set_context(this);
     }

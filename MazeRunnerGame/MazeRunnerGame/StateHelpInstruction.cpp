@@ -14,7 +14,7 @@ void StateHelpInstruction::pollEvents()
 		case sf::Event::KeyPressed:
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-				this->context_->TransitionTo(ContextGame::getStateMenu());
+				this->context_->TransitionTo(new StateMenu);
 				return;
 			}
 			break;

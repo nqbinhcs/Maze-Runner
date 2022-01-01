@@ -26,7 +26,7 @@ void StateModeSelect::pollEvents()
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-				//m_pModeGame->GetPressedItem() //0, 1, 2
+				StateModeSelect::pressedItem = PressedItem();
 				this->context_->TransitionTo(new StateInGame());
 				return;
 			}

@@ -6,15 +6,7 @@
 
 
 sf::RenderWindow* SingletonRenderWindow::window = nullptr;
-
-StateMenu* ContextGame::stateMenu_ = new StateMenu;
-StateInGame* ContextGame::stateInGame_ = new StateInGame;
-StateModeSelect* ContextGame::stateModeSelect_ = new StateModeSelect;
-StateDemo* ContextGame::stateDemo_ = new StateDemo;
-StateDifficultyComplete* ContextGame::stateDifficultyComplete_ = new StateDifficultyComplete;
-StateOverGame* ContextGame::stateOverGame_ = new StateOverGame;
-StateHelpInstruction* ContextGame::stateHelpInstruction_ = new StateHelpInstruction;
-StateContinue* ContextGame::stateContinue_ = new StateContinue;
+int StateModeSelect::pressedItem = 0;
 
 int main()
 {
@@ -30,7 +22,6 @@ int main()
 	}
 
 	//clear memory
-	ContextGame::makeDelete();
 	
 
 }

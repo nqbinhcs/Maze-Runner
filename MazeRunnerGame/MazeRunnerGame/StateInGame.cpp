@@ -122,16 +122,16 @@ StateInGame::StateInGame()
 	initFonts();
 	initButtons();
 	initText();
-	/*if(ContextGame::getStateModeSelect()->getPressedItem() == 0)
+
+	if(StateModeSelect::pressedItem == 0)
 		levelMaze = std::shared_ptr<LevelMaze>(new EasyLevelMaze());
 
-	if (ContextGame::getStateModeSelect()->getPressedItem() == 1)
+	if (StateModeSelect::pressedItem == 1)
 		levelMaze = std::shared_ptr<LevelMaze>(new MediumLevelMaze());
 
-	if (ContextGame::getStateModeSelect()->getPressedItem() == 2)
-		levelMaze = std::shared_ptr<LevelMaze>(new HardLevelMaze());*/
+	if (StateModeSelect::pressedItem == 2)
+		levelMaze = std::shared_ptr<LevelMaze>(new HardLevelMaze());
 
-	levelMaze = std::shared_ptr<LevelMaze>(new HardLevelMaze());
 
 	curMaze = levelMaze->OrderLevelMaze();
 	m_Player = std::shared_ptr<Player>(new Player(curMaze->getStartPos(), OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
@@ -448,7 +448,7 @@ void StateInGame::render()
 
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
 	if (m_Helper.isHelping == false)
-		m_Helper.help(1, curMaze->FindRoomByPos(curMaze->getStartPos()), curMaze->FindRoomByPos(curMaze->getFinalPos()));
+		m_Helper.help(2, curMaze->FindRoomByPos(curMaze->getStartPos()), curMaze->FindRoomByPos(curMaze->getFinalPos()));
 	m_Helper.showInstruction(*m_pWindow);
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
 
@@ -486,7 +486,8 @@ void StateInGame::render()
 
 	//-----------------------------Next Stage-----------------------------
 	if (m_Player->loseLevel()) { //GameOver
-		exit(0);
+		this->context_->TransitionTo(new StateOverGame);
+		return;
 	}
 	if (m_State == NextStageState || curMaze->completeLevel() == true)
 	{
@@ -494,7 +495,9 @@ void StateInGame::render()
 
 		//Win a difficulty mode
 		if (curMaze->isWin() == true) {
+			std::cout << "YOU WIN\n";
 			this->context_->TransitionTo(new StateDifficultyComplete);
+			return;
 		}
 		
 		nextLevel(true);
