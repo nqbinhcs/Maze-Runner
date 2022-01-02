@@ -16,7 +16,7 @@ public:
 	virtual ~HelpAlgorithmMenu();
 
 public:
-	int getOptionAlgo(); //0: Astar, 1: BFS, 2: DFS, 3:DIIJFSTRA
+	int getOptionAlgo(); //0: Astar, 1: BFS, 2: DFS
 	bool isRun();
 	bool isExit(sf::RenderWindow* window);
 
