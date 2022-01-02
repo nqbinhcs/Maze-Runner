@@ -128,7 +128,7 @@ public:
 	std::shared_ptr<Maze> CreatLevelMaze() {
 		vector<int> mazeX_Room = { 25 };
 		vector<int> mazeY_Room = { 25 };
-		vector<int> random = { 31 };
+		vector<int> random = { 150 };
 		vector<int> key = { 0 };
 		vector<int> trap = { 0 };
 		vector<int> guard = { 0 };

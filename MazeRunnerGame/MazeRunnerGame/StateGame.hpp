@@ -275,7 +275,7 @@ public:
 
 
 //VisualDemo
-enum DemoState { InDemoState, InChoosingState };
+enum StatesInDemo { InDemoState, InChoosingState };
 
 class StateDemo : public StateGame
 {
@@ -287,7 +287,7 @@ private:
 	sf::Event m_Event;
 
 	//----------------StateDemo State atrributes----------------
-	DemoState m_State;
+	StatesInDemo m_State;
 	MazeBot m_Demoer;
 
 	//----------------Display attributes----------------
@@ -322,10 +322,9 @@ private:
 	void updateAlgorithmInfo();
 
 	//----------------Render GUI functions----------------
-	void renderDisplayStates(DemoState state);
+	void renderDisplayStates(StatesInDemo state);
 
-	//----------------"In game processing" functions----------------
-	void resetGame(); 
+	//----------------"In demo processing" functions----------------
 
 public:
 

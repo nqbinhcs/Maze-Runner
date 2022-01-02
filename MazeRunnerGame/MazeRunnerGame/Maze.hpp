@@ -157,6 +157,7 @@ public:
 	}
 	void setFinalPos(MazeCoordinate pos) {
 		finalPos = pos;
+		mazeChest->setPosition(pos);
 	}
 	void setDirRoom(int i, int dir) {
 		allRooms[i]->wallDirBit = dir;
