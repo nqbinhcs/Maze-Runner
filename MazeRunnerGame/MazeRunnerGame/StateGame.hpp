@@ -90,7 +90,7 @@ public:
 
 
 //IN GAME
-enum GameState { InGameState, InHelpState, NextStageState, LevelCompleteState };
+enum GameState { InGameState, NextStageState, LevelCompleteState };
 
 struct MyLevel {
 	int x, y;
@@ -106,13 +106,11 @@ public:
 private:
 	//----------------Game State atrributes----------------
 	GameState m_State;
-	//Helper m_Helper;
+	MazeBot m_Helper;
 	bool m_EndGame;
 
 	//----------------Display attributes----------------
 	shared_ptr<NextStage> m_pNextStage;
-	shared_ptr<HelpAlgorithmMenu> m_pHelpMenu;
-
 
 	//----------------"In Game processing"  atrributes----------------
 	shared_ptr<Maze> curMaze;

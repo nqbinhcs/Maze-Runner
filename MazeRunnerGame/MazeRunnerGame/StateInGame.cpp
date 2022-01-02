@@ -9,7 +9,7 @@ int StateInGame::timeCycle = 0;
 //@RETURN: None
 void StateInGame::initVariables()
 {
-	m_State = InGameState; //Obviously, we always in MenuState when entering game
+	m_State =InGameState; //Obviously, we always in MenuState when entering game
 	this->m_EndGame = false;
 	this->m_Time.setCDTime(3603);
 	this->m_Time.start();
@@ -22,7 +22,6 @@ void StateInGame::initWindow()
 {
 	this->m_pWindow = SingletonRenderWindow::getInstance();
 	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
-	this->m_pHelpMenu = std::shared_ptr<HelpAlgorithmMenu>(new HelpAlgorithmMenu());
 	
 }
 
@@ -109,7 +108,7 @@ void StateInGame::setLevel(int _level, bool check)
 	m_Player->setLose(false);
 	m_Player->resetTimes(check);
 
-	//m_Player->updateDirecPlayer(1);
+	m_Helper.end();
 }
 
 
@@ -196,13 +195,6 @@ void StateInGame::renderDisplayStates(GameState state)
 	{
 
 		m_pNextStage->draw(*m_pWindow);
-		return;
-	}
-
-	if (state == InHelpState)
-	{
-		if (!m_pHelpMenu->isRun())
-			m_pHelpMenu->draw(*m_pWindow);
 		return;
 	}
 }
@@ -330,6 +322,11 @@ void StateInGame::pollEvents()
 		sf::Event temp;
 		while (this->m_pWindow->pollEvent(temp))
 		{
+			if (temp.type != sf::Event::MouseButtonPressed) {
+				m_Help.makeNormal();
+				m_ReturnMenu.makeNormal();
+				m_RestartGame.makeNormal();
+			}
 
 			switch (temp.type)
 			{
@@ -341,39 +338,34 @@ void StateInGame::pollEvents()
 			case sf::Event::MouseButtonPressed:
 				if (m_State == GameState::InGameState)
 				{
-					if (m_Help.isClickV1(m_pWindow))
-					{
-						//
-						//run
-						//
-						m_Help.makeChosen();
-					}
-
+					cout << "YES" << endl;
 					if (m_ReturnMenu.isClickV1(m_pWindow))
 					{
 						m_ReturnMenu.makeChosen();
 					}
-
-					if (m_RestartGame.isClickV1(m_pWindow))
-					{
-						m_RestartGame.makeChosen();
-					}
-
-					break;
-				}
-
-				if (m_State == GameState::InHelpState) //Choosing Algorithm
-				{
-					if (m_pHelpMenu->isExit(m_pWindow)) //Check exit
-					{
-						//back to normal
-						m_State = GameState::InGameState;
-						m_Help.makeNormal();
-						m_RestartGame.makeNormal();
+					else {
 						m_ReturnMenu.makeNormal();
 					}
-					else
-						m_pHelpMenu->pollEvent(m_pWindow); //Choose Algorithms
+
+					if (m_Helper.isShowing == false || m_Helper.isFinished == true) {
+						if (m_Help.isClickV1(m_pWindow))
+						{
+							m_Helper.end();
+							m_Help.makeChosen();
+						}
+						else {
+							m_Help.makeNormal();
+						}
+
+						if (m_RestartGame.isClickV1(m_pWindow))
+						{
+							m_Helper.end();
+							m_RestartGame.makeChosen();
+						}
+						else {
+							m_RestartGame.makeNormal();
+						}
+					}
 					break;
 				}
 				break;
@@ -387,17 +379,6 @@ void StateInGame::pollEvents()
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 					{
 						m_State = GameState::LevelCompleteState;
-					}
-					break;
-				}
-
-
-				//In Help State
-				if (m_State == InHelpState)
-				{
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-					{
-						m_State = GameState::InGameState;
 					}
 					break;
 				}
@@ -416,7 +397,6 @@ void StateInGame::pollEvents()
 
 		if (m_ReturnMenu.isChosen())
 		{
-			m_ReturnMenu.makeNormal();
 			save();
 			context_->TransitionTo(new StateMenu);
 			return;
@@ -424,7 +404,18 @@ void StateInGame::pollEvents()
 
 		if (m_Help.isChosen())
 		{
-			m_State = GameState::InHelpState;
+			shared_ptr<Room> destination;;
+			if (curMaze->CheckGetAllKey()) {
+				cout << "Already got all keys" << endl;
+				destination = curMaze->FindRoomByPos(curMaze->getFinalPos());
+			}
+			else {
+				BFS nearestKeyFinder;
+				destination = nearestKeyFinder.findNearestItem(curMaze->FindRoomByPos(m_Player->getPosition()), RoomType::KEY);
+			}
+			m_Helper.start(AlgorithmIndex::iAStar,
+				curMaze->FindRoomByPos(m_Player->getPosition()),
+				destination);
 			return;
 		}
 
@@ -467,7 +458,12 @@ void StateInGame::render()
 	if (this->m_EndGame == true)
 		this->m_pWindow->draw(this->m_EndGameText);
 
+	//Render helping path
+	if (m_Helper.isShowing) {
+		m_Helper.showPathOnly(*m_pWindow);
+	}
 
+	//Render Maze
 	curMaze->AddMazeRoomsToRenderer(*m_pWindow);
 	curMaze->AddMazeObstaclesToRenderer(*m_pWindow);
 	if (timeCycle % 50 == 0) {
@@ -547,19 +543,10 @@ void StateInGame::render()
 		m_State = NextStageState;
 	}
 
-
 	// Button display
 	m_Help.drawButton(*m_pWindow);
 	m_RestartGame.drawButton(*m_pWindow);
 	m_ReturnMenu.drawButton(*m_pWindow);
-
-
-	//-----------------------------In Help State-----------------------------
-	if (m_State == InHelpState)
-	{
-		renderDisplayStates(m_State);
-	}
-
 
 	this->m_pWindow->display();
 
