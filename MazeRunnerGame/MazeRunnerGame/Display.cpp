@@ -29,7 +29,6 @@ Display::Display(float width, float height)
 	}
 
 	spriteBackground.setTexture(textureBackground);
-	spriteBackground.scale(1.5, 1.5);
 	spriteBackground.setPosition(0, 0);
 
 }

@@ -20,12 +20,14 @@ ModeGame::ModeGame(float width, float height) :Menu(width, height)
 
 	/* set thông số đồ họa cho dòng chữ NEW GAME
 	   do dònng chữ New Game nằm đầu nên ta cho mặc định khi vào Menu, chức năng này được chọn */
+
+	int delta = 70;
 	textMode[0].setFont(font);
 	textMode[0].setCharacterSize(60);
 	textMode[0].setFillColor(sf::Color::White);
 	textMode[0].setStyle(sf::Text::Bold);
 	textMode[0].setString("EASY");
-	setPositionText(textMode[0], 200);
+	setPositionText(textMode[0], 200 + delta);
 
 	// set thông số đồ họa cho dòng chữ các dòng chữ thể hiện chức năng khác
 	textMode[1].setFont(font);
@@ -33,14 +35,14 @@ ModeGame::ModeGame(float width, float height) :Menu(width, height)
 	textMode[1].setFillColor(sf::Color::White);
 	textMode[1].setStyle(sf::Text::Bold);
 	textMode[1].setString("NORMAL");
-	setPositionText(textMode[1], 300);
+	setPositionText(textMode[1], 300 + delta);
 
 	textMode[2].setFont(font);
 	textMode[2].setCharacterSize(40);
 	textMode[2].setFillColor(sf::Color::White);
 	textMode[2].setStyle(sf::Text::Bold);
 	textMode[2].setString("HARD");
-	setPositionText(textMode[2], 400);
+	setPositionText(textMode[2], 400 + delta);
 
 	select = 0; // mặc định ban đầu chọn chức năng 1
 }
@@ -56,13 +58,14 @@ void ModeGame::draw(sf::RenderWindow& window)
 
 void ModeGame::moveUp() // nhấn phím UP
 {
+	int delta = 70;
 	if (select - 1 >= 0)
 	{
 		textMode[select].setFillColor(sf::Color::White);
 		textMode[select].setCharacterSize(40);
 
 		// update position because changing size
-		setPositionText(textMode[select], 200 + select * 100);
+		setPositionText(textMode[select], 200 + delta + select * 100);
 
 		select--;
 
@@ -70,26 +73,27 @@ void ModeGame::moveUp() // nhấn phím UP
 		textMode[select].setCharacterSize(60);
 
 		// update position because changing size
-		setPositionText(textMode[select], 200 + select * 100);
+		setPositionText(textMode[select], 200 + delta + select * 100);
 	}
 }
 
 void ModeGame::moveDown() // nhấn phím Down
 {
+	int delta = 70;
 	if (select + 1 < 3)
 	{
 		textMode[select].setFillColor(sf::Color::White);
 		textMode[select].setCharacterSize(40);
 
 		// update position because changing size
-		setPositionText(textMode[select], 200 + select * 100);
+		setPositionText(textMode[select], 200 + delta + select * 100);
 
 		select++;
 		textMode[select].setFillColor(sf::Color::White);
 		textMode[select].setCharacterSize(60);
 
 		// update position because changing size
-		setPositionText(textMode[select], 200 + select * 100);
+		setPositionText(textMode[select], 200 + delta + select * 100);
 	}
 }
 

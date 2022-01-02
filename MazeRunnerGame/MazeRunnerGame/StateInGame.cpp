@@ -23,6 +23,13 @@ void StateInGame::initWindow()
 	this->m_pWindow = SingletonRenderWindow::getInstance();
 	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
 	this->m_pHelpMenu = std::shared_ptr<HelpAlgorithmMenu>(new HelpAlgorithmMenu());
+
+	if (!textureBackground.loadFromFile(IMG_BEHINDMAZE))
+	{
+		std::cout << "Load file failed" << std::endl;
+	}
+	spriteBackground.setTexture(textureBackground);
+	spriteBackground.setPosition(0, 0);
 	
 }
 
@@ -182,7 +189,8 @@ void StateInGame::updateGui()
 //@RETURN: None
 void StateInGame::renderGui(sf::RenderTarget* target)
 {
-	target->draw(this->m_GuiText);
+	//target->draw(this->m_GuiText);
+	m_pWindow->draw(spriteBackground);
 }
 
 
@@ -298,7 +306,7 @@ void StateInGame::updateTimeInfo() {
 
 void StateInGame::updateCoinsInfo() {
 	stringstream writer("");
-	writer << m_Points;
+	writer << m_Player->getTotalCoin();
 
 	m_CoinsInfo[1].setContent(writer.str());
 	m_CoinsInfo[1].alignTextCenter();
@@ -430,6 +438,8 @@ void StateInGame::pollEvents()
 
 		if (m_RestartGame.isChosen())
 		{
+			m_RestartGame.makeNormal();
+			context_->TransitionTo(new StateInGame);
 			return;
 		}
 

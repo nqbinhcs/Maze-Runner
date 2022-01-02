@@ -33,6 +33,7 @@ Menu::Menu(float width, float height) :Display(width, height)
 	text[0].setStyle(sf::Text::Bold);
 	text[0].setString("NEW GAME");
 
+
 	setPositionText(text[0], 170 + delta);
 
 	// set thông số đồ họa cho dòng chữ các dòng chữ thể hiện chức năng khác
@@ -73,7 +74,7 @@ void Menu::draw(sf::RenderWindow& window)
 	//effect for fun
 	delta_effect *= -1;
 	GameTittle.setFillColor(sf::Color::Color(120 + delta_effect, 120 + delta_effect, 120 + delta_effect));
-	window.draw(GameTittle);
+	//window.draw(GameTittle);
 	for (int i = 0; i < _MAX_CHOICE_MENU; i++)
 	{
 		window.draw(text[i]); // vẽ các dòng chữ thể hiện chế độ chơi

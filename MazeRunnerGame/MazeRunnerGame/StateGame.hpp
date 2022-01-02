@@ -138,6 +138,9 @@ private:
 	Button m_ReturnMenu;
 	Button m_RestartGame;
 
+	sf::Texture textureBackground;
+	sf::Sprite spriteBackground;
+
 
 public:
 	StateInGame(bool isContinue = false);

@@ -41,6 +41,10 @@ public:
 		return timesPlayed;
 	}
 
+	int getTotalCoin() {
+		return totalCoin;
+	}
+
 	void setLose(bool lose) {
 		isLose = lose;
 	}
