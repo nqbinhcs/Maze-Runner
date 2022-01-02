@@ -27,7 +27,8 @@ private:
 
 	MyClock m_Clock;
 
-	int curRoom1, curRoom2;
+	int curRoom1 = 0;
+	int curRoom2 = 0;
 public:
 	void start(int option, shared_ptr<Room> start, shared_ptr<Room> end);
 	void end();
@@ -37,4 +38,5 @@ public:
 	void showPath(sf::RenderTarget& window);
 	void showProgress(sf::RenderTarget& window);
 	void showInstruction(sf::RenderTarget& window);
+	void showPathOnly(sf::RenderTarget& window);
 };

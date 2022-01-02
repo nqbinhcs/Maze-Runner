@@ -124,3 +124,10 @@ void MazeBot::showInstruction(sf::RenderTarget& window)
 		m_PathShower.back() == NUMBER_COLOR)
 		isFinished = true;
 }
+
+void MazeBot::showPathOnly(sf::RenderTarget& window)
+{
+	showPath(window);
+	if (m_PathShower.back() == NUMBER_COLOR)
+		isFinished = true;
+}

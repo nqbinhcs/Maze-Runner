@@ -90,7 +90,7 @@ public:
 
 
 //IN GAME
-enum GameState { InGameState, InHelpState, NextStageState, LevelCompleteState };
+enum GameState { InGameState, NextStageState, LevelCompleteState };
 
 struct MyLevel {
 	int x, y;
@@ -106,13 +106,11 @@ public:
 private:
 	//----------------Game State atrributes----------------
 	GameState m_State;
-	//Helper m_Helper;
+	MazeBot m_Helper;
 	bool m_EndGame;
 
 	//----------------Display attributes----------------
 	shared_ptr<NextStage> m_pNextStage;
-	shared_ptr<HelpAlgorithmMenu> m_pHelpMenu;
-
 
 	//----------------"In Game processing"  atrributes----------------
 	shared_ptr<Maze> curMaze;
@@ -278,7 +276,7 @@ public:
 
 
 //VisualDemo
-enum DemoState { InDemoState, InChoosingState };
+enum StatesInDemo { InDemoState, InChoosingState };
 
 class StateDemo : public StateGame
 {
@@ -290,7 +288,7 @@ private:
 	sf::Event m_Event;
 
 	//----------------StateDemo State atrributes----------------
-	DemoState m_State;
+	StatesInDemo m_State;
 	MazeBot m_Demoer;
 
 	//----------------Display attributes----------------
@@ -325,10 +323,9 @@ private:
 	void updateAlgorithmInfo();
 
 	//----------------Render GUI functions----------------
-	void renderDisplayStates(DemoState state);
+	void renderDisplayStates(StatesInDemo state);
 
-	//----------------"In game processing" functions----------------
-	void resetGame(); 
+	//----------------"In demo processing" functions----------------
 
 public:
 

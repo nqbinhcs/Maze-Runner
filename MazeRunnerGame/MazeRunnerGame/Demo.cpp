@@ -100,18 +100,18 @@ void StateDemo::pollEvents()
 			break;
 			//------------------CLICK EVENT------------------
 		case sf::Event::MouseButtonReleased:
-			cout << "NO" << endl;
+			//cout << "Mouse is released" << endl;
 			if (m_Player->isChosenByMouse) {
-				cout << "Give up choosing player!\n";
+				//cout << "Give up choosing player!\n";
 				m_Player->isChosenByMouse = false;
 			}
 			if (m_Chest->isChosenByMouse) {
-				cout << "Give up choosing chest!\n";
+				//cout << "Give up choosing chest!\n";
 				m_Chest->isChosenByMouse = false;
 			}
 			break;
 		case sf::Event::MouseButtonPressed:
-			cout << "YES" << endl;
+			//cout << "Mouse is pressed" << endl;
 			if (m_Player->checkMouseOver(*m_pWindow)) {
 				m_Player->isChosenByMouse = true;
 				break;
@@ -130,7 +130,6 @@ void StateDemo::pollEvents()
 
 				if (m_Find.isClickV1(m_pWindow)) {
 					m_Find.makeChosen();
-					m_Demoer.start(m_pChooseMenu->getOptionAlgo(), curMaze->FindRoomByPos(curMaze->getStartPos()), curMaze->FindRoomByPos(curMaze->getFinalPos()));
 				}
 
 				if (m_ReturnMenu.isClickV1(m_pWindow)) {
@@ -182,12 +181,6 @@ void StateDemo::pollEvents()
 //@RETURN: None
 void StateDemo::update()
 {
-	
-	if (m_Demoer.isShowing) {
-		if (m_Demoer.isFinished == false)
-			return;
-	}
-
 	if (this->m_EndGame == false && m_State == InDemoState) {
 		if ((m_Chest->isChosenByMouse || m_Player->isChosenByMouse)) {
 			m_Demoer.end();
@@ -251,43 +244,50 @@ void StateDemo::render()
 	m_ReturnMenu.drawButton(*m_pWindow);
 
 	//-----------------------------In Help State-----------------------------
-	if (m_State == InChoosingState)
-	{
-		renderDisplayStates(m_State);
+	if (m_Demoer.isShowing == false || m_Demoer.isFinished == true) {
+		bool endShowingPath = false;
+
+		if (m_State == InChoosingState)
+		{
+			renderDisplayStates(m_State);
+		}
+
+		if (m_Find.isChosen())
+		{
+			m_Demoer.start(m_pChooseMenu->getOptionAlgo(), curMaze->FindRoomByPos(curMaze->getStartPos()), curMaze->FindRoomByPos(curMaze->getFinalPos()));
+		}
+
+		if (m_ChooseAlgo.isChosen())
+		{
+			m_State = InChoosingState;
+		}
+
+		if (m_Generate.isChosen())
+		{
+			m_Demoer.end();
+			MazeCoordinate startPos = m_Player->getPosition();
+			MazeCoordinate finalPos = m_Chest->getPosition();
+
+			curMaze = std::shared_ptr<LevelMaze>(new DemoMaze())->OrderLevelMaze();
+			curMaze->setStartPos(startPos);
+			curMaze->setFinalPos(finalPos);
+			m_Chest = curMaze->mazeChest;
+		}
 	}
 
 	this->m_pWindow->display();
-
 
 	if (m_ReturnMenu.isChosen())
 	{
 		this->context_->TransitionTo(new StateMenu);
 		return;
 	}
-
-	if (m_Find.isChosen())
-	{
-
-	}
-
-	if (m_ChooseAlgo.isChosen())
-	{
-		m_State = InChoosingState;
-		return;
-	}
-
-	if (m_Generate.isChosen())
-	{
-		resetGame();
-		return;
-	}
-
 }
 
 //@DESCR: Render StateDemo's particular state such as: GameOver, NextStage, LevelComplete
 //@PARAM: None
-//@RETURN: Non
-void StateDemo::renderDisplayStates(DemoState state)
+//@RETURN: None
+void StateDemo::renderDisplayStates(StatesInDemo state)
 {
 	if (state == InChoosingState)
 	{
@@ -335,21 +335,10 @@ void StateDemo::initAlgorithmInfo() {
 }
 
 void StateDemo::updateAlgorithmInfo() {
-	m_Algorithm[1].setContent("A-STAR");
+	string algoName[]{ "BFS", "DFS", "A-STAR" };
+
+	m_Algorithm[1].setContent(algoName[m_pChooseMenu->getOptionAlgo()]);
 	m_Algorithm[1].alignTextCenter();
 	m_Algorithm[1].alignTextMiddle();
-}
-
-void StateDemo::resetGame()
-{
-	curMaze->UpdateMaze(false);
-
-	m_Player->setPosition(curMaze->getStartPos());
-	m_Player->setSize(curMaze->getWidthRoom(), curMaze->getHeightRoom());
-	m_Player->updateDirecPlayer(1);
-	m_Player->setLose(false);
-
-	//m_Player->updateDirecPlayer(0);
-
 }
 
