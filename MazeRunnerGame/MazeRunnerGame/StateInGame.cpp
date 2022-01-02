@@ -242,7 +242,7 @@ void StateInGame::initTimeInfo() {
 		sf::Color::Black, sf::Color::White);
 	m_TimeInfo[0].setBoxOutlineThickness(5);
 
-	m_TimeInfo[0].setText("TIME", FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_TimeInfo[0].setText("LIVES", FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
 	m_TimeInfo[0].setCharacterSpacing(1.5);
 	m_TimeInfo[0].alignTextCenter();
 	m_TimeInfo[0].alignTextMiddle();
@@ -291,7 +291,7 @@ void StateInGame::initCoinsInfo() {
 }
 
 void StateInGame::updateTimeInfo() {
-	m_TimeInfo[1].setContent(m_Time.getCDTime());
+	m_TimeInfo[1].setContent(std::to_string(m_Player->getTimesPlayed()));
 	m_TimeInfo[1].alignTextCenter();
 	m_TimeInfo[1].alignTextMiddle();
 }
@@ -308,7 +308,7 @@ void StateInGame::updateCoinsInfo() {
 void StateInGame::updateLevel() {
 	stringstream writer("");
 
-	writer << "LEVEL " << m_Level + 1;
+	writer << "LEVEL " << curMaze->getLevel() + 1;
 
 	m_LevelInfo.setContent(writer.str());
 	m_LevelInfo.alignTextCenter();
@@ -416,7 +416,6 @@ void StateInGame::pollEvents()
 
 		if (m_ReturnMenu.isChosen())
 		{
-			resetGame();
 			m_ReturnMenu.makeNormal();
 			save();
 			context_->TransitionTo(new StateMenu);
