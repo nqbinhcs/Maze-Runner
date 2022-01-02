@@ -21,6 +21,6 @@ public:
 	bool isExit(sf::RenderWindow* window);
 
 public:
-	void pollEvent(sf::RenderWindow* window);
+	bool pollEvent(sf::RenderWindow* window);
 	virtual void draw(sf::RenderWindow& window);
 };

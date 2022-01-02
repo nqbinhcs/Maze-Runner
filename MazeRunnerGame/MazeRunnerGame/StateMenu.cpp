@@ -41,7 +41,8 @@ void StateMenu::pollEvents() {
 					}
 					break;
 
-				case 2: //"HIGH SCORE" option
+				case 2: //"VISUAL DEMO" option
+					this->context_->TransitionTo(new StateDemo);
 					return;
 					break;
 

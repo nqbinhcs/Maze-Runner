@@ -14,9 +14,7 @@ void StateDemo::initVariables()
 void StateDemo::initWindow()
 {
 	//Init window
-	this->m_VideoMode = sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT);
-	this->m_pWindow = new sf::RenderWindow(this->m_VideoMode, NAME_GAME, sf::Style::Close | sf::Style::Titlebar);
-	this->m_pWindow->setFramerateLimit(60);
+	this->m_pWindow = SingletonRenderWindow::getInstance();
 
 	//Init displays
 	this->m_pChooseMenu = std::shared_ptr<HelpAlgorithmMenu>(new HelpAlgorithmMenu());
@@ -71,14 +69,6 @@ StateDemo::StateDemo()
 	m_Chest = curMaze->mazeChest;
 }
 
-
-//@DESCR: Destructor of StateDemo
-//@PARAM: None
-//@RETURN: None
-StateDemo::~StateDemo()
-{
-	delete this->m_pWindow;
-}
 
 //@DESCR: Check whether the StateDemo is running
 //@PARAM: None
@@ -140,7 +130,7 @@ void StateDemo::pollEvents()
 
 				if (m_Find.isClickV1(m_pWindow)) {
 					m_Find.makeChosen();
-					m_Demoer.start(0, curMaze->FindRoomByPos(curMaze->getStartPos()), curMaze->FindRoomByPos(curMaze->getFinalPos()));
+					m_Demoer.start(m_pChooseMenu->getOptionAlgo(), curMaze->FindRoomByPos(curMaze->getStartPos()), curMaze->FindRoomByPos(curMaze->getFinalPos()));
 				}
 
 				if (m_ReturnMenu.isClickV1(m_pWindow)) {
@@ -166,7 +156,17 @@ void StateDemo::pollEvents()
 					m_ReturnMenu.makeNormal();
 				}
 				else
-					m_pChooseMenu->pollEvent(m_pWindow); //Choose Algorithms
+				{
+					bool isConfirm =  m_pChooseMenu->pollEvent(m_pWindow); //Choose Algorithms
+					if (isConfirm)
+					{
+						m_State = InDemoState;
+						m_ChooseAlgo.makeNormal();
+						m_Find.makeNormal();
+						m_Generate.makeNormal();
+						m_ReturnMenu.makeNormal();
+					}
+				}
 				break;
 			}
 			break;
@@ -182,8 +182,7 @@ void StateDemo::pollEvents()
 //@RETURN: None
 void StateDemo::update()
 {
-	this->pollEvents();
-
+	
 	if (m_Demoer.isShowing) {
 		if (m_Demoer.isFinished == false)
 			return;
@@ -262,7 +261,8 @@ void StateDemo::render()
 
 	if (m_ReturnMenu.isChosen())
 	{
-
+		this->context_->TransitionTo(new StateMenu);
+		return;
 	}
 
 	if (m_Find.isChosen())
@@ -291,9 +291,7 @@ void StateDemo::renderDisplayStates(DemoState state)
 {
 	if (state == InChoosingState)
 	{
-		if (!m_pChooseMenu->isRun())
-			m_pChooseMenu->draw(*m_pWindow);
-		return;
+		m_pChooseMenu->draw(*m_pWindow);
 	}
 }
 

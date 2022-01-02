@@ -275,20 +275,69 @@ public:
 
 
 //VisualDemo
-//class StateDemo : public StateGame {
-//public:
-//	sf::RenderWindow* m_pWindow;
-//
-//public:
-//	StateDemo() {
-//		this->m_pWindow = SingletonRenderWindow::getInstance();
-//	}
-//
-//public:
-//	void pollEvents() override;
-//	void update() override;
-//	void render() override;
-//};
+enum DemoState { InDemoState, InChoosingState };
+
+class StateDemo : public StateGame
+{
+public:
+	sf::RenderWindow* m_pWindow;
+private:
+	sf::VideoMode m_VideoMode;
+	bool m_EndGame;
+	sf::Event m_Event;
+
+	//----------------StateDemo State atrributes----------------
+	DemoState m_State;
+	MazeBot m_Demoer;
+
+	//----------------Display attributes----------------
+	shared_ptr<HelpAlgorithmMenu> m_pChooseMenu;
+
+
+	//----------------"In StateDemo processing"  atrributes----------------
+	shared_ptr<Maze> curMaze;
+	shared_ptr<Player> m_Player;
+	shared_ptr<MazeChest> m_Chest;
+
+	//----------------GUI atrributes---------------
+	MyText m_Title;
+	MyText m_Algorithm[2];
+
+	Button m_ChooseAlgo;
+	Button m_Find;
+	Button m_ReturnMenu;
+	Button m_Generate;
+
+	//----------------Initial GUI functions----------------
+	void initVariables();
+	void initWindow();
+	void initButtons();
+	void initText();
+
+	void initTitle();
+	void initAlgorithmInfo();
+
+
+	//----------------Update GUI functions----------------
+	void updateAlgorithmInfo();
+
+	//----------------Render GUI functions----------------
+	void renderDisplayStates(DemoState state);
+
+	//----------------"In game processing" functions----------------
+	void resetGame(); 
+
+public:
+
+	StateDemo();
+
+	//--------Accessors functions--------
+	const bool running() const;
+	void pollEvents() override;
+	void update() override;
+	void render() override;
+};
+
 
 
 //Instruction

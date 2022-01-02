@@ -126,6 +126,7 @@ StateInGame::StateInGame(bool isContinue)
 
 	if (isContinue)
 	{
+		std::cout << "LOAD\n";
 		load();
 	}
 	else
@@ -477,9 +478,9 @@ void StateInGame::render()
 	if (timeCycle == 100) {
 		//Save after 100 timcyles
 		//this->save();
+		save();
 		timeCycle = 0;
 	}
-	save();
 	m_Player->render(*m_pWindow);
 	m_Player->checkCllisionObject(curMaze);
 
