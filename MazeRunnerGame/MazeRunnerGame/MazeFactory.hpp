@@ -59,7 +59,7 @@ public:
 	std::shared_ptr<Maze> CreatLevelMaze() {
 		vector<int> mazeX_Room = { 5, 6, 7, 8 };
 		vector<int> mazeY_Room = { 5, 6, 7, 8 };
-		vector<int> random = { 1, 2, 3, 4 };
+		vector<int> random = { 2, 5, 10, 15 };
 		vector<int> key = { 1, 2, 3, 4 };
 		vector<int> trap = { 0,0, 2, 4 };
 		vector<int> guard = { 0,0,0,3 };
@@ -82,7 +82,7 @@ public:
 	std::shared_ptr<Maze> CreatLevelMaze() {
 		vector<int> mazeX_Room = { 9, 10, 11, 12 };
 		vector<int> mazeY_Room = { 9, 10, 11, 12 };
-		vector<int> random = { 3, 5, 7, 9 };
+		vector<int> random = { 19, 27, 32, 52 };
 		vector<int> key = { 2, 2, 4, 5 };
 		vector<int> trap = { 3,5, 7, 9 };
 		vector<int> guard = { 2,3,4,6 };
@@ -105,7 +105,7 @@ public:
 	std::shared_ptr<Maze> CreatLevelMaze() {
 		vector<int> mazeX_Room = { 13, 18, 22, 25 };
 		vector<int> mazeY_Room = { 13, 18, 22, 25 };
-		vector<int> random = { 12, 23, 27, 31 };
+		vector<int> random = { 52, 68, 98, 131 };
 		vector<int> key = { 6, 8, 10, 13 };
 		vector<int> trap = { 8, 11, 15, 18 };
 		vector<int> guard = { 5, 7, 10, 13 };

@@ -68,6 +68,7 @@ private:
 
 	//All rooms can have objects in them
 	std::vector <std::shared_ptr<Room>> obstacleRooms;
+	std::vector <std::shared_ptr<Room>> obstacleRoomsGuard;
 public:
 	std::vector<std::shared_ptr<MazeGuard>> mazeGuard;
 	std::vector<std::shared_ptr<MazeTrap>> mazeTrap;
@@ -229,6 +230,7 @@ public:
 	void ResetMaze();
 	void UpdateLevel(bool next);
 
+	bool checkAroundPosStart(MazeCoordinate pos);
 	void CreateRooms();
 public:
 	bool CheckGetKeyAtPos(MazeCoordinate pos);

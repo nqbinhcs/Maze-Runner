@@ -346,10 +346,10 @@ void StateDemo::resetGame()
 
 	m_Player->setPosition(curMaze->getStartPos());
 	m_Player->setSize(curMaze->getWidthRoom(), curMaze->getHeightRoom());
-	m_Player->updateDirecPlayer(0);
+	m_Player->updateDirecPlayer(1);
 	m_Player->setLose(false);
 
-	m_Player->updateDirecPlayer(0);
+	//m_Player->updateDirecPlayer(0);
 
 }
 

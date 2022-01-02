@@ -73,10 +73,13 @@ void Maze::ResetMaze() {
 	//Clear all previous vectors
 	allRooms.clear();
 	obstacleRooms.clear();
-	mazeGuard.resize(0);
-	mazeTrap.resize(0);
-	mazeKey.resize(0);
-	mazeCoin.resize(0);
+	obstacleRoomsGuard.clear();
+	mazeGuard.clear();
+	mazeTrap.clear();
+	mazeKey.clear();
+	mazeCoin.clear();
+	isTakeCoin.clear();
+	isTakeKey.clear();
 
 }
 void Maze::UpdateLevel(bool next) {
@@ -229,8 +232,36 @@ void Maze::CarveMaze() {
 	}
 }
 
+bool Maze::checkAroundPosStart(MazeCoordinate pos) {
+	//Nearest is 4 rooms
+	for (int i = 1; i <= 4; i++) {
+		if (startPos.getX() - i == pos.getX() && startPos.getY() == pos.getY()) {
+			return false;
+		}
+		if (startPos.getX() + i == pos.getX() && startPos.getY() == pos.getY()) {
+			return false;
+		}
+		if (startPos.getX() == pos.getX() && startPos.getY() - i == pos.getY()) {
+			return false;
+		}
+		if (startPos.getX() == pos.getX() && startPos.getY() + i == pos.getY()) {
+			return false;
+		}
+	}
+	return true;
+}
 void Maze::CreateObjects() {
 	std::shared_ptr<Room> curRoomPtr;
+
+	for (int i = 0; i < allRooms.size(); i++) {
+		curRoomPtr = allRooms[i];
+		if ((curRoomPtr->roomTypes.size() == 0 && curRoomPtr->connectRooms.size() == 3))
+		{
+			obstacleRoomsGuard.push_back(curRoomPtr);
+		}
+	}
+
+	int i = 0;
 	for (int i = 0; i < numTrap; i++) {
 		do
 		{
@@ -239,11 +270,12 @@ void Maze::CreateObjects() {
 		curRoomPtr->roomTypes.push_back(TRAP);
 		mazeTrap.push_back(std::shared_ptr<MazeTrap>(new MazeTrap(curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
 	}
+	cout << "SIZE ROOM GUARD: " << obstacleRoomsGuard.size() << endl;
 	for (int i = 0; i < numGuard; i++) {
 		do
 		{
-			curRoomPtr = randomElement(obstacleRooms);
-			if (curRoomPtr->roomTypes.size() == 0 && curRoomPtr->connectRooms.size() == 3) {
+			curRoomPtr = randomElement(obstacleRoomsGuard);
+			if (curRoomPtr->roomTypes.size() == 0 && curRoomPtr->connectRooms.size() == 3 && checkAroundPosStart(curRoomPtr->roomPos)) {
 				break;
 			}
 		} while (1);
@@ -251,46 +283,6 @@ void Maze::CreateObjects() {
 		curRoomPtr->roomTypes.push_back(TRAP);
 		mazeGuard.push_back(std::shared_ptr<MazeGuard>(new MazeGuard(curRoomPtr, curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
 	}
-
-
-	/*
-	int trap = numTrap;
-	int guard = numGuard;
-
-	for (int i = 0; i < obstacleRooms.size() - 1; i++) {
-		if (obstacleRooms[i]->roomTypes.size() == 0)
-		{
-			i++;
-			if (obstacleRooms[i]->connectRooms.size() == 3 && guard > 0 && i % 3 == 0)
-			{
-				guard--;
-				obstacleRooms[i]->roomTypes.push_back(GUARD);
-				mazeGuard.push_back(std::shared_ptr<MazeGuard>(new MazeGuard(obstacleRooms[i], obstacleRooms[i]->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
-			}
-			else if (trap > 0 && i % 3 == 0)
-			{
-				trap--;
-				obstacleRooms[i]->roomTypes.push_back(TRAP);
-				mazeTrap.push_back(std::shared_ptr<MazeTrap>(new MazeTrap(obstacleRooms[i]->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
-			}
-		}
-	}*/
-
-
-	/*if (guard == numGuard) {
-		for (int i = 0; i < numGuard * 2; i++) {
-			if (guard == 0) {
-				return;
-			}
-			std::shared_ptr<Room> curRoomPtr = randomElement(obstacleRooms);
-			if (curRoomPtr->connectRooms.size() == 3 && guard > 0)
-			{
-				guard--;
-				curRoomPtr->roomTypes.push_back(GUARD);
-				mazeGuard.push_back(std::shared_ptr<MazeGuard>(new MazeGuard(curRoomPtr, curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
-			}
-		}
-	}*/
 }
 void Maze::NextMazeCycle() {
 	for (int i = 0; i < mazeGuard.size(); i++) {

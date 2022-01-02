@@ -21,7 +21,7 @@ Player::Player(MazeCoordinate pos, float xOffset, float yOffset, float width, fl
 	}
 	sf::Image newImage;
 	newImage.create(width, height, sf::Color::Black);
-	Room::resizeImage(playerImages[0], newImage);
+	Room::resizeImage(playerImages[1], newImage);
 	curTexure.loadFromImage(newImage);
 
 	//this->initVariables();
