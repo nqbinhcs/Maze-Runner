@@ -46,12 +46,9 @@ public:
 
 	bool checkMouseOver(const sf::Window& window) {
 		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-		//std::cout << "Mouse position: " << mousePosition.x << " " << mousePosition.y << '\n';
 		sf::Vector2i objectPosition = sf::Vector2i(
-			xOffset + (int)((curMazePosition.getX()) * width),
-			yOffset + (int)((curMazePosition.getY()) * height));
-		//std::cout << "Object position: " << objectPosition.x << " " << objectPosition.y << '\n';
-		//std::cout << "Object size: " << width << " " << height << '\n';
+		xOffset + (int)((curMazePosition.getX()) * width),
+		yOffset + (int)((curMazePosition.getY()) * height));
 		return (objectPosition.x <= mousePosition.x && mousePosition.x <= objectPosition.x + width &&
 			objectPosition.y <= mousePosition.y && mousePosition.y <= objectPosition.y + height);
 	}
@@ -65,7 +62,6 @@ public:
 		this->height = height;
 	}
 	
-	//Cập nhật, dựng hình
 	void update(const sf::RenderTarget* target);
 	virtual void NextCycle() {
 

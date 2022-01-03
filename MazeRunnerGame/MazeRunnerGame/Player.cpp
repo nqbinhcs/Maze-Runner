@@ -48,15 +48,10 @@ void Player::updateInput(int direction, shared_ptr<Maze> curMaze)
 	switch (direction)
 	{
 	case sf::Keyboard::Key::Left:
-		//MazeCoordinate posNew(posPlayer.getX() - 1, posPlayer.getY());
 		if (curMazePosition.getX() - 1 >= 0 && checkIsConnect(curMaze, roomNow, MazeCoordinate(curMazePosition.getX() - 1, curMazePosition.getY()))) {
 			
 			updateDirecPlayer(0);
 			curMazePosition.setX(curMazePosition.getX() - 1);
-			//this->shape.move(sf::Vector2f(-movementSpeed, 0.f));
-		}
-		else {
-			cout << "Can't move left.\n";
 		}
 		break;
 	case sf::Keyboard::Key::Right:
@@ -64,10 +59,6 @@ void Player::updateInput(int direction, shared_ptr<Maze> curMaze)
 			
 			updateDirecPlayer(3);
 			curMazePosition.setX(curMazePosition.getX() + 1);
-			//this->shape.move(sf::Vector2f(movementSpeed, 0.f));
-		}
-		else {
-			cout << "Can't move right.\n";
 		}
 		break;
 	case sf::Keyboard::Key::Up:
@@ -75,10 +66,6 @@ void Player::updateInput(int direction, shared_ptr<Maze> curMaze)
 			
 			updateDirecPlayer(2);
 			curMazePosition.setY(curMazePosition.getY() - 1);
-			//this->shape.move(sf::Vector2f(0.f, -movementSpeed));
-		}
-		else {
-			cout << "Can't move up.\n";
 		}
 		break;
 	case sf::Keyboard::Key::Down:
@@ -86,10 +73,6 @@ void Player::updateInput(int direction, shared_ptr<Maze> curMaze)
 			
 			updateDirecPlayer(1);
 			curMazePosition.setY(curMazePosition.getY() + 1);
-			//this->shape.move(sf::Vector2f(0.f, movementSpeed));
-		}
-		else {
-			cout << "Can't move down.\n";
 		}
 		break;
 	}
@@ -118,7 +101,6 @@ bool Player::CollisionTrap(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	for (int i = 0; i < curMaze->getSizeObj(1); i++) {
 		if (curMaze->getActiveTrap(i) == true && curMaze->getPos(i, 1) == pos) {
 			isLose = true;
-			cout << "Lose" << endl;
 			return true;
 		}
 	}
@@ -128,7 +110,6 @@ bool Player::CollisionGuard(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	for (int i = 0; i < curMaze->getSizeObj(2); i++) {
 		if (curMaze->getPos(i, 2) == pos) {
 			isLose = true;
-			cout << "Lose" << endl;
 			return true;
 		}
 	}
@@ -137,7 +118,6 @@ bool Player::CollisionGuard(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 bool Player::CollisionKey(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	for (int i = 0; i < curMaze->getSizeObj(3); i++) {
 		if (curMaze->getPos(i, 3) == pos && curMaze->getTake(i, 1) == false) {
-			cout << "Get key.\n";
 			curMaze->setTake(i, 1);
 			return true;
 		}
@@ -147,7 +127,6 @@ bool Player::CollisionKey(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 bool Player::CollisionCoin(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	for (int i = 0; i < curMaze->getSizeObj(4); i++) {
 		if (curMaze->getPos(i, 4) == pos && curMaze->getTake(i, 2) == false) {
-			cout << "Get coin.\n";
 			totalCoin++;
 			curMaze->setTake(i, 2);
 			return true;
@@ -159,7 +138,6 @@ bool Player::CollisionChest(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	
 	if (curMaze->getFinalPos() == pos) {
 		if (curMaze->CheckGetAllKey() == true) {
-			cout << "Get chest.\n";
 			curMaze->setTake(0, 3);
 		}
 		return true;
@@ -167,7 +145,6 @@ bool Player::CollisionChest(shared_ptr<Maze> curMaze, MazeCoordinate pos) {
 	return false;
 }
 void Player::checkCllisionObject(shared_ptr<Maze> curMaze) {
-	//Check after cycle guard or trap collision player
 	CollisionTrap(curMaze, MazeCoordinate(curMazePosition.getX(), curMazePosition.getY()));
 	CollisionGuard(curMaze, MazeCoordinate(curMazePosition.getX(), curMazePosition.getY()));
 }

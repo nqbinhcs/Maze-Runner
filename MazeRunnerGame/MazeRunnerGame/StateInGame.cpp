@@ -563,7 +563,7 @@ void StateInGame::render()
 
 	if (m_State == LevelCompleteState || curMaze->completeLevel() == true)
 	{
-		cout << "LEVEL~~~ : " << m_Level << '\n';
+		//cout << "LEVEL~~~ : " << m_Level << '\n';
 		//testing
 		renderDisplayStates(NextStageState);
 		m_State = NextStageState;

@@ -71,8 +71,6 @@ public:
 	//Tells us if the Room is in the maze
 	bool inMaze = false;
 
-	bool isBrowser = false;
-
 	//Rooms adjacent to this room
 	std::vector<std::shared_ptr<Room>> adjRooms;
 
@@ -111,15 +109,11 @@ public:
 	//Create Room Rect
 	void MakeRoomRect(int& xOffset, int& yOffset, int& xSplits, int& ySplits, const int& mazeWidth, const int& mazeHeight);
 
-	void MakeRoomRect();
-
 	//Check the direction of an adjacent room
 	directions CheckAdjRoomDir(Room& room);
 
 	//Assign Texture to this room based off the number of walls (wallDirections)
 	void AssignRoomTextures();
-	void SetRoomEnd();
-	void SetRoomBrowser();
 	//Remove Wall if one is there 
 	void RemoveWallDirection(std::shared_ptr<Room>& roomToConnectPtr);
 

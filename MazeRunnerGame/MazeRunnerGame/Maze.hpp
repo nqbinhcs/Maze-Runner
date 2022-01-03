@@ -168,7 +168,7 @@ public:
 			std::shared_ptr<Room> curRoom = FindRoomByPos(mazeKey[i]->getPosition());
 			auto roomTypesIter = std::find(begin(curRoom->roomTypes), end(curRoom->roomTypes), KEY);
 
-			//Remove the "Guard" type from the roomTypes
+			//Remove the "KEY" type from the roomTypes
 			if (roomTypesIter != end(curRoom->roomTypes))
 				curRoom->roomTypes.erase(roomTypesIter);
 		}
@@ -177,7 +177,7 @@ public:
 			std::shared_ptr<Room> curRoom = FindRoomByPos(mazeCoin[i]->getPosition());
 			auto roomTypesIter = std::find(begin(curRoom->roomTypes), end(curRoom->roomTypes), COIN);
 
-			//Remove the "Guard" type from the roomTypes
+			//Remove the "COIN" type from the roomTypes
 			if (roomTypesIter != end(curRoom->roomTypes))
 				curRoom->roomTypes.erase(roomTypesIter);
 		}
@@ -256,151 +256,9 @@ private:
 
 	//FUNCTION USE INSERT INFOR FROM FILE.
 public:
-	void ConnectEachOther(std::shared_ptr<Room> roomNow, int x, int y) {
-		std::shared_ptr<Room> room = FindRoomByPos(MazeCoordinate(roomNow->roomPos.getX() + x, roomNow->roomPos.getY() + y));
-		roomNow->connectRooms.push_back(room);
-	}
-	void addObjFromFile(int pos, int type) {
-		//TRAP 1;	GUARD 2;	KEY 3;	COIN 4
-		std::shared_ptr<Room> curRoomPtr = allRooms[pos];
-		if (type == 1) {
-			curRoomPtr->roomTypes.push_back(TRAP);
-			mazeTrap.push_back(std::shared_ptr<MazeTrap>(new MazeTrap(curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
-		}
-		else if (type == 2) {
-			curRoomPtr->roomTypes.push_back(GUARD);
-			mazeGuard.push_back(std::shared_ptr<MazeGuard>(new MazeGuard(curRoomPtr, curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
-		}
-		else if (type == 3) {
-			curRoomPtr->roomTypes.push_back(KEY);
-			mazeKey.push_back(std::shared_ptr<MazeKey>(new MazeKey(curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
-		}
-		else if (type == 4) {
-			curRoomPtr->roomTypes.push_back(COIN);
-			mazeCoin.push_back(std::shared_ptr<MazeCoin>(new MazeCoin(curRoomPtr->roomPos, mazeX_Offset, mazeY_Offset, int(mazeX_Size / numRoomX), int(mazeY_Size / numRoomY))));
-		}
-	}
-	void setMazeFromFile(vector<vector<int>> maze, vector<vector<int>> mazeObj, vector<vector<int>> checkObj, MazeCoordinate startP, MazeCoordinate finalP) {
-		//Set start and final.
-		setStartPos(startP);
-		setFinalPos(finalP);
-
-		//Set image to Room.
-		for (int i = 0; i < maze.size(); i++) {
-			for (int j = 0; j < maze[i].size(); j++) {
-				setDirRoom(j * maze.size() + i, maze[i][j]);
-			}
-		}
-
-		//Change image of Room.
-		for (int i = 0; i < allRooms.size(); i++) {
-			allRooms[i]->AssignRoomTextures();
-		}
-
-		//Connect room with each other.
-		for (int i = 0; i < allRooms.size(); i++) {
-			//1-D; 2-L, 8-R, 4-U, 3-DL, 9-DR, 5-DU, 
-			// 10-LR, 6-LU, 12-UR,	11 - DLR, 7 - DLU, 
-			//13 - DUR 14 - LUR    15NULL
-			if (allRooms[i]->wallDirBit == 1) {
-				//Connect Room Left, Right, Up
-				ConnectEachOther(allRooms[i], -1, 0);
-				ConnectEachOther(allRooms[i], 1, 0);
-				ConnectEachOther(allRooms[i], 0, -1);
-			}
-			else if (allRooms[i]->wallDirBit == 2) {
-				//Connect Room Right and Down, UP
-				ConnectEachOther(allRooms[i], 1, 0);
-				ConnectEachOther(allRooms[i], 0, 1);
-				ConnectEachOther(allRooms[i], 0, -1);
-			}
-			else if (allRooms[i]->wallDirBit == 3) {
-				//Connect Room Right and up
-				ConnectEachOther(allRooms[i], 1, 0);
-				ConnectEachOther(allRooms[i], 0, -1);
-			}
-			else if (allRooms[i]->wallDirBit == 4) {
-				//Connect Room Right and Down,left
-				ConnectEachOther(allRooms[i], 1, 0);
-				ConnectEachOther(allRooms[i], -1, 0);
-				ConnectEachOther(allRooms[i], 0, 1);
-			}
-			else if (allRooms[i]->wallDirBit == 5) {
-				//Connect Room Right and left
-				ConnectEachOther(allRooms[i], 1, 0);
-				ConnectEachOther(allRooms[i], -1, 0);
-			}
-			else if (allRooms[i]->wallDirBit == 6) {
-				//Connect Room Right and down
-				ConnectEachOther(allRooms[i], 1, 0);
-				ConnectEachOther(allRooms[i], 0, 1);
-			}
-			else if (allRooms[i]->wallDirBit == 7) {
-				//Connect Room right
-				ConnectEachOther(allRooms[i], 1, 0);
-			}
-			else if (allRooms[i]->wallDirBit == 8) {
-				//Connect Room left, down, up
-				ConnectEachOther(allRooms[i], -1, 0);
-				ConnectEachOther(allRooms[i], 0, 1);
-				ConnectEachOther(allRooms[i], 0, -1);
-			}
-			else if (allRooms[i]->wallDirBit == 9) {
-				//Connect Room left, up
-				ConnectEachOther(allRooms[i], -1, 0);
-				ConnectEachOther(allRooms[i], 0, -1);
-			}
-			else if (allRooms[i]->wallDirBit == 10) {
-				//Connect Room down, up
-				ConnectEachOther(allRooms[i], 0, 1);
-				ConnectEachOther(allRooms[i], 0, -1);
-			}
-			else if (allRooms[i]->wallDirBit == 11) {
-				//Connect Room up
-				ConnectEachOther(allRooms[i], 0, -1);
-			}
-			else if (allRooms[i]->wallDirBit == 12) {
-				//Connect Room left, down
-				ConnectEachOther(allRooms[i], -1, 0);
-				ConnectEachOther(allRooms[i], 0, 1);
-			}
-			else if (allRooms[i]->wallDirBit == 13) {
-				//Connect Room left
-				ConnectEachOther(allRooms[i], -1, 0);
-			}
-			else if (allRooms[i]->wallDirBit == 14) {
-				//Connect Room down
-				ConnectEachOther(allRooms[i], 0, 1);
-			}
-		}
-
-		//TRAP 1;	GUARD 2;	KEY 3;	COIN 4
-		for (int i = 0; i < mazeObj.size(); i++) {
-			for (int j = 0; j < mazeObj[i].size(); j++) {
-				if (mazeObj[i][j] == 1) {
-					addObjFromFile(j * mazeObj.size() + i, 1);
-				}
-				else if (mazeObj[i][j] == 2) {
-					addObjFromFile(j * mazeObj.size() + i, 2);
-				}
-				else if (mazeObj[i][j] == 3) {
-					addObjFromFile(j * mazeObj.size() + i, 3);
-					if (checkObj[i][j] == 1) {
-						setTake(mazeKey.size() - 1, 1);
-					}
-				}
-				else if (mazeObj[i][j] == 4) {
-					addObjFromFile(j * mazeObj.size() + i, 4);
-					if (checkObj[i][j] == 1) {
-						setTake(mazeCoin.size() - 1, 2);
-					}
-				}
-			}
-		}
-		
-		//Set chest.
-		CreatChest();
-	}
+	void ConnectEachOther(std::shared_ptr<Room> roomNow, int x, int y);
+	void addObjFromFile(int pos, int type);
+	void setMazeFromFile(vector<vector<int>> maze, vector<vector<int>> mazeObj, vector<vector<int>> checkObj, MazeCoordinate startP, MazeCoordinate finalP);
 public:
 	void AddMazeRoomsToRenderer(sf::RenderWindow& window);
 	void AddMazeObstaclesToRenderer(sf::RenderWindow& window);

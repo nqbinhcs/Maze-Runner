@@ -88,8 +88,6 @@ void SaveLoadGame::LoadGameContinue(shared_ptr<Maze>& curMaze, shared_ptr<Player
 	//After creat maze, then creat player.
 	m_Player = std::shared_ptr<Player>(new Player(curMaze->getStartPos(), OFFSET_MAZE_X, OFFSET_MAZE_Y, curMaze->getWidthRoom(), curMaze->getHeightRoom()));
 	m_Player->setPosition(playerPos);
-
-	std::cout << "LOAD SUCCESSFULLY\n";
 }
 void SaveLoadGame::SaveGameContiune(shared_ptr<Maze> curMaze, shared_ptr<Player> m_Player) {
 	fstream f;
@@ -171,13 +169,11 @@ void SaveLoadGame::SaveGameContiune(shared_ptr<Maze> curMaze, shared_ptr<Player>
 	//KEY
 	for (int t = 0; t < curMaze->getSizeObj(3); t++) {
 		pos = curMaze->getPos(t, 3);
-		cout << "Value of key: " << curMaze->getTake(t, 1) << endl;
 		matrix[pos.getY()][pos.getX()] = curMaze->getTake(t, 1);
 	}
 	//COIN
 	for (int t = 0; t < curMaze->getSizeObj(4); t++) {
 		pos = curMaze->getPos(t, 4);
-		cout << "Value of coin: " << curMaze->getTake(t, 2) << endl;
 		matrix[pos.getY()][pos.getX()] = curMaze->getTake(t, 2);
 	}
 
@@ -190,5 +186,4 @@ void SaveLoadGame::SaveGameContiune(shared_ptr<Maze> curMaze, shared_ptr<Player>
 		f << matrix[i][j] << endl;
 	}
 	f.close();
-	cout << "SAVE SUCCESSFUL\n";
 }

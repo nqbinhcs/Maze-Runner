@@ -19,8 +19,6 @@ Room::Room(MazeCoordinate pos, int widthRoom, int heightRoom) : roomPos(pos), wi
 		Room::roomImages[0b0100].loadFromFile(IMG_1BORDER_U);	//Up
 		Room::roomImages[0b1000].loadFromFile(IMG_1BORDER_R);
 
-		std::cout << roomImages[2].getSize().x << ' ' << roomImages[2].getSize().y << '\n';
-
 		Room::roomImages[0b0011].loadFromFile(IMG_2BORDER_DL);
 		Room::roomImages[0b0101].loadFromFile(IMG_2BORDER_DU);
 		Room::roomImages[0b1001].loadFromFile(IMG_2BORDER_DR);
@@ -28,15 +26,12 @@ Room::Room(MazeCoordinate pos, int widthRoom, int heightRoom) : roomPos(pos), wi
 		Room::roomImages[0b1010].loadFromFile(IMG_2BORDER_LR);
 		Room::roomImages[0b1100].loadFromFile(IMG_2BORDER_UR);
 
-
 		Room::roomImages[0b0111].loadFromFile(IMG_3BORDER_DLU);
 		Room::roomImages[0b1011].loadFromFile(IMG_3BORDER_DLR);
 		Room::roomImages[0b1101].loadFromFile(IMG_3BORDER_DUR);
 		Room::roomImages[0b1110].loadFromFile(IMG_3BORDER_LUR);
 
-
 		Room::roomImages[0b1111].loadFromFile(IMG_4BORDER);
-
 	}
 	sf::Image newImage;
 	newImage.create(widthRoom, heightRoom, sf::Color::Black);
@@ -68,13 +63,6 @@ void Room::MakeRoomRect(int& xOffset, int& yOffset, int& xSplits, int& ySplits, 
 	positionY = yOffset + (int)((roomPos.getY()) * ceil(mazeHeight / ySplits));
 	widthRoom = (int)ceil(mazeWidth / (xSplits));
 	heightRoom = (int)ceil(mazeHeight / (ySplits));
-}
-
-//@DESCR: Use test each Room.
-//@PARAM: None
-//@RETURN: None
-void Room::MakeRoomRect() {
-	//curRoomTexture.setPosition(100, 100);
 }
 
 //@DESCR: NOT UNDERSTAND,
@@ -111,20 +99,6 @@ void Room::AssignRoomTextures()
 	resizeImage(roomImages[wallDirBit], newImage);
 	curRoomTexture.loadFromImage(newImage);
 }
-
-void Room::SetRoomEnd() {
-	sf::Image newImage;
-	newImage.create(widthRoom, heightRoom, sf::Color::Black);
-	//resizeImage(roomImagesEnd[wallDirBit], newImage);
-	curRoomTexture.loadFromImage(newImage);
-}
-
-void Room::SetRoomBrowser() {
-	sf::Image newImage;
-	newImage.create(widthRoom, heightRoom, sf::Color::Black);
-	//resizeImage(roomImagesBrowser[wallDirBit], newImage);
-	curRoomTexture.loadFromImage(newImage);
-}
 //@DESCR: Remove wall direction. (not understand)
 //@PARAM: shared_ptr<Room>
 //@RETURN: None
@@ -158,7 +132,6 @@ void Room::AddRoomToRenderer(sf::RenderWindow& window)
 //@RETURN: None
 void Room::resizeImage(const sf::Image& originalImage, sf::Image& resizedImage)
 {
-	//if (originalImage.getSize().x <= 0 && originalImage.getSize().y <= 0) return;
 	const sf::Vector2u originalImageSize{ originalImage.getSize() };
 	const sf::Vector2u resizedImageSize{ resizedImage.getSize() };
 	for (unsigned int y{ 0u }; y < resizedImageSize.y; ++y)
