@@ -146,6 +146,8 @@ void StateDemo::pollEvents()
 				if (m_Generate.isClickV1(m_pWindow)) {
 					m_Generate.makeChosen();
 				}
+				else
+					m_Generate.makeNormal();
 
 				break;
 			}
@@ -272,6 +274,8 @@ void StateDemo::render()
 
 		if (m_Generate.isChosen())
 		{
+			this->m_pWindow->display();
+
 			m_Demoer.end();
 			MazeCoordinate startPos = m_Player->getPosition();
 			MazeCoordinate finalPos = m_Chest->getPosition();
@@ -280,6 +284,8 @@ void StateDemo::render()
 			curMaze->setStartPos(startPos);
 			curMaze->setFinalPos(finalPos);
 			m_Chest = curMaze->mazeChest;
+
+			m_Generate.makeNormal();
 		}
 	}
 
