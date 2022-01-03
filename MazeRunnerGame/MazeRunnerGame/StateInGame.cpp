@@ -413,8 +413,10 @@ void StateInGame::pollEvents()
 
 		if (m_Help.isChosen())
 		{
+			m_Help.makeNormal();
 			if (m_Player->getTotalCoin() >= 3)
 			{
+				std::cout << "DELETE COIN\n";
 				m_Player->setTotalCoin(m_Player->getTotalCoin() - 3);
 
 				shared_ptr<Room> destination;;
@@ -431,6 +433,7 @@ void StateInGame::pollEvents()
 					destination);
 				return;
 			}
+			return;
 		}
 
 		if (m_RestartGame.isChosen())
@@ -512,7 +515,7 @@ void StateInGame::render()
 		this->context_->TransitionTo(new StateOverGame);
 		return;
 	}
-	if (m_State == NextStageState || curMaze->completeLevel() == true)
+	if (m_State == NextStageState)
 	{
 		delay(0.7);
 
@@ -551,7 +554,7 @@ void StateInGame::render()
 	updateLevel();
 	m_LevelInfo.drawMyText(*m_pWindow);
 
-	if (m_State == LevelCompleteState)
+	if (m_State == LevelCompleteState || curMaze->completeLevel() == true)
 	{
 		cout << "LEVEL~~~ : " << m_Level << '\n';
 		//testing
