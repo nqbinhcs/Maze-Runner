@@ -4,10 +4,8 @@
 #include "MazeAlgorithms.hpp"
 #include "Clock.hpp"
 
-#define PATH_START_COLOR 255,80,0
-#define PATH_END_COLOR 255,160,100
-#define PROGRESS_START_COLOR 0,5,255
-#define PROGRESS_END_COLOR 0,255,255
+//#define PATH_START_COLOR 255,80,0
+//#define PATH_END_COLOR 255,160,100
 
 #define NUMBER_COLOR 20
 

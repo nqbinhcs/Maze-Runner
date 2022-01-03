@@ -41,6 +41,10 @@ public:
 		return timesPlayed;
 	}
 
+	void setTotalCoin(int totalCoin_) {
+		totalCoin = totalCoin_;
+	}
+
 	int getTotalCoin() {
 		return totalCoin;
 	}

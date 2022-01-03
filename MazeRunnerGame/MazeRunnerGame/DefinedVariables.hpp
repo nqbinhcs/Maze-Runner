@@ -31,3 +31,5 @@
 const float OBJECT_WIDTH = 50;
 const float OBJECT_HEIGHT = 50;
 
+#define IMG_BEHINDMAZE "Images/BehindMaze.png"
+

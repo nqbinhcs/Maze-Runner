@@ -1,5 +1,11 @@
 #include "Helper.hpp"
 
+#define PATH_START_COLOR 0,145,142
+#define PATH_END_COLOR 77,213,153
+#define PROGRESS_START_COLOR 157,92,13
+#define PROGRESS_END_COLOR  229,137,50
+
+
 void MazeBot::start(int option, shared_ptr<Room> start, shared_ptr<Room> end)
 {
 	this->setPathFinder(option);

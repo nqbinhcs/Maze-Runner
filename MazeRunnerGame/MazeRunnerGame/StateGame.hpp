@@ -309,6 +309,8 @@ private:
 	Button m_ReturnMenu;
 	Button m_Generate;
 
+	sf::Texture textureBackground;
+	sf::Sprite spriteBackground;
 	//----------------Initial GUI functions----------------
 	void initVariables();
 	void initWindow();

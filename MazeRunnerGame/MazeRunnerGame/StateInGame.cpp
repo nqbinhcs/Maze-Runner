@@ -22,7 +22,7 @@ void StateInGame::initWindow()
 {
 	this->m_pWindow = SingletonRenderWindow::getInstance();
 	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
-	this->m_pHelpMenu = std::shared_ptr<HelpAlgorithmMenu>(new HelpAlgorithmMenu());
+	//this->m_pHelpMenu = std::shared_ptr<HelpAlgorithmMenu>(new HelpAlgorithmMenu());
 
 	if (!textureBackground.loadFromFile(IMG_BEHINDMAZE))
 	{
@@ -214,7 +214,7 @@ void StateInGame::initTitle() {
 		sf::Vector2f(SCREEN_TITLE_WIDTH, SCREEN_TITLE_HEIGHT),
 		sf::Color::Black, sf::Color::Transparent);
 
-	m_Title.setText("MAZE RUNNER", FONT_GAME, 90, sf::Text::Bold, sf::Color::White);
+	m_Title.setText("MAZE RUNNER", FONT_GAME, 90, sf::Text::Italic, sf::Color::Color(253, 205, 79));
 	m_Title.setCharacterSpacing(1.5);
 	m_Title.alignTextCenter();
 	m_Title.alignTextMiddle();
@@ -230,7 +230,7 @@ void StateInGame::initLevelInfo() {
 		sf::Color::Black, sf::Color::White);
 	m_LevelInfo.setBoxOutlineThickness(5);
 
-	m_LevelInfo.setText(writer.str(), FONT_GAME, 40, sf::Text::Bold, sf::Color::White);
+	m_LevelInfo.setText(writer.str(), FONT_GAME, 40, sf::Text::Italic, sf::Color::Color(253, 205, 79));
 	m_LevelInfo.setCharacterSpacing(1.5);
 	m_LevelInfo.alignTextCenter();
 	m_LevelInfo.alignTextMiddle();
@@ -243,7 +243,7 @@ void StateInGame::initTimeInfo() {
 		sf::Color::Black, sf::Color::White);
 	m_TimeInfo[0].setBoxOutlineThickness(5);
 
-	m_TimeInfo[0].setText("LIVES", FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_TimeInfo[0].setText("LIVES", FONT_GAME, 30, sf::Text::Italic, sf::Color::Color(253, 205, 79));
 	m_TimeInfo[0].setCharacterSpacing(1.5);
 	m_TimeInfo[0].alignTextCenter();
 	m_TimeInfo[0].alignTextMiddle();
@@ -258,7 +258,7 @@ void StateInGame::initTimeInfo() {
 
 	writer << m_Time.getCDTime();
 
-	m_TimeInfo[1].setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_TimeInfo[1].setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::Color(253, 205, 79));
 	m_TimeInfo[1].setCharacterSpacing(1.5);
 	m_TimeInfo[1].alignTextCenter();
 	m_TimeInfo[1].alignTextMiddle();
@@ -271,7 +271,7 @@ void StateInGame::initCoinsInfo() {
 		sf::Color::Black, sf::Color::White);
 	m_CoinsInfo[0].setBoxOutlineThickness(5);
 
-	m_CoinsInfo[0].setText("COINS", FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_CoinsInfo[0].setText("COINS", FONT_GAME, 30, sf::Text::Italic, sf::Color::Color(253, 205, 79));
 	m_CoinsInfo[0].setCharacterSpacing(1.5);
 	m_CoinsInfo[0].alignTextCenter();
 	m_CoinsInfo[0].alignTextMiddle();
@@ -285,7 +285,7 @@ void StateInGame::initCoinsInfo() {
 
 	writer << m_Points;
 
-	m_CoinsInfo[1].setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_CoinsInfo[1].setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::Color(253, 205, 79));
 	m_CoinsInfo[1].setCharacterSpacing(1.5);
 	m_CoinsInfo[1].alignTextCenter();
 	m_CoinsInfo[1].alignTextMiddle();
@@ -413,19 +413,24 @@ void StateInGame::pollEvents()
 
 		if (m_Help.isChosen())
 		{
-			shared_ptr<Room> destination;;
-			if (curMaze->CheckGetAllKey()) {
-				cout << "Already got all keys" << endl;
-				destination = curMaze->FindRoomByPos(curMaze->getFinalPos());
+			if (m_Player->getTotalCoin() >= 3)
+			{
+				m_Player->setTotalCoin(m_Player->getTotalCoin() - 3);
+
+				shared_ptr<Room> destination;;
+				if (curMaze->CheckGetAllKey()) {
+					cout << "Already got all keys" << endl;
+					destination = curMaze->FindRoomByPos(curMaze->getFinalPos());
+				}
+				else {
+					BFS nearestKeyFinder;
+					destination = nearestKeyFinder.findNearestItem(curMaze->FindRoomByPos(m_Player->getPosition()), RoomType::KEY);
+				}
+				m_Helper.start(AlgorithmIndex::iAStar,
+					curMaze->FindRoomByPos(m_Player->getPosition()),
+					destination);
+				return;
 			}
-			else {
-				BFS nearestKeyFinder;
-				destination = nearestKeyFinder.findNearestItem(curMaze->FindRoomByPos(m_Player->getPosition()), RoomType::KEY);
-			}
-			m_Helper.start(AlgorithmIndex::iAStar,
-				curMaze->FindRoomByPos(m_Player->getPosition()),
-				destination);
-			return;
 		}
 
 		if (m_RestartGame.isChosen())

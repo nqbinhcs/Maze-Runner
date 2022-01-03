@@ -19,6 +19,13 @@ void StateDemo::initWindow()
 	//Init displays
 	this->m_pChooseMenu = std::shared_ptr<HelpAlgorithmMenu>(new HelpAlgorithmMenu());
 
+	if (!textureBackground.loadFromFile(IMG_BEHINDMAZE))
+	{
+		std::cout << "Load file failed" << std::endl;
+	}
+	spriteBackground.setTexture(textureBackground);
+	spriteBackground.setPosition(0, 0);
+
 }
 
 
@@ -218,6 +225,7 @@ void StateDemo::update()
 void StateDemo::render()
 {
 	m_pWindow->clear(sf::Color(128, 128, 128));
+	m_pWindow->draw(spriteBackground);
 
 	//-----------------------------In StateDemo-----------------------------
 	if (m_Demoer.isShowing)
