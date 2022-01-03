@@ -34,21 +34,28 @@ void StateDemo::initWindow()
 //@RETURN: None
 void StateDemo::initButtons()
 {
+
+	float scSize = 1.15;
+
 	m_ChooseAlgo.setButton(sf::Vector2f(DEMO_OFFSET_CHOOSE_ALGO_X, DEMO_OFFSET_CHOOSE_ALGO_Y), sf::Vector2f(DEMO_BUTTON_WIDTH, DEMO_BUTTON_HEIGHT),
-		sf::Color::Transparent, sf::Color::Transparent, "Choose Algorithm",
-		FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "Images/button.png");
+		sf::Color::Transparent, sf::Color::Transparent, "",
+		FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "Images/DDemoChooseAlgo.png");
+	m_ChooseAlgo.setScaleSprite(sf::Vector2f(m_ChooseAlgo.getScaleSprite().x * scSize, m_ChooseAlgo.getScaleSprite().y * scSize));
 
 	m_Find.setButton(sf::Vector2f(DEMO_OFFSET_FIND_X, DEMO_OFFSET_FIND_Y), sf::Vector2f(DEMO_BUTTON_WIDTH, DEMO_BUTTON_HEIGHT),
-		sf::Color::Black, sf::Color::Transparent, "Find",
-		FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "");
+		sf::Color::Transparent, sf::Color::Transparent, "",
+		FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "Images/DDemoFind.png");
+	m_Find.setScaleSprite(sf::Vector2f(m_Find.getScaleSprite().x * scSize, m_Find.getScaleSprite().y * scSize));
 
 	m_Generate.setButton(sf::Vector2f(DEMO_OFFSET_GENERATE_X, DEMO_OFFSET_GENERATE_Y), sf::Vector2f(DEMO_BUTTON_WIDTH, DEMO_BUTTON_HEIGHT),
-		sf::Color::Black, sf::Color::Transparent, "Restart",
-		FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "");
+		sf::Color::Transparent, sf::Color::Transparent, "",
+		FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "Images/DDemoGenerate.png");
+	m_Generate.setScaleSprite(sf::Vector2f(m_Generate.getScaleSprite().x * scSize, m_Generate.getScaleSprite().y * scSize));
 
 	m_ReturnMenu.setButton(sf::Vector2f(DEMO_OFFSET_RETURN_MENU_X, DEMO_OFFSET_RETURN_MENU_Y), sf::Vector2f(DEMO_BUTTON_WIDTH, DEMO_BUTTON_HEIGHT),
-		sf::Color::Black, sf::Color::Transparent, "Menu",
-		FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "");
+		sf::Color::Transparent, sf::Color::Transparent, "",
+		FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "Images/DDemoMenu.png");
+	m_ReturnMenu.setScaleSprite(sf::Vector2f(m_ReturnMenu.getScaleSprite().x * scSize, m_ReturnMenu.getScaleSprite().y * scSize));
 }
 
 

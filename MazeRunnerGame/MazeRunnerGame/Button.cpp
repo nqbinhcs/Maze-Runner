@@ -94,6 +94,17 @@ void Button::scaleSprite(float scaleSize)
 	m_ScaleSprite.scale(sf::Vector2f(scaleSize, scaleSize));
 }
 
+void Button::setScaleSprite(sf::Vector2f scale)
+{
+	m_RootSprite.setScale(scale);
+}
+
+sf::Vector2f Button::getScaleSprite()
+{
+	return m_RootSprite.getScale();
+}
+
+
 void Button::setButton(sf::Vector2f position, sf::Vector2f boxSize,
 	sf::Color fillColor, sf::Color outlineColor,
 	std::string text, std::string font,

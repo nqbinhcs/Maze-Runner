@@ -51,17 +51,24 @@ void StateInGame::initFonts()
 //@RETURN: None
 void StateInGame::initButtons()
 {
+
+	float scSize = 1.5;
+
 	m_Help.setButton(sf::Vector2f(OFFSET_HELP_X, OFFSET_HELP_Y), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
-		sf::Color::Black, sf::Color::Transparent,
-		"Help", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "");
+		sf::Color::Transparent, sf::Color::Transparent,
+		"", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "Images/DHelp.png");
+	m_Help.setScaleSprite(sf::Vector2f(m_Help.getScaleSprite().x * scSize, m_Help.getScaleSprite().y * scSize));
 
 	m_RestartGame.setButton(sf::Vector2f(OFFSET_RESTART_X, OFFSET_RESTART_Y), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
-		sf::Color::Black, sf::Color::Transparent,
-		"Restart", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "");
+		sf::Color::Transparent, sf::Color::Transparent,
+		"", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "Images/DRestart.png");
+	m_RestartGame.setScaleSprite(sf::Vector2f(m_RestartGame.getScaleSprite().x * scSize, m_RestartGame.getScaleSprite().y * scSize));
+
 
 	m_ReturnMenu.setButton(sf::Vector2f(OFFSET_RETURN_MENU_X, OFFSET_RETURN_MENU_Y), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
-		sf::Color::Black, sf::Color::Transparent,
-		"Menu", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "");
+		sf::Color::Transparent, sf::Color::Transparent,
+		"", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::White, "Images/DMenu.png");
+	m_ReturnMenu.setScaleSprite(sf::Vector2f(m_ReturnMenu.getScaleSprite().x * scSize, m_ReturnMenu.getScaleSprite().y * scSize));
 }
 
 
