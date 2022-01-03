@@ -31,6 +31,8 @@ public:
 	void setSpritePosition(sf::Vector2f position);
 	void setSprite(std::string imageFile);
 	void scaleSprite(float scaleSize);
+	void setScaleSprite(sf::Vector2f scale);
+	sf::Vector2f getScaleSprite();
 
 public:
 	void setButton(sf::Vector2f position, sf::Vector2f boxSize,
