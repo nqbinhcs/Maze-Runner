@@ -12,9 +12,6 @@ Menu::Menu(float width, float height) :Display(width, height)
 		std::cout << "Load font failed" << std::endl;
 	}
 
-	/* set thông số đồ họa cho dòng chữ NEW GAME
-	   do dònng chữ New Game nằm đầu nên ta cho mặc định khi vào Menu, chức năng này được chọn */
-
 	
 	delta_effect = 0;
 
@@ -36,11 +33,10 @@ Menu::Menu(float width, float height) :Display(width, height)
 
 	setPositionText(text[0], 170 + delta);
 
-	// set thông số đồ họa cho dòng chữ các dòng chữ thể hiện chức năng khác
 	setText(1, "CONTINUE GAME");
 	setPositionText(text[1], 250 + delta);
 
-	setText(2, "VISUAL DEMO");
+	setText(2, "VISUALIZE");
 	setPositionText(text[2], 330 + delta);
 
 	setText(3, "HELP");
@@ -49,7 +45,7 @@ Menu::Menu(float width, float height) :Display(width, height)
 	setText(4, "EXIT GAME");
 	setPositionText(text[4], 490 + delta);
 
-	selectOption = 0; // mặc định ban đầu chọn chức năng 1
+	selectOption = 0; 
 }
 
 Menu::~Menu()
@@ -59,7 +55,7 @@ Menu::~Menu()
 
 void Menu::setText(int select, std::string nameOption)
 {
-	// set thông số đồ họa cho text
+	
 	text[select].setFont(font);
 	text[select].setCharacterSize(40);
 	text[select].setFillColor(sf::Color::White);
@@ -69,21 +65,20 @@ void Menu::setText(int select, std::string nameOption)
 
 void Menu::draw(sf::RenderWindow& window)
 {
-	Display::draw(window); // vẽ lại Background trong Display
+	Display::draw(window); 
 
-	//effect for fun
 	delta_effect *= -1;
 	GameTittle.setFillColor(sf::Color::Color(120 + delta_effect, 120 + delta_effect, 120 + delta_effect));
-	//window.draw(GameTittle);
+
 	for (int i = 0; i < _MAX_CHOICE_MENU; i++)
 	{
-		window.draw(text[i]); // vẽ các dòng chữ thể hiện chế độ chơi
+		window.draw(text[i]); 
 	}
 }
 
-void Menu::moveUp() // nhấn phím UP
+void Menu::moveUp() 
 {
-	if (selectOption - 1 >= 0) // do đi lên nên kiểm tra >= 0
+	if (selectOption - 1 >= 0) 
 	{
 		text[selectOption].setFillColor(sf::Color::White);
 		text[selectOption].setCharacterSize(40);
@@ -101,9 +96,9 @@ void Menu::moveUp() // nhấn phím UP
 	}
 }
 
-void Menu::moveDown() // nhấn phím DOWN
+void Menu::moveDown() 
 {
-	if (selectOption + 1 < _MAX_CHOICE_MENU) // do đi xuống nên kiểm tra < _MAX_CHOICE_MENU
+	if (selectOption + 1 < _MAX_CHOICE_MENU) 
 	{
 		text[selectOption].setFillColor(sf::Color::White);
 		text[selectOption].setCharacterSize(40);
@@ -122,11 +117,7 @@ void Menu::moveDown() // nhấn phím DOWN
 
 
 void Menu::mouseMoved(sf::RenderWindow& windows) // di chuyển chuột
-{/*  khi di chuyển chuột đên một dòng chữ nào đó
-		dòng chữ đó sẽ đổi sang màu trắng và size lớn hơn bình thường
-		các dòng chữ còn lại màu đỏ và size bình thường
-		cập nhật là selectOption
-	*/
+{
 	if (clickMouse(text[0], windows))
 	{
 		selectOption = 0;
@@ -249,35 +240,12 @@ void Menu::mouseMoved(sf::RenderWindow& windows) // di chuyển chuột
 	}
 }
 
-void Menu::mouseSelect(sf::RenderWindow& window) // bắt sự kiện click chuột
+void Menu::mouseSelect(sf::RenderWindow& window) 
 {
-	if (clickMouse(text[0], window)) // vào chọn chế độ chơi
-	{
-		//modeGame mode(window.getSize().x, window.getSize().y);
-		//mode.runModeGame(window);
-	}
-	else if (clickMouse(text[1], window)) // vào chức năng tiếp tục chơi
-	{
-		//continueGame cont;
-		//cont.runContinueGame(window);
-	}
-	else if (clickMouse(text[2], window)) // hiện bảng điểm cao
-	{
-		//modeGame mode(window.getSize().x, window.getSize().y);
-		//mode.runModeHigh(window);
-	}
-	else if (clickMouse(text[3], window)) // hiện bảng giúp đỡ
-	{
-		//helpMenu help(window.getSize().x, window.getSize().y);
-		//help.drawMenu(window);
-	}
-	else if (clickMouse(text[4], window)) // thoát game
-	{
-		window.close();
-	}
+
 }
 
-int Menu::GetPressedItem() // lấy giá trị selectOption
+int Menu::GetPressedItem() 
 {
 	return selectOption;
 }

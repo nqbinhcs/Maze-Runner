@@ -35,7 +35,7 @@ void StateDemo::initWindow()
 void StateDemo::initButtons()
 {
 
-	float scSize = 1.15;
+	float scSize = 1.1;
 
 	m_ChooseAlgo.setButton(sf::Vector2f(DEMO_OFFSET_CHOOSE_ALGO_X, DEMO_OFFSET_CHOOSE_ALGO_Y), sf::Vector2f(DEMO_BUTTON_WIDTH, DEMO_BUTTON_HEIGHT),
 		sf::Color::Transparent, sf::Color::Transparent, "",
@@ -322,7 +322,7 @@ void StateDemo::initTitle() {
 		sf::Vector2f(DEMO_TITLE_WIDTH, DEMO_TITLE_HEIGHT),
 		sf::Color::Black, sf::Color::Transparent);
 
-	m_Title.setText("MAZE RUNNER", FONT_GAME, 90, sf::Text::Bold, sf::Color::White);
+	m_Title.setText("MAZE RUNNER", FONT_GAME, 90, sf::Text::Italic, sf::Color::Color(253, 205, 79));
 	m_Title.setCharacterSpacing(1.5);
 	m_Title.alignTextCenter();
 	m_Title.alignTextMiddle();
@@ -335,7 +335,7 @@ void StateDemo::initAlgorithmInfo() {
 		sf::Color::Black, sf::Color::White);
 	m_Algorithm[0].setBoxOutlineThickness(5);
 
-	m_Algorithm[0].setText("ALGORITHM", FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_Algorithm[0].setText("ALGORITHM", FONT_GAME, 30, sf::Text::Italic, sf::Color::Color(253, 205, 79));
 	m_Algorithm[0].setCharacterSpacing(1.5);
 	m_Algorithm[0].alignTextCenter();
 	m_Algorithm[0].alignTextMiddle();
@@ -349,7 +349,7 @@ void StateDemo::initAlgorithmInfo() {
 
 	writer << "BFS";
 
-	m_Algorithm[1].setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::White);
+	m_Algorithm[1].setText(writer.str(), FONT_GAME, 30, sf::Text::Bold, sf::Color::Color(253, 205, 79));
 	m_Algorithm[1].setCharacterSpacing(1.5);
 	m_Algorithm[1].alignTextCenter();
 	m_Algorithm[1].alignTextMiddle();

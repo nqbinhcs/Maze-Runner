@@ -68,8 +68,6 @@ void Display::setPositionText(sf::Text& text, float height)
 
 void Display::draw(sf::RenderWindow& window)
 {
-	//std::cout << "CALL DISPLAY DRAW\n";
 	text.drawMyText(window);
-	window.draw(spriteBackground); // vẽ background menu
-	// window.draw(gameName); // vẽ tiêu đề 
+	window.draw(spriteBackground); 
 }

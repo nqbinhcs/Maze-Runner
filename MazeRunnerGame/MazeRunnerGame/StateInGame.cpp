@@ -22,7 +22,6 @@ void StateInGame::initWindow()
 {
 	this->m_pWindow = SingletonRenderWindow::getInstance();
 	this->m_pNextStage = std::shared_ptr<NextStage>(new NextStage());
-	//this->m_pHelpMenu = std::shared_ptr<HelpAlgorithmMenu>(new HelpAlgorithmMenu());
 
 	if (!textureBackground.loadFromFile(IMG_BEHINDMAZE))
 	{
@@ -187,7 +186,6 @@ void StateInGame::updatePlayer()
 void StateInGame::updateGui()
 {
 	stringstream writer;
-	//Level Info
 }
 
 
@@ -196,7 +194,6 @@ void StateInGame::updateGui()
 //@RETURN: None
 void StateInGame::renderGui(sf::RenderTarget* target)
 {
-	//target->draw(this->m_GuiText);
 	m_pWindow->draw(spriteBackground);
 }
 
@@ -423,12 +420,12 @@ void StateInGame::pollEvents()
 			m_Help.makeNormal();
 			if (m_Player->getTotalCoin() >= 3)
 			{
-				std::cout << "DELETE COIN\n";
+				
 				m_Player->setTotalCoin(m_Player->getTotalCoin() - 3);
 
 				shared_ptr<Room> destination;;
 				if (curMaze->CheckGetAllKey()) {
-					cout << "Already got all keys" << endl;
+					
 					destination = curMaze->FindRoomByPos(curMaze->getFinalPos());
 				}
 				else {
@@ -469,14 +466,6 @@ void StateInGame::render()
 
 	m_pWindow->clear(sf::Color(128, 128, 128));
 
-	//-----------------------------In Game + Next Stage-----------------------------
-
-	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
-	/*if (m_Helper.isHelping == false)
-		m_Helper.help(2, curMaze->FindRoomByPos(curMaze->getStartPos()), curMaze->FindRoomByPos(curMaze->getFinalPos()));
-	m_Helper.showInstruction(*m_pWindow);*/
-	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!HELPER TESTING HERE!!!>>>>>>>>>>>>>>>>>>>>*/
-
 	//Render Gui
 	this->renderGui(this->m_pWindow);
 
@@ -498,7 +487,6 @@ void StateInGame::render()
 	timeCycle++;
 	if (timeCycle == 100) {
 		//Save after 100 timcyles
-		//this->save();
 		save();
 		timeCycle = 0;
 	}
@@ -528,7 +516,6 @@ void StateInGame::render()
 
 		//Win a difficulty mode
 		if (curMaze->isWin() == true) {
-			std::cout << "YOU WIN\n";
 			this->context_->TransitionTo(new StateDifficultyComplete);
 			return;
 		}
@@ -563,8 +550,6 @@ void StateInGame::render()
 
 	if (m_State == LevelCompleteState || curMaze->completeLevel() == true)
 	{
-		//cout << "LEVEL~~~ : " << m_Level << '\n';
-		//testing
 		renderDisplayStates(NextStageState);
 		m_State = NextStageState;
 	}

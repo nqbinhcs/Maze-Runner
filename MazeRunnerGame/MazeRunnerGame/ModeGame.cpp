@@ -18,8 +18,6 @@ ModeGame::ModeGame(float width, float height) :Menu(width, height)
 		std::cout << "Load font failed" << std::endl;
 	}
 
-	/* set thông số đồ họa cho dòng chữ NEW GAME
-	   do dònng chữ New Game nằm đầu nên ta cho mặc định khi vào Menu, chức năng này được chọn */
 
 	int delta = 70;
 	textMode[0].setFont(font);
@@ -29,7 +27,7 @@ ModeGame::ModeGame(float width, float height) :Menu(width, height)
 	textMode[0].setString("EASY");
 	setPositionText(textMode[0], 200 + delta);
 
-	// set thông số đồ họa cho dòng chữ các dòng chữ thể hiện chức năng khác
+	
 	textMode[1].setFont(font);
 	textMode[1].setCharacterSize(40);
 	textMode[1].setFillColor(sf::Color::White);
@@ -44,19 +42,19 @@ ModeGame::ModeGame(float width, float height) :Menu(width, height)
 	textMode[2].setString("HARD");
 	setPositionText(textMode[2], 400 + delta);
 
-	select = 0; // mặc định ban đầu chọn chức năng 1
+	select = 0; 
 }
 
 void ModeGame::draw(sf::RenderWindow& window)
 {
-	Display::draw(window); // vẽ lại Background trong Display
+	Display::draw(window); 
 	for (int i = 0; i < 3; i++)
 	{
-		window.draw(textMode[i]); // vẽ các dòng chữ thể hiện chế độ chơi
+		window.draw(textMode[i]); 
 	}
 }
 
-void ModeGame::moveUp() // nhấn phím UP
+void ModeGame::moveUp() 
 {
 	int delta = 70;
 	if (select - 1 >= 0)
@@ -77,7 +75,7 @@ void ModeGame::moveUp() // nhấn phím UP
 	}
 }
 
-void ModeGame::moveDown() // nhấn phím Down
+void ModeGame::moveDown() 
 {
 	int delta = 70;
 	if (select + 1 < 3)
@@ -99,11 +97,6 @@ void ModeGame::moveDown() // nhấn phím Down
 
 void ModeGame::mouseMoved(sf::RenderWindow& windows) // di chuyển chuột
 {
-	/*  khi di chuyển chuột đên một dòng chữ nào đó
-		dòng chữ đó sẽ đổi sang màu trắng và size lớn hơn bình thường
-		các dòng chữ còn lại màu đỏ và size bình thường
-		cập nhật là select
-	*/
 	if (clickMouse(textMode[0], windows))
 	{
 		select = 0;
@@ -135,132 +128,6 @@ void ModeGame::mouseMoved(sf::RenderWindow& windows) // di chuyển chuột
 	}
 }
 
-//int ModeGame::mouseSelect(sf::RenderWindow& window) // bắt sự kiện click chuột
-//{
-//	levelChoice choice(window.getSize().x, window.getSize().y);
-//
-//	if (clickMouse(textMode[0], window))
-//	{
-//		choice.runLevelChoice(window, GetPressedItem());
-//		return 0; // player chơi
-//	}
-//	if (clickMouse(textMode[1], window))
-//	{
-//		choice.runLevelChoice(window, GetPressedItem()); // máy chơi
-//		return 1;
-//	}
-//
-//	return -1;
-//}
-//
-//int ModeGame::mouseSelectHigh(sf::RenderWindow& window)
-//{
-//
-//	if (clickMouse(textMode[0], window))
-//	{
-//		listHighScore listHigh(window.getSize().x, window.getSize().y, GetPressedItem());
-//		listHigh.drawMenu(window, GetPressedItem());
-//		return 0; // player chơi
-//	}
-//	if (clickMouse(textMode[1], window))
-//	{
-//		listHighScore listHigh(window.getSize().x, window.getSize().y, GetPressedItem());
-//		listHigh.drawMenu(window, GetPressedItem());
-//		return 1;
-//	}
-//
-//	return -1;
-//}
-//
-void ModeGame::runModeGame(sf::RenderWindow& window)
-{
-	while (window.isOpen()) {
-		sf::Event event;
-		while(window.pollEvent(event)) {
-			switch (event.type) {
-
-			case sf::Event::Closed:
-				window.close();
-				break;
-			case sf::Event::MouseMoved:
-				mouseMoved(window); // di chuyển chuột
-				break;
-			case sf::Event::MouseButtonPressed:
-			{
-				mouseSelect(window); // click chuột
-				break;
-			}
-
-			case sf::Event::KeyPressed:
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-					moveUp(); // di chuyển lên
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-					moveDown(); // di chuyển xuống
-				}
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-					return;
-				}
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-					return;
-				}
-			}
-		}
-		window.clear();
-		draw(window);
-		window.display();
-		//return GetPressedItem();
-	}
-}
-//
-//void ModeGame::runModeHigh(sf::RenderWindow& window)
-//{
-//	while (window.isOpen()) {
-//		sf::Event event;
-//		while (window.pollEvent(event)) {
-//			switch (event.type) {
-//
-//			case sf::Event::Closed:
-//				window.close();
-//				break;
-//			case sf::Event::MouseMoved:
-//				mouseMoved(window); // di chuyển chuột
-//				break;
-//			case sf::Event::MouseButtonPressed:
-//			{
-//				mouseSelectHigh(window); // click chuột
-//				break;
-//			}
-//
-//			case sf::Event::KeyPressed:
-//
-//				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-//					moveUp(); // di chuyển lên
-//				}
-//				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-//					moveDown(); // di chuyển xuống
-//				}
-//
-//				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-//					return;
-//				}
-//
-//				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-//
-//					listHighScore listHigh(window.getSize().x, window.getSize().y, GetPressedItem());
-//					listHigh.drawMenu(window, GetPressedItem());
-//				}
-//			}
-//		}
-//		window.clear();
-//		drawMenu(window);
-//		window.display();
-//	}
-//}
-//
 int ModeGame::GetPressedItem() // lấy giá trị select
 {
 	return select;
