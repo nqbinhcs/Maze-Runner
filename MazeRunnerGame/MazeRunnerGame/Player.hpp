@@ -74,7 +74,7 @@ public:
 		}
 	}
 	bool loseLevel() {
-		if (timesPlayed == 0) {
+		if (timesPlayed <= 0) {
 			return true;
 		}
 		return false;
