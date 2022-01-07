@@ -475,7 +475,14 @@ void Maze::setMazeFromFile(vector<vector<int>> maze, vector<vector<int>> mazeObj
 		//1-D; 2-L, 8-R, 4-U, 3-DL, 9-DR, 5-DU, 
 		// 10-LR, 6-LU, 12-UR,	11 - DLR, 7 - DLU, 
 		//13 - DUR 14 - LUR    15NULL
-		if (allRooms[i]->wallDirBit == 1) {
+		if (allRooms[i]->wallDirBit == 0) {
+			//Connect Room Left, Right, Up
+			ConnectEachOther(allRooms[i], -1, 0);
+			ConnectEachOther(allRooms[i], 1, 0);
+			ConnectEachOther(allRooms[i], 0, 1);
+			ConnectEachOther(allRooms[i], 0, -1);
+		}
+		else if (allRooms[i]->wallDirBit == 1) {
 			//Connect Room Left, Right, Up
 			ConnectEachOther(allRooms[i], -1, 0);
 			ConnectEachOther(allRooms[i], 1, 0);
