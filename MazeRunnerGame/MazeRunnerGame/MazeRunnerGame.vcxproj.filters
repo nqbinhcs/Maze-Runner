@@ -244,5 +244,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
 </Project>

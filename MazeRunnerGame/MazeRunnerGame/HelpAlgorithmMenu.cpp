@@ -20,7 +20,6 @@ HelpAlgorithmMenu::HelpAlgorithmMenu()
 
 	spriteBackground.scale(0.5, 0.5);
 
-
 	//Button
 	algos.resize(4);
 
@@ -31,22 +30,25 @@ HelpAlgorithmMenu::HelpAlgorithmMenu()
 	int XSTART = 465;
 	int XPOS[4] = { XSTART, XSTART + 150, XSTART + 300, XSTART + 450 };
 
+
+	sf::Color myColor = sf::Color(10, 122, 9);
+
 	algos[0].setButton(sf::Vector2f(XPOS[0], YPOS), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
 		sf::Color::Color(240, 186, 74), sf::Color::Transparent,
-		"BFS", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::Color(153,254,101), "");
+		"BFS", FONT_GAME, 20, sf::Text::Style::Bold, myColor, "");
 
 	algos[1].setButton(sf::Vector2f(XPOS[1], YPOS), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
 		sf::Color::Color(240, 186, 74), sf::Color::Transparent,
-		"DFS", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::Color(153, 254, 101), "");
+		"DFS", FONT_GAME, 20, sf::Text::Style::Bold, myColor, "");
 
 	algos[2].setButton(sf::Vector2f(XPOS[2], YPOS), sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT),
 		sf::Color::Color(240, 186, 74), sf::Color::Transparent,
-		"AStar", FONT_GAME, 20, sf::Text::Style::Bold, sf::Color::Color(153, 254, 101), "");
+		"AStar", FONT_GAME, 20, sf::Text::Style::Bold, myColor, "");
 
 
 	run.setButton(sf::Vector2f(622, YPOS + 130), sf::Vector2f(2 * BUTTON_WIDTH + 20, BUTTON_HEIGHT - 50),
 		sf::Color::Color(240, 186, 74), sf::Color::Transparent,
-		"CONFIRM", FONT_GAME, 25, sf::Text::Style::Italic, sf::Color::Color(153, 254, 101), "");
+		"CONFIRM", FONT_GAME, 25, sf::Text::Style::Italic, myColor, "");
 
 	//choose
 	choose = 0;
