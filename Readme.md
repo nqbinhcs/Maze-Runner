@@ -1,16 +1,12 @@
-09/12/2021
-@Binh
-+ Thay đổi class Square -> MazeObject bao gồm file hpp, cpp
-+ Tạo class Room (thay thế Cell) -> Chỉ mới tạo hpp
-+ Tạo class MazeFactory, MazeCreationInterface
+Phương pháp lập trình hướng đối tượng
+ĐỒ ÁN: MAZE RUNNER
+GVHD: Thầy Trần Anh Duy
+NHÓM: 5 TN2
+Thành viên:
+1.	20120351 – Phạm Hữu Phúc
+2.	20120412 – Nguyễn Quang Bình
+3.	20120579 – Vũ Văn Thái
 
-- Có nhiều phần cài đặt trong code mình chưa sử dụng cách tạo đổi tượng bằng MazeCreationInterface. Các ông nếu thấy phần code nào chưa áp dụng thì sửa nha
-- Có nên sài shared pointer hết không getter đến setter ? Mấy ông giúp tui nghen, chứ ngu wa hic ;-;
-
-@Thai: Cài đặt và thay đổi các lớp TileMap, Cell -> Maze, Room (Theo UML)
-@Phuc: Đảm bảo chạy được phần running Game và refactor nếu cần
-
-Yêu cầu: Thay đổi lại nhưng code vẫn chạy được như ban đầu
 
 
 
