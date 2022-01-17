@@ -17,7 +17,7 @@ This is an example of how to list things you need to use the software and how to
 * Cmake
 
 ### Build
-1. Create the build directoru
+1. Create the build directory
    ```sh
    mkdir build
    cd build
@@ -26,6 +26,7 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    cmake ..
    cmake --build . --config Release
+   cd ..
    ```
 
 <!-- USAGE EXAMPLES -->
