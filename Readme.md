@@ -1,5 +1,5 @@
 # Phương pháp lập trình hướng đối tượng
-## ĐỒ ÁN: MAZE RUNNER
+## ĐỒ ÁN: MAZE RUNNER_GAME
 ## GVHD: Thầy Trần Anh Duy
 ## NHÓM: 5 TN2
 **Thành viên:**
