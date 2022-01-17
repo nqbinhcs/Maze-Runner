@@ -12,6 +12,7 @@ Our project is based on a maze-solving game as well as supporting visualization 
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
+* C++ compiler
 * Cmake
 
 ### Build
