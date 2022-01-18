@@ -69,7 +69,7 @@ Other transition screens:
    + Drag and drop characters to change their positions;
    + Click **Find** to challenge _Bot_.
 
- <img src="assets/ReadMeImgages/11_VisualizeDemo.png" width="" height="300">
+ <img src="assets/ReadMeImgages/12_VisualizeDemo.gif" width="" height="300">
 
 ## Authors
 
